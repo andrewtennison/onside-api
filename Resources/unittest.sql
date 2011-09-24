@@ -1,1 +1,1 @@
-CREATE DATABASE unittest ;\n
+CREATE DATABASE unittest ;

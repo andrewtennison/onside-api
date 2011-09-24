@@ -1,1 +1,1 @@
-CREATE DATABASE onside ;\n
+CREATE DATABASE onside ;
