@@ -1,0 +1,25 @@
+<phpunit
+    bootstrap="./bootstrap.php"
+    backupGlobals="false"
+    backupStaticAttributes="false"
+    colors="false"
+    strict="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true">
+    <testsuites>
+        <testsuite name="OnsideTest">
+            <directory>./</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">../Library</directory>
+        </whitelist>
+        <exlude>
+            <file>DatabaseTest.php</file>
+            <file>Test.php</file>
+            <file>phpunit.xml</file>
+        </exlude>
+    </filter>
+</phpunit>
