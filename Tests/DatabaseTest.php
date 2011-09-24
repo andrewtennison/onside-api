@@ -1,2 +1,2 @@
 <?php
-namespace Onside\Tests;
+namespace Tests;
