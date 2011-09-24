@@ -1,5 +1,11 @@
 <?php
 namespace Onside;
+use \Exception;
+
+// Self contained to avoid issues with
+// using Autoloader to load exception file
+class AutoloaderException extends Exception
+{}
 
 class Autoloader
 {
@@ -9,15 +15,19 @@ class Autoloader
 //        $parts  = explode('\\', str_replace('Onside\\', '', $className));
         $parts  = explode('\\', $className);
         $filename = APPLICATION_BASE . '/' . implode('/', $parts) . '.php';
-        assert('$this->_assertFileExists($filename)');
+//echo "Autoloader::\$filename: $filename\n";
+        $this->assertFileExists($filename);
+        assert('$this->assertFileExists($filename)');
         require $filename;
     }
     
     private function assertFileExists($filename)
     {
         $path = stream_resolve_include_path($filename);
+//echo 'Autoloader::assertFileExists($filename): ' . $filename . "\n";
+//echo 'file_exists($path): ' . $path . ' ' . (file_exists($path) ? 'true' : 'false') . "\n";
         if (!file_exists($path)) {
-//            throw new AutoloaderException("File $file could not be found for class $class");
+            throw new AutoloaderException("File $filename could not be found at path $path");
         }
         
         return true;

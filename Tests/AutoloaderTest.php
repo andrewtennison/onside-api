@@ -45,4 +45,13 @@ class AutoloaderTest extends Test
         $class = new $className();
         $this->assertInstanceOf('\\' . $className, $class);
     }
+    
+    /**
+     * @expectedException \Onside\AutoloaderException
+     */
+    public function testInvalidClasses()
+    {
+        $className = '\Onside\NonExistantClass';
+        $class = new $className();
+    }
 }
