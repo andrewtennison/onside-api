@@ -1,5 +1,5 @@
 <?php
 namespace Onside;
 
-class Log
+abstract class Log
 {}

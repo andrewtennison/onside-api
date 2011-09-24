@@ -1,5 +1,6 @@
 <?php
 namespace Onside;
+use \PDO;
 
-class Db
+abstract class Db extends PDO
 {}

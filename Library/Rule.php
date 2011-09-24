@@ -1,5 +1,5 @@
 <?php
 namespace Onside;
 
-class Rule
+abstract class Rule
 {}

@@ -1,5 +1,5 @@
 <?php
 namespace Onside;
 
-class Config
+abstract class Config
 {}
