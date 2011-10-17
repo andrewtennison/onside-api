@@ -13,8 +13,8 @@ class SearchController extends BaseController
         ), array());
     }
     
-    public function actionLogin()
+    public function actionList()
     {
-        return array(array(), array(array('code' => '100', 'message' => "Action 'LOGIN' not implemented yet")));
+        return array(array(), array(array('code' => '100', 'message' => "Action 'LIST' not implemented yet")));
     }
 }
