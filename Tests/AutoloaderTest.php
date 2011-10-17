@@ -33,7 +33,7 @@ class AutoloaderTest extends Test
             array('Onside\Onside'),
             array('Onside\Queue'),
 //            array('Onside\Rule'),
-            
+            array('Api\ArticleController'),
         );
     }
     
@@ -51,7 +51,7 @@ class AutoloaderTest extends Test
      */
     public function testInvalidClasses()
     {
-        $className = '\Onside\NonExistantClass';
+        $className = 'Onside\NonExistantClass';
         $class = new $className();
     }
 }

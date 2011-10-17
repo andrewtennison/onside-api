@@ -1,5 +1,5 @@
 <phpunit
-    bootstrap="./bootstrap.php"
+    bootstrap="./Tests/bootstrap.php"
     backupGlobals="false"
     backupStaticAttributes="false"
     colors="false"
@@ -9,17 +9,17 @@
     convertWarningsToExceptions="true">
     <testsuites>
         <testsuite name="OnsideTest">
-            <directory>./</directory>
+            <directory>./Tests/</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
-            <directory suffix=".php">../Library</directory>
+            <directory suffix=".php">Api</directory>
+            <directory suffix=".php">Onside</directory>
         </whitelist>
         <exlude>
             <file>DatabaseTest.php</file>
             <file>Test.php</file>
-            <file>phpunit.xml</file>
         </exlude>
     </filter>
 </phpunit>

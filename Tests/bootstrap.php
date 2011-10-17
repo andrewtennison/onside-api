@@ -12,3 +12,4 @@ ini_set('display_errors', true);
 
 // Autoloading
 set_include_path(APPLICATION_BASE . '/Tests' . PATH_SEPARATOR . get_include_path());
+set_include_path(APPLICATION_BASE . '/Tests/Api' . PATH_SEPARATOR . get_include_path());

@@ -7,6 +7,7 @@ ini_set('display_errors', false);
 // Constants
 define('APPLICATION_BASE', __DIR__);
 defined('APPLICATION_ENV') or define('APPLICATION_ENV', getenv('APPLICATION_ENV'));
+define('APPLICATION_CONFIG', APPLICATION_BASE . '/Config');
 
 // Autoloading
 set_include_path(APPLICATION_BASE . PATH_SEPARATOR . get_include_path());
