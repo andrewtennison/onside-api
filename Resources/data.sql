@@ -1,5 +1,5 @@
 
-TRUNCATE `feeds` IF EXISTS;
+TRUNCATE `feeds`;
 INSERT INTO `feeds` (name, url, rate, frequency) VALUES
 ('BBC Football', 'http://newsrss.bbc.co.uk/rss/sportplayer_uk_edition/football/rss.xml', 1, 'd'),
 ('Caught Off Side', 'http://www.caughtoffside.com/feed/rss/', 1, 'd'),
