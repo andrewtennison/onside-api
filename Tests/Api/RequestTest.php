@@ -1,0 +1,57 @@
+<?php
+namespace Tests\Api;
+use \Tests\Test;
+use \Api\Request;
+
+class RequestTest extends Test
+{
+    public function getRequests()
+    {
+        return array(
+            array('/article', 'GET'),
+            array('/article/8475th3293fh3ufhejwfkn', 'GET'),
+        );
+    }
+    
+    /**
+     * @dataProvider getRequests
+     */
+    public function testGetRequest($uri, $method, $get = array(), $post = array())
+    {
+        list($object, $key) = strpos(substr($uri, 1), '/') ?
+            explode('/', substr($uri, 1)) :
+            array(substr($uri, 1), null)
+        ;
+        $request = new Request($uri, $method, $get, $post);
+        $this->assertInstanceOf('\Api\BaseRequest', $request);
+        $this->assertEquals($object, $request->getObject());
+        $this->assertEquals($key, $request->getKey());
+        $this->assertEquals($method, $request->getMethod());
+
+        $response = $request->getResponse('Person', 200);
+        $this->assertInstanceOf('\Api\BaseResponse', $response);
+    }
+    
+    public function getRequestsWithParams()
+    {
+        return array(
+            array('/article', 'GET', array('channel' => '8475th3293fh3ufhejwfkn')),
+            array('/article/8475th3293fh3ufhejwfkn', 'GET', array('event' => '8475th3293fh3ufhejwfkn')),
+        );
+    }
+    
+    /**
+     * @dataProvider getRequestsWithParams
+     */
+    public function testGetParam($uri, $method, $get = array(), $post = array())
+    {
+        list($object, $key) = strpos(substr($uri, 1), '/') ?
+            explode('/', substr($uri, 1)) :
+            array(substr($uri, 1), substr($uri, 1))
+        ;
+        $keys = array_keys($get);
+        $key = $get[$keys[0]];
+        $request = new Request($uri, $method, $get, $post);
+        $this->assertEquals($key, $request->getParam($keys[0]), print_r($request, true));
+    }
+}
