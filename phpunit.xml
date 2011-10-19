@@ -20,6 +20,16 @@
         <exlude>
             <file>DatabaseTest.php</file>
             <file>Test.php</file>
+            <directory>cc</directory>
         </exlude>
     </filter>
+    <logging>
+        <log type="coverage-html" target="Tests/cc/report" charset="UTF-8" yui="true" highlight="false" lowUpperBound="35" highLowerBound="70"/>
+        <log type="coverage-clover" target="Tests/cc/coverage.xml"/>
+        <log type="json" target="Tests/cc/logfile.json"/>
+        <log type="tap" target="Tests/cc/logfile.tap"/>
+        <log type="junit" target="Tests/cc/logfile.xml" logIncompleteSkipped="false"/>
+        <log type="testdox-html" target="Tests/cc/testdox.html"/>
+        <log type="testdox-text" target="Tests/cc/testdox.txt"/>
+    </logging>
 </phpunit>
