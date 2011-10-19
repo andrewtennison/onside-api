@@ -34,7 +34,7 @@ class BaseApi
                 $key = $this->request->getKey();
                 if ((string)$key === $key && method_exists($controller, 'action' . ucfirst($key))) {
                         $action = 'action' . ucfirst($key);
-                        list($data, $errors) = $controller->$action();
+                        list($data, $errors) = $controller->$action($this->request->getParam('id'));
                 } else if (is_numeric($key)) {
                     list($data, $errors) = $controller->actionItem($key);
                 } else {

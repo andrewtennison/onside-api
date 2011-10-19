@@ -34,7 +34,7 @@ abstract class BaseResponse
 
     public function getXml()
     {
-        
+        return null;
     }
 
     protected function assertResponseType($responseType)

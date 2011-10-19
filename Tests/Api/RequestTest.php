@@ -53,5 +53,22 @@ class RequestTest extends Test
         $key = $get[$keys[0]];
         $request = new Request($uri, $method, $get, $post);
         $this->assertEquals($key, $request->getParam($keys[0]), print_r($request, true));
+        $this->assertNull($request->getParam('abcdefghijklmnopqrstuvwxyz0123456789'));
+    }
+    
+    public function dataGetPost()
+    {
+        return array(
+            array(array('a' => 'b', 'abc' => 123)),
+        );
+    }
+    
+    /**
+     * @dataProvider dataGetPost
+     */
+    public function testGetPost($post)
+    {
+        $request = new Request('/article', 'POST', array(), $post);
+        $this->assertInternalType('array', $request->getPost());
     }
 }

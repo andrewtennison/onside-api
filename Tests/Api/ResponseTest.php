@@ -9,6 +9,7 @@ class ResponseTest extends Test
     {
         $response = new Response('Person', 200);
         $this->assertInstanceOf('\Api\BaseResponse', $response, 'Class found: ' . get_class($response));
+        
     }
     
     public function getResponses()
@@ -65,6 +66,7 @@ class ResponseTest extends Test
     
     public function testGetXml()
     {
-        $this->markTestIncomplete('requires outputing in xml?');
+        $response = new Response('Article', 200, array(), array());
+        $this->assertNull($response->getXml());
     }
 }
