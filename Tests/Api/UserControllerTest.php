@@ -56,4 +56,14 @@ class UserControllerTest extends Test
         $this->assertInternalType('array', $errors);
         $this->assertGreaterThan(0, count($errors));
     }
+    
+    public function testActionLogin()
+    {
+        list($data, $errors) = $this->controller->actionLogin();
+        $this->assertInternalType('array', $data);
+        $this->assertEquals(0, count($data));
+//        $this->assertCount(0, $data);
+        $this->assertInternalType('array', $errors);
+        $this->assertGreaterThan(0, count($errors));
+    }
 }
