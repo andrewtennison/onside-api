@@ -2,9 +2,9 @@
 namespace Onside;
 use \PDO;
 
-abstract class Db extends PDO
+class Db extends PDO
 {
-    protected function prepared($sql, array $args = array())
+    public function prepared($sql, array $args = array())
     {
         $stmt = $this->prepare($sql);
         try {
