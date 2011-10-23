@@ -6,12 +6,29 @@ class Db extends PDO
 {
     public function prepared($sql, array $args = array())
     {
-        $stmt = $this->prepare($sql);
-        try {
-            $stmt->execute($args);
-        } catch (PDOException $e) {
+//        try {
+            $stmt = $this->prepare($sql);
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            
+            $i = 1;
+            // can't use execute($args) because of apparent PHP bug — 'invalid syntax for booelan ""'
+            foreach($args as $value) {
+                assert('is_scalar($value) || NULL === $value');
+                $stmt->bindValue($i++, $value, is_string($value) ? PDO::PARAM_STR : (is_int($value) ? PDO::PARAM_INT : (null === $value ? PDO::PARAM_NULL : PDO::PARAM_BOOL)));
+            }
+            
+            $stmt->execute();
+            if ($this->_isNonModifyingQuery($sql))
+                return $stmt;
+//        } catch (PDOException $e) {
             // TODO: return error object
-        }
-        return $stmt;
+//            throw $e;
+//        }
+        return $stmt->rowCount();
+    }
+    
+    private function _isNonModifyingQuery($sql)
+    {
+        return !preg_match('/^\s*(?:INSERT|DELETE|UPDATE|BEGIN|ALTER|CREATE)\s/i', $sql);
     }
 }
