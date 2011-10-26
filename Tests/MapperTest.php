@@ -12,7 +12,7 @@ class MapperTest extends Test
 {
     public function provideMappers()
     {
-        $db = new Db('mysql:host=127.0.0.1;user=onside;pass=onside;dbname=onside_unittest', 'onside', 'onside');
+        $db = new Db('mysql:host=127.0.0.1;user=onside;pass=On2011Side;dbname=onside_unittest', 'onside', 'On2011Side');
         $db->setAttribute(Db::ATTR_ERRMODE, Db::ERRMODE_EXCEPTION);
         return array(
             array(
@@ -45,12 +45,12 @@ class MapperTest extends Test
     
     public function provideSelectMappers()
     {
-        $db = new Db('mysql:host=127.0.0.1;user=onside;pass=onside;dbname=onside_unittest', 'onside', 'onside');
+        $db = new Db('mysql:host=127.0.0.1;user=onside;pass=On2011Side;dbname=onside_unittest', 'onside', 'On2011Side');
         $db->setAttribute(Db::ATTR_ERRMODE, Db::ERRMODE_EXCEPTION);
         return array(
             array(
-                '\Onside\Model\Article',
-                new \Onside\Mapper\Article($db),
+                '\Onside\Model\Channel',
+                new \Onside\Mapper\Channel($db),
                 array(),
                 array(),
                 null,
@@ -63,8 +63,8 @@ class MapperTest extends Test
                 null,
             ),
             array(
-                '\Onside\Model\Article',
-                new \Onside\Mapper\Article($db),
+                '\Onside\Model\Discussion',
+                new \Onside\Mapper\Discussion($db),
                 array(),
                 array('id' => true),
                 null,
@@ -77,15 +77,15 @@ class MapperTest extends Test
                 100,
             ),
             array(
-                '\Onside\Model\Article',
-                new \Onside\Mapper\Article($db),
+                '\Onside\Model\Event',
+                new \Onside\Mapper\Event($db),
                 array(),
                 array('id' => false),
                 array(55),
             ),
             array(
-                '\Onside\Model\Article',
-                new \Onside\Mapper\Article($db),
+                '\Onside\Model\User',
+                new \Onside\Mapper\User($db),
                 array(),
                 array('id' => true),
                 array(99, 33),

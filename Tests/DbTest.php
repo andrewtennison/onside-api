@@ -7,7 +7,7 @@ class DbTest extends Test
 {
     private function getValidDb()
     {
-        $db = new Db('mysql:host=127.0.0.1;user=onside;pass=onside;dbname=onside_unittest', 'onside', 'onside');
+        $db = new Db('mysql:host=localhost;user=onside;pass=On2011Side;dbname=onside_unittest', 'onside', 'On2011Side');
         $db->setAttribute(Db::ATTR_ERRMODE, Db::ERRMODE_EXCEPTION);
         $stmt = $db->prepared('use onside_unittest');
         return $db;
@@ -27,8 +27,8 @@ class DbTest extends Test
     public function getDSN()
     {
         return array(
-            array('mysql:host=127.0.0.1;user=onside;pass=onside;dbname=onside_unittest', 'onside', 'onside'),
-            array('mysql:host=127.0.0.1;user=onside;pass=wrong;dbname=onside_unittest', 'onside', 'wrong'),
+            array('mysql:host=localhost;user=onside;pass=On2011Side;dbname=onside_unittest', 'onside', 'On2011Side'),
+            array('mysql:host=localhost;user=onside;pass=wrong;dbname=onside_unittest', 'onside', 'wrong'),
         );
     }
     
