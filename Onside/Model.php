@@ -5,6 +5,9 @@ class Model
 {
     private $_fields;
     private $_values;
+    private $_where;
+    private $_sort;
+    private $_limit;
     
     protected $_schema;
     protected $_table;
@@ -20,6 +23,45 @@ class Model
             }
         }
         return $model;
+    }
+    
+    public function setWhere($where)
+    {
+        $this->_where = array();
+        // TODO: define where clauses considering AND/OR
+    }
+    
+    public function clearSort()
+    {
+        $this->_sort = array();
+    }
+    
+    public function setSort($field, $ascend = true)
+    {
+        $this->_sort[] = $field . ' ' . ($ascend ? 'asc' : 'desc');
+    }
+    
+    public function setLimit($limit, $offset = 0)
+    {
+        $this->_limit = array($offset, $limit);
+    }
+
+    public function getSelectSQL()
+    {
+        $this->_values = array();
+        $sql = 'SELECT * FROM ' . $this->_getTable();
+        //foreach ($where as $w)
+        
+        // sort order
+        if (is_array($this->_sort) && count($this->_sort) > 0) {
+            $sql .= ' ORDER BY ' . implode(', ', $this->_sort);
+        }
+        
+        // limit
+        if (null !== $this->_limit && count($this->_limit) === 2)
+            $sql .= ' LIMIT ' . $this->_limit[0] . ', ' . $this->_limit[1];
+        
+        return $sql;
     }
     
     public function getInsertSQL()
@@ -54,9 +96,9 @@ class Model
     {
         return <<<SQL
 CREATE TABLE IF NOT EXISTS {$this->_getTable()} (
-    {$this->_getFieldDefinitions()}
+    {$this->_getFieldDefinitions()},
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 
 SQL;
     }
     
