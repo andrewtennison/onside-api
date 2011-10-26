@@ -24,7 +24,9 @@ class Db extends PDO
             // TODO: return error object
 //            throw $e;
 //        }
-        return $stmt->rowCount();
+//echo 'lastInsertId(): ' . $this->lastInsertId() . "\n";
+//echo 'rowCount(): ' . $stmt->rowCount() . "\n";
+        return $this->lastInsertId() > 0 ? $this->lastInsertId() : $stmt->rowCount();
     }
     
     private function _isNonModifyingQuery($sql)
