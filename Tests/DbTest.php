@@ -27,7 +27,7 @@ class DbTest extends Test
     public function getDSN()
     {
         return array(
-            array('mysql:host=127.0.0.2;user=onside;pass=onside;dbname=onside_unittest', 'onside', 'onside'),
+            array('mysql:host=127.0.0.1;user=onside;pass=onside;dbname=onside_unittest', 'onside', 'onside'),
             array('mysql:host=127.0.0.1;user=onside;pass=wrong;dbname=onside_unittest', 'onside', 'wrong'),
         );
     }
