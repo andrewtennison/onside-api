@@ -19,6 +19,7 @@ class ChannelControllerTest extends Test
     
     public function testActionDelete()
     {
+        $this->markTestIncomplete('Waiting completion of response');
         list($data, $errors) = $this->controller->actionDelete(1);
         $this->assertInternalType('array', $data);
         $this->assertEquals(0, count($data));
@@ -31,10 +32,10 @@ class ChannelControllerTest extends Test
     {
         list($data, $errors) = $this->controller->actionGet();
         $this->assertInternalType('array', $data);
-        $this->assertEquals(0, count($data));
+        $this->assertGreaterThan(0, count($data));
 //        $this->assertCount(0, $data);
         $this->assertInternalType('array', $errors);
-        $this->assertGreaterThan(0, count($errors));
+        $this->assertEquals(0, count($errors));
     }
     
     public function testActionItem()
