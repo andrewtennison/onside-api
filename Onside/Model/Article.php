@@ -7,7 +7,7 @@ class Article extends Model
     protected $_table = 'article';
     protected $_definitions = array(
         'id' => 'INT(11) NOT NULL AUTO_INCREMENT',
-        'name' => 'VARCHAR(100)',
+        'name' => 'VARCHAR(100) NOT NULL',
 //        'added' => 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
     );
     
