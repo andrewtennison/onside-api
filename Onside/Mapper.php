@@ -32,12 +32,22 @@ class Mapper
         return $this->_selectItem($where, $sort, $limit);
     }
     
+    public function getItem($id)
+    {
+        return $this->_selectItem(array('id' => $id));
+    }
+    
+    // TODO: ->getItem($id) ->selectItem() ..... etc ....
+    
     protected function _addItem($data)
     {
         $class = $this->_model;
         $model = $class::getModelFromArray($data);
         $sql = $model->getInsertSQL();
         $args = $model->getValues();
+        
+        $id = $this->_db->prepared($sql, $args);
+        return $this->_selectItem(array('id' => $id));
         
         return $this->_db->prepared($sql, $args);
     }
@@ -50,6 +60,9 @@ class Mapper
         $sql = $model->getUpdateSQL();
         $args = $model->getValues();
 
+        $this->_db->prepared($sql, $args);
+        return $this->_selectItem(array('id' => $id));
+        
         return $this->_db->prepared($sql, $args);
     }
     
@@ -69,7 +82,13 @@ class Mapper
         $model = $class::getModelFromArray(array());
 
         // TODO: where clause
+        // $leftside, $rightside, $operator = '=', $type = 'AND'
 //        $model->setWhere(array('id' => 30));
+        if (count($where) > 0) {
+            foreach ($where as $field => $value) {
+                $model->setWhere($field, $value);
+            }
+        }
         
         // sort order
         if (count($sort) > 0) {

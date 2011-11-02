@@ -12,7 +12,7 @@ class MapperTest extends Test
 {
     public function provideMappers()
     {
-        $db = new Db('mysql:host=127.0.0.1;user=onside;pass=On2011Side;dbname=onside_unittest', 'onside', 'On2011Side');
+        $db = new Db('mysql:host=localhost;user=onside;pass=On2011Side;dbname=onside_unittest', 'onside', 'On2011Side');
         $db->setAttribute(Db::ATTR_ERRMODE, Db::ERRMODE_EXCEPTION);
         return array(
             array(
@@ -23,7 +23,7 @@ class MapperTest extends Test
             array(
                 '\Onside\Mapper\Channel',
                 new \Onside\Mapper\Channel($db),
-                array('name' => 'this is a sample name'),
+                array('name' => 'this is a sample name', 'level' => 1),
             ),
             array(
                 '\Onside\Mapper\Discussion',
@@ -38,14 +38,14 @@ class MapperTest extends Test
             array(
                 '\Onside\Mapper\User',
                 new \Onside\Mapper\User($db),
-                array('name' => 'this is a sample name'),
+                array('name' => 'this is a sample name', 'email' => 'test@example.com'),
             ),
         );
     }
     
     public function provideSelectMappers()
     {
-        $db = new Db('mysql:host=127.0.0.1;user=onside;pass=On2011Side;dbname=onside_unittest', 'onside', 'On2011Side');
+        $db = new Db('mysql:host=localhost;user=onside;pass=On2011Side;dbname=onside_unittest', 'onside', 'On2011Side');
         $db->setAttribute(Db::ATTR_ERRMODE, Db::ERRMODE_EXCEPTION);
         return array(
             array(
