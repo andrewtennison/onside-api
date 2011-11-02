@@ -15,11 +15,17 @@ abstract class BaseRequest
     {
         assert('!empty($uri)');
         $this->method = strtoupper($method);
+        $this->key = null;
         $this->setGet($get);
         $this->setPost($post);
         $this->parseUri($uri);
     }
 
+    public function getGet()
+    {
+        return $this->get;
+    }
+    
     public function getPost()
     {
         return $this->post;
@@ -54,6 +60,11 @@ abstract class BaseRequest
         return null;
     }
     
+    public function getParams()
+    {
+        return array_merge($this->get, $this->post);
+    }
+    
     protected function setGet($get)
     {
         assert('is_array($get)');
@@ -86,6 +97,8 @@ abstract class BaseRequest
             } else {
                 $this->key = $parts[1];
             }
+            if (is_numeric($this->key))
+                $this->get['id'] = $this->key;
         }
     }
 
