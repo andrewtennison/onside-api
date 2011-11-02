@@ -25,9 +25,14 @@ class Model
         return $model;
     }
     
-    public function setWhere($where)
+    public function clearWhere()
     {
         $this->_where = array();
+    }
+    
+    public function setWhere($leftside, $rightside, $operator = '=', $type = 'AND')
+    {
+        $this->_where[] = $leftside . ' ' . $operator . ' ' . $rightside . ' ' . $type;
         // TODO: define where clauses considering AND/OR
     }
     
@@ -51,6 +56,9 @@ class Model
         $this->_values = array();
         $sql = 'SELECT * FROM ' . $this->_getTable();
         //foreach ($where as $w)
+        if (count($this->_where) > 0) {
+            $sql .= ' WHERE ' . substr(implode('', $this->_where), 0, -3);
+        }
         
         // sort order
         if (is_array($this->_sort) && count($this->_sort) > 0) {
