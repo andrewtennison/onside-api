@@ -15,21 +15,9 @@ set_include_path(APPLICATION_BASE . '/Tests' . PATH_SEPARATOR . get_include_path
 set_include_path(APPLICATION_BASE . '/Tests/Api' . PATH_SEPARATOR . get_include_path());
 
 // Reset database
-use \Onside\Db;
 /**
-use \Onside\Mapper\Article;
-use \Onside\Mapper\Channel;
-use \Onside\Mapper\Discussion;
-use \Onside\Mapper\Event;
-use \Onside\Mapper\User;
-use \Onside\Model\Article;
-use \Onside\Model\Channel;
-use \Onside\Model\Discussion;
-use \Onside\Model\Event;
-use \Onside\Model\User;
- */
-/*
-$db = new Db('mysql:host=127.0.0.1;user=onside;pass=onside;dbname=onside_unittest', 'onside', 'onside');
+use \Onside\Db;
+$db = new Db('mysql:host=127.0.0.1;user=onside;pass=On2011Side;dbname=onside_unittest', 'onside', 'On2011Side');
 $db->setAttribute(Db::ATTR_ERRMODE, Db::ERRMODE_EXCEPTION);
 
 $mapper = new \Onside\Mapper\Article($db);

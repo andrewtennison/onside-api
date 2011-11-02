@@ -8,7 +8,7 @@ class Test extends PHPUnit_Framework_TestCase
 {
     protected function countTable($table)
     {
-        $db = new Db('mysql:host=127.0.0.1;user=onside;pass=onside;dbname=onside_unittest', 'onside', 'onside');
+        $db = new Db('mysql:host=127.0.0.1;user=onside;pass=On2011Side;dbname=onside_unittest', 'onside', 'On2011Side');
         $db->setAttribute(Db::ATTR_ERRMODE, Db::ERRMODE_EXCEPTION);
 //        $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         $stmt = $db->prepared('use onside_unittest');
