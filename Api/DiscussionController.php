@@ -27,11 +27,13 @@ class DiscussionController extends BaseController
     
     public function actionItem($id)
     {
-        return array(array(), array(array('code' => '100', 'message' => "Action 'ITEM($id)' not implemented yet")));
+        return array($this->_mapper->getItem($id), array());
+//        return array(array(), array(array('code' => '100', 'message' => "Action 'ITEM($id)' not implemented yet")));
     }
     
     public function actionPost($id, $data)
     {
-        return array(array(), array(array('code' => '100', 'message' => "Action 'POST' not implemented yet")));
+        return array($this->_mapper->updateItem($id, $data), array());
+//        return array(array(), array(array('code' => '100', 'message' => "Action 'POST' not implemented yet")));
     }
 }

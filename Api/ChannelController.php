@@ -13,7 +13,7 @@ class ChannelController extends BaseController
         $this->_mapper = new Channel($db);
     }
     
-    public function actionFollow($id)
+    public function actionFollow($id, $data)
     {
         return array(array(), array(array('code' => '100', 'message' => "Action 'FOLLOW' not implemented yet")));
     }

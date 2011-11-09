@@ -13,8 +13,14 @@ class UserController extends BaseController
         $this->_mapper = new User($db);
     }
         
-    public function actionLogin()
+    public function actionLogin($id, $data)
     {
         return array(array(), array(array('code' => '100', 'message' => "Action 'LOGIN' not implemented yet")));
     }
+    
+    public function actionRegister($id, $data)
+    {
+        return array($this->_mapper->addItem($data), array());
+    }
+    
 }
