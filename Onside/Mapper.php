@@ -34,7 +34,7 @@ class Mapper
     
     public function getItem($id)
     {
-        return $this->_selectItem(array('id' => $id));
+        return $this->_selectItem(array('id' => $id), array(), null);
     }
     
     // TODO: ->getItem($id) ->selectItem() ..... etc ....
