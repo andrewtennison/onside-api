@@ -11,8 +11,16 @@ define('APPLICATION_ENV', 'development');
 //defined('APPLICATION_ENV') or define('APPLICATION_ENV', getenv('APPLICATION_ENV'));
 define('APPLICATION_CONFIG', APPLICATION_BASE . '/Config');
 
-// TODO: General error/exception handling
-
+/**
+ * Application-wise error handler
+ */
+function exceptionErrorHandler($errno, $errstr, $errfile, $errline)
+{
+    // error_reporting check is required to make @ operator work
+    if (error_reporting()) {
+        throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+    }
+}
 
 // Autoloading
 set_include_path(APPLICATION_BASE . PATH_SEPARATOR . get_include_path());

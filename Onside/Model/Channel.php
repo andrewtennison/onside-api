@@ -11,7 +11,7 @@ class Channel extends Model
         'description' => 'TEXT',
         'sport' => 'VARCHAR(50)',
         'type' => 'VARCHAR(50)',
-        'level' => 'INT(1) NOT NULL default 0',
+        'level' => 'INT(1) NOT NULL default 1',
         'geolat' => 'DECIMAL(10,6) default NULL',
         'geolng' => 'DECIMAL(10,6) default NULL',
 
