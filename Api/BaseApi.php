@@ -43,7 +43,7 @@ class BaseApi
             method_exists($controller, 'action' . ucfirst($key))
         ) {
             $action = 'action' . ucfirst($key);
-            list($data, $errors) = $controller->$action($this->request->getParam('id'));
+            list($data, $errors) = $controller->$action($this->request->getParam('id'), $this->request->getPost());
         } else {
             $code = 401;
             $errors[] = array('code' => 2001, 'message' => "This call doesn't support the '{$method}' method");
