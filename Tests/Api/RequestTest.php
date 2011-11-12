@@ -71,4 +71,11 @@ class RequestTest extends Test
         $request = new Request('/article', 'POST', array(), $post);
         $this->assertInternalType('array', $request->getPost());
     }
+    
+    public function testGetGet()
+    {
+	$request = new Request('/article', 'GET', array('name' => 'test article'), null);
+	$get = $request->getGet();
+	$this->assertInternalType('array', $get);
+    }
 }
