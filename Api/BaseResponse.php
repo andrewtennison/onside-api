@@ -47,23 +47,24 @@ abstract class BaseResponse
     protected function parseResponse($object, $errors)
     {
         $response = new \stdClass;
-        $response->type = $this->responseType;
-        $response->code = $this->responseCode;
+        $response->service = $this->responseType;
+//        $response->code = $this->responseCode;
         if (count($errors) > 0) {
-            $response->errors = array();
+            $response->errorset = array();
             foreach ($errors as $error) {
-                $response->errors[] = array('error' => array('code' => $error['code'], 'message' => $error['message']));
+                $response->errorset[] = array('error' => array('code' => $error['code'], 'message' => $error['message']));
             }
             return $response;
         }
         $response->count = count($object);
-        $response->results = array();
+        $response->resultset = array();
         foreach ($object as $row) {
             foreach ($row as $key => $value) {
+		// TODO: use array_key_exists for better optimization
                 if (in_array($key, $this->integerFields)) $row[$key] = (int)$value;
                 if (in_array($key, $this->booleanFields)) $row[$key] = (bool)$value;
             }
-            $response->results[] = array('result' => $row);
+            $response->resultset[] = array('result' => $row);
         }
         return $response;
     }
