@@ -12,6 +12,7 @@ class Channel extends Model
         'sport' => 'VARCHAR(50)',
         'type' => 'VARCHAR(50)',
         'level' => 'INT(1) NOT NULL default 1',
+	'keywords' => 'TEXT',
         'geolat' => 'DECIMAL(10,6) default NULL',
         'geolng' => 'DECIMAL(10,6) default NULL',
 
@@ -19,12 +20,23 @@ class Channel extends Model
     );
     
     public $id;
-    public $name;
+    public $name; /* searchable */
     public $description;
-    public $sport;
-    public $type;
+    public $sport; /* searchable */
+    public $type; /* searchable */
     public $level;
+    public $keywords; /* searchable */
     public $geolat;
     public $geolng;
 //    public $added;
 }
+
+/**
+ * source(s) can be [fliker/rss/twitter/youtube]
+ * 
+ * users (admin)
+ * followers
+ * 
+ * can save a search as a source for channe, this will
+ * associate channel/event/articles* to this channel
+ */
