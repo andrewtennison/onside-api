@@ -12,8 +12,8 @@ class ApiTest extends Test
     {
         parent::setUp();
         $options = array(
-            'uri' => '/article/8475th3293fh3ufhejwfkn',
-            'method' => 'DELETE',
+            'uri' => '/article',
+            'method' => 'GET',
             'get' => array(),
             'post' => array(),
         );
@@ -34,11 +34,11 @@ class ApiTest extends Test
     public function dataHttpMethods()
     {
         return array(
-            array(new Api(
-                array(
-                    'uri' => '/article/123', 'method' => 'DELETE', 'get' => array(), 'post' => array()
-                )
-            )),
+//            array(new Api(
+//                array(
+//                    'uri' => '/article/123', 'method' => 'DELETE', 'get' => array(), 'post' => array()
+//                )
+//            )),
             array(new Api(
                 array(
                     'uri' => '/article', 'method' => 'GET', 'get' => array(), 'post' => array()
@@ -46,7 +46,7 @@ class ApiTest extends Test
             )),
             array(new Api(
                 array(
-                    'uri' => '/article/123', 'method' => 'GET', 'get' => array(), 'post' => array()
+                    'uri' => '/channel/1', 'method' => 'GET', 'get' => array(), 'post' => array()
                 )
             )),
             array(new Api(
@@ -56,12 +56,12 @@ class ApiTest extends Test
             )),
             array(new Api(
                 array(
-                    'uri' => '/article/123', 'method' => 'POST', 'get' => array(), 'post' => array()
+                    'uri' => '/channel/1', 'method' => 'POST', 'get' => array(), 'post' => array('name' => 'sample title')
                 )
             )),
             array(new Api(
                 array(
-                    'uri' => '/article/123', 'method' => 'PUT', 'get' => array(), 'post' => array()
+                    'uri' => '/article', 'method' => 'POST', 'get' => array(), 'post' => array('title' => 'sample title', 'source' => 'test sources')
                 )
             )),
         );

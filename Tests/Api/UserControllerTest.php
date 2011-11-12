@@ -59,7 +59,7 @@ class UserControllerTest extends Test
     
     public function testActionLogin()
     {
-        list($data, $errors) = $this->controller->actionLogin();
+        list($data, $errors) = $this->controller->actionLogin(null, array('email' => 'test@testing.com', 'passwd' => 'test'));
         $this->assertInternalType('array', $data);
         $this->assertEquals(0, count($data));
 //        $this->assertCount(0, $data);

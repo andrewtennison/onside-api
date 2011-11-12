@@ -45,26 +45,26 @@ class EventControllerTest extends Test
         $this->assertEquals(0, count($data));
 //        $this->assertCount(0, $data);
         $this->assertInternalType('array', $errors);
-        $this->assertGreaterThan(0, count($errors));
+        $this->assertEquals(0, count($errors));
     }
     
     public function testActionPost()
     {
-        list($data, $errors) = $this->controller->actionPost(1, array());
+        list($data, $errors) = $this->controller->actionPost(1, array('sport' => 'football', 'type' => 'match', 'name' => 'updated event name'));
         $this->assertInternalType('array', $data);
         $this->assertEquals(0, count($data));
 //        $this->assertCount(0, $data);
         $this->assertInternalType('array', $errors);
-        $this->assertGreaterThan(0, count($errors));
+        $this->assertEquals(0, count($errors));
     }
     
     public function testActionPut()
     {
-        list($data, $errors) = $this->controller->actionPut(array());
+        list($data, $errors) = $this->controller->actionPut(array('sport' => 'football', 'type' => 'match', 'name' => 'event name'));
         $this->assertInternalType('array', $data);
-        $this->assertEquals(0, count($data));
+        $this->assertGreaterThan(0, count($data));
 //        $this->assertCount(0, $data);
         $this->assertInternalType('array', $errors);
-        $this->assertGreaterThan(0, count($errors));
+        $this->assertEquals(0, count($errors));
     }
 }

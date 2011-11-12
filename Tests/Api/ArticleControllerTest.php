@@ -32,7 +32,7 @@ class ArticleControllerTest extends Test
     {
         list($data, $errors) = $this->controller->actionGet();
         $this->assertInternalType('array', $data);
-        $this->assertEquals(0, count($data));
+        $this->assertGreaterThan(0, count($data));
 //        $this->assertCount(0, $data);
         $this->assertInternalType('array', $errors);
         $this->assertEquals(0, count($errors));
@@ -42,29 +42,29 @@ class ArticleControllerTest extends Test
     {
         list($data, $errors) = $this->controller->actionItem(1);
         $this->assertInternalType('array', $data);
-        $this->assertEquals(0, count($data));
+        $this->assertGreaterThan(0, count($data));
 //        $this->assertCount(0, $data);
         $this->assertInternalType('array', $errors);
-        $this->assertGreaterThan(0, count($errors));
+        $this->assertEquals(0, count($errors));
     }
     
     public function testActionPost()
     {
-        list($data, $errors) = $this->controller->actionPost(1, array());
+        list($data, $errors) = $this->controller->actionPost(1, array('source' => 'test source'));
         $this->assertInternalType('array', $data);
-        $this->assertEquals(0, count($data));
+        $this->assertGreaterThan(0, count($data));
 //        $this->assertCount(0, $data);
         $this->assertInternalType('array', $errors);
-        $this->assertGreaterThan(0, count($errors));
+        $this->assertEquals(0, count($errors));
     }
     
     public function testActionPut()
     {
-        list($data, $errors) = $this->controller->actionPut(array());
+        list($data, $errors) = $this->controller->actionPut(array('title' => 'test title', 'source' => 'test source'));
         $this->assertInternalType('array', $data);
-        $this->assertEquals(0, count($data));
+        $this->assertGreaterThan(0, count($data));
 //        $this->assertCount(0, $data);
         $this->assertInternalType('array', $errors);
-        $this->assertGreaterThan(0, count($errors));
+        $this->assertEquals(0, count($errors));
     }
 }

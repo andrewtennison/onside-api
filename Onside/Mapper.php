@@ -47,7 +47,7 @@ class Mapper
         $args = $model->getValues();
         
         $id = $this->_db->prepared($sql, $args);
-        return $this->_selectItem(array('id' => $id));
+        return $this->_selectItem(array('id' => $id), null, null);
         
         return $this->_db->prepared($sql, $args);
     }
@@ -61,7 +61,7 @@ class Mapper
         $args = $model->getValues();
 
         $this->_db->prepared($sql, $args);
-        return $this->_selectItem(array('id' => $id));
+        return $this->_selectItem(array('id' => $id), null, null);
         
         return $this->_db->prepared($sql, $args);
     }
@@ -78,6 +78,7 @@ class Mapper
     
     protected function _selectItem($where, $sort, $limit)
     {
+//echo '$where: ' . print_r($where, true) . ', $sort: ' . print_r($sort, true) . ', $limit: ' . print_r($limit, true) . "\n";
         $class = $this->_model;
         $model = $class::getModelFromArray(array());
 
