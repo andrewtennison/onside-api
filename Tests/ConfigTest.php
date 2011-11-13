@@ -1,7 +1,7 @@
 <?php
 namespace Tests;
 use \Tests\Test;
-use Onside\Config;
+use \Onside\Config;
 
 class ConfigTest extends Test
 {
