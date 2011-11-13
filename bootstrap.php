@@ -2,7 +2,7 @@
 use \Onside\Autoloader;
 use \Onside\Db;
 
-error_reporting(E_ALL ^ E_NOTICE);
+error_reporting(E_ALL & E_STRICT);
 ini_set('display_errors', false);
 
 // Constants
@@ -18,7 +18,9 @@ function exceptionErrorHandler($errno, $errstr, $errfile, $errline)
 {
     // error_reporting check is required to make @ operator work
     if (error_reporting()) {
-        throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+echo "ERROR: $errno $errfile $errno $errline\n";
+die();
+//        throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
     }
 }
 
