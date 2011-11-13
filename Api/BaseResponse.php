@@ -3,7 +3,7 @@ namespace Api;
 
 abstract class BaseResponse
 {
-    protected $allowedTypes = array();
+    //protected $allowedTypes = array();
     protected $integerFields = array();
     protected $booleanFields = array();
     
@@ -13,7 +13,7 @@ abstract class BaseResponse
     public function __construct($responseType = 'unknown', $responseCode = 200, $object = array(), $errors = array())
     {
         assert('!empty($responseCode)');
-        $this->assertResponseType($responseType);
+        //$this->assertResponseType($responseType);
         $this->responseCode = $responseCode;
         $this->responseType = $responseType;
         $this->response = $this->parseResponse($object, $errors);
@@ -37,12 +37,12 @@ abstract class BaseResponse
         return null;
     }
 
-    protected function assertResponseType($responseType)
-    {
-        if (!in_array($responseType, $this->allowedTypes)) {
+//    protected function assertResponseType($responseType)
+//    {
+//        if (!in_array($responseType, $this->allowedTypes)) {
 //            throw new Exception('Incorrect response type passed: ' . $responseType);
-        }
-    }
+//        }
+//    }
     
     protected function parseResponse($object, $errors)
     {

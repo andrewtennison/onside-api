@@ -6,6 +6,7 @@ class BaseApi
     protected $ip;
     protected $request;
     protected $directResponse;
+    protected $allowedServices = array();
     
     public function __construct($options = array())
     {
@@ -23,8 +24,15 @@ class BaseApi
     
     public function run()
     {
-        // TODO: client authentication
         $code = 200;
+        
+	// check request, authorization
+	$response = $this->getInvalidResponse($this->request->getObject());
+	if (null !== $response && $response instanceof \Api\BaseResponse) {
+	    echo 'ERROR: RETURNING RESPONSE' . "\n";
+	    die();
+	    return $response;
+	}
         list ($controllerName, $controller) = $this->getControllerName($this->request->getObject());
         
         $key = $this->request->getKey();
@@ -97,7 +105,22 @@ echo 'Inside PUT' . "\n";
          */
         return $this->request->getResponse($controllerName, $code, $data, $errors);
     }
+    
+    protected function getInvalidResponse($controllerName)
+    {
+	if (in_array(ucfirst($controllerName), $this->allowedServices)) {
+	    return $this->request->getResponse(
+		$controllerName,
+		404,
+		array(), 
+		array('code' => 404, 'message' => 'Not Found')
+	    );
+	}
+	// TODO: client authentication
         
+	return null;
+    }
+    
     protected function getControllerName($controllerName)
     {
         $className = '\Api\\' . ucfirst($controllerName) . 'Controller';
