@@ -56,52 +56,6 @@ class BaseApi
             $errors[] = array('code' => 2001, 'message' => "This call doesn't support the '{$method}' method");
         }
         
-        /**
-        switch($this->request->getMethod()) {
-            case 'DELETE':
-echo 'Inside DELETE' . "\n";
-                $key = $this->request->getKey();
-                if (is_numeric($key)) {
-                    list($data, $errors) = $controller->actionDelete($this->request->getParam('id'));
-                } else {
-                    $code = 401;
-                    $errors[] = array('code' => 2001, 'message' => "This call doesn't support the 'DELETE' method");
-                }
-                break;
-            case 'GET':
-                $key = $this->request->getKey();
-                if ((string)$key === $key && method_exists($controller, 'action' . ucfirst($key))) {
-                        $action = 'action' . ucfirst($key);
-                        list($data, $errors) = $controller->$action($this->request->getParam('id'));
-                } else if (is_numeric($key)) {
-                    list($data, $errors) = $controller->actionItem($key);
-                } else {
-                    list($data, $errors) = $controller->actionGet();
-                }
-                break;
-            case 'POST':
-echo 'Inside POST' . "\n";
-                $key = $this->request->getKey();
-                if (is_numeric($key)) {
-                    list($data, $errors) = $controller->actionPost($this->request->getParam('id'), $this->request->getPost());
-                } else {
-                    $code = 401;
-                    $errors[] = array('code' => 2001, 'message' => "This call doesn't support the 'POST' method");
-                }
-                break;
-            // Used to create objects
-            case 'PUT':
-echo 'Inside PUT' . "\n";
-                $key = $this->request->getKey();
-                if (is_numeric($key)) {
-                    $code = 401;
-                    $errors[] = array('code' => 2001, 'message' => "This call doesn't support the 'PUT' method");
-                } else {
-                    list($data, $errors) = $controller->actionPut($this->request->getPost());
-                }
-                break;
-        }
-         */
         return $this->request->getResponse($controllerName, $code, $data, $errors);
     }
     
