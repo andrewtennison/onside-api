@@ -29,8 +29,6 @@ class BaseApi
 	// check request, authorization
 	$response = $this->getInvalidResponse($this->request->getObject());
 	if (null !== $response && $response instanceof \Api\BaseResponse) {
-	    echo 'ERROR: RETURNING RESPONSE' . "\n";
-	    die();
 	    return $response;
 	}
         list ($controllerName, $controller) = $this->getControllerName($this->request->getObject());
@@ -108,7 +106,7 @@ echo 'Inside PUT' . "\n";
     
     protected function getInvalidResponse($controllerName)
     {
-	if (in_array(ucfirst($controllerName), $this->allowedServices)) {
+	if (!in_array(ucfirst($controllerName), $this->allowedServices)) {
 	    return $this->request->getResponse(
 		$controllerName,
 		404,
