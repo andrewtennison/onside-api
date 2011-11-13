@@ -18,11 +18,12 @@ function exceptionErrorHandler($errno, $errstr, $errfile, $errline)
 {
     // error_reporting check is required to make @ operator work
     if (error_reporting()) {
-echo "ERROR: $errno $errfile $errno $errline\n";
-die();
-//        throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+//echo "ERROR: $errno $errfile $errno $errline\n";
+//die();
+        throw new Exception($errstr, 0, $errno, $errfile, $errline);
     }
 }
+set_exception_handler('exceptionErrorHandler');
 
 // Autoloading
 set_include_path(APPLICATION_BASE . PATH_SEPARATOR . get_include_path());
