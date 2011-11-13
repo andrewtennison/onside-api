@@ -6,7 +6,9 @@ class Db extends PDO
 {
     public function prepared($sql, array $args = array())
     {
-//        try {
+//echo '$sql: ' . $sql . "\n";
+//echo '$args: ' . print_r($args, true) . "\n";
+        try {
             $stmt = $this->prepare($sql);
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             
@@ -17,13 +19,15 @@ class Db extends PDO
                 $stmt->bindValue($i++, $value, is_string($value) ? PDO::PARAM_STR : (is_int($value) ? PDO::PARAM_INT : (null === $value ? PDO::PARAM_NULL : PDO::PARAM_BOOL)));
             }
             
-            $stmt->execute();
+            $r = $stmt->execute();
+//echo '$r: ' . ($r ? 'TRUE' : 'FALSE') . "\n";
             if ($this->_isNonModifyingQuery($sql))
                 return $stmt;
-//        } catch (PDOException $e) {
+        } catch (PDOException $e) {
             // TODO: return error object
-//            throw $e;
-//        }
+            throw $e;
+//echo print_r($e->getTraceAsString(), true) . "\n";
+        }
 //echo 'lastInsertId(): ' . $this->lastInsertId() . "\n";
 //echo 'rowCount(): ' . $stmt->rowCount() . "\n";
         return $this->lastInsertId() > 0 ? $this->lastInsertId() : $stmt->rowCount();

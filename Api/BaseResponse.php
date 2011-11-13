@@ -21,7 +21,7 @@ abstract class BaseResponse
 
     public function sendResponse()
     {
-        header('HTTP/1.1 ' . $this->responseCode . ' api');
+        header('HTTP/1.1 ' . $this->responseCode . ' OK');
         header('X-Content-Type-Options:nosniff');
         header('Content-Type:application/javascript;charset=UTF-8');
         echo $this->getJson();
