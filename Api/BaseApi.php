@@ -29,7 +29,8 @@ class BaseApi
 	// check request, authorization
 	$response = $this->getInvalidResponse($this->request->getObject());
 	if (null !== $response && $response instanceof \Api\BaseResponse) {
-	    return $response;
+	    $response->sendResponse();
+	    exit;
 	}
         list ($controllerName, $controller) = $this->getControllerName($this->request->getObject());
         
