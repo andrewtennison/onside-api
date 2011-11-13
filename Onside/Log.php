@@ -1,7 +1,8 @@
 <?php
 namespace Onside;
 
-abstract class Log
+interface Log
 {
-    abstract public function write($message);
+    public function __construct(Config $config);
+    public function write($message);
 }
