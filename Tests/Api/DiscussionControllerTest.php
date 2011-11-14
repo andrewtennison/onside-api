@@ -20,7 +20,9 @@ class DiscussionControllerTest extends Test
     public function testActionDelete()
     {
         $this->markTestIncomplete('Waiting completion of response');
-        list($data, $errors) = $this->controller->actionDelete(1);
+        $this->controller->actionDelete(1);
+        $data = $this->controller->getResults();
+	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertEquals(0, count($data));
 //        $this->assertCount(0, $data);
@@ -31,7 +33,9 @@ class DiscussionControllerTest extends Test
     public function testActionGet()
     {
         $this->markTestIncomplete('Waiting completion of response');
-        list($data, $errors) = $this->controller->actionGet();
+        $this->controller->actionGet();
+        $data = $this->controller->getResults();
+	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertEquals(0, count($data));
 //        $this->assertCount(0, $data);
@@ -41,7 +45,9 @@ class DiscussionControllerTest extends Test
     
     public function testActionItem()
     {
-        list($data, $errors) = $this->controller->actionItem(1);
+        $this->controller->actionItem(1);
+        $data = $this->controller->getResults();
+	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertEquals(0, count($data));
 //        $this->assertCount(0, $data);
@@ -51,7 +57,9 @@ class DiscussionControllerTest extends Test
     
     public function testActionPost()
     {
-        list($data, $errors) = $this->controller->actionPost(1, array('name' => 'test discussion'));
+        $this->controller->actionPost(1, array('name' => 'test discussion'));
+        $data = $this->controller->getResults();
+	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertEquals(0, count($data));
 //        $this->assertCount(0, $data);
@@ -61,7 +69,9 @@ class DiscussionControllerTest extends Test
     
     public function testActionPut()
     {
-        list($data, $errors) = $this->controller->actionPut(array('name' => 'test discussion'));
+        $this->controller->actionPut(array('name' => 'test discussion'));
+        $data = $this->controller->getResults();
+	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertEquals(0, count($data));
 //        $this->assertCount(0, $data);

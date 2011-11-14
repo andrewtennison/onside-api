@@ -20,7 +20,9 @@ class ChannelControllerTest extends Test
     public function testActionDelete()
     {
         $this->markTestIncomplete('Waiting completion of response');
-        list($data, $errors) = $this->controller->actionDelete(1);
+        $this->controller->actionDelete(1);
+        $data = $this->controller->getResults();
+	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertEquals(0, count($data));
 //        $this->assertCount(0, $data);
@@ -30,7 +32,9 @@ class ChannelControllerTest extends Test
     
     public function testActionGet()
     {
-        list($data, $errors) = $this->controller->actionGet();
+        $this->controller->actionGet();
+        $data = $this->controller->getResults();
+	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertGreaterThan(0, count($data));
 //        $this->assertCount(0, $data);
@@ -40,7 +44,9 @@ class ChannelControllerTest extends Test
     
     public function testActionItem()
     {
-        list($data, $errors) = $this->controller->actionItem(1);
+        $this->controller->actionItem(1);
+        $data = $this->controller->getResults();
+	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertGreaterThan(0, count($data));
 //        $this->assertCount(0, $data);
@@ -50,7 +56,9 @@ class ChannelControllerTest extends Test
     
     public function testActionPost()
     {
-        list($data, $errors) = $this->controller->actionPost(1, array('sport' => 'tennis'));
+        $this->controller->actionPost(1, array('sport' => 'tennis'));
+        $data = $this->controller->getResults();
+	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertEquals(1, count($data));
 //        $this->assertCount(0, $data);
@@ -60,7 +68,9 @@ class ChannelControllerTest extends Test
     
     public function testActionPut()
     {
-        list($data, $errors) = $this->controller->actionPut(array('level' => 2));
+        $this->controller->actionPut(array('level' => 2));
+        $data = $this->controller->getResults();
+	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertGreaterThan(0, count($data));
 //        $this->assertCount(0, $data);
@@ -70,7 +80,9 @@ class ChannelControllerTest extends Test
     
     public function testActionFollow()
     {
-        list($data, $errors) = $this->controller->actionFollow(null, array('channel' => 1, 'user' => 1));
+        $this->controller->actionFollow(null, array('channel' => 1, 'user' => 1));
+        $data = $this->controller->getResults();
+	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertEquals(0, count($data));
 //        $this->assertCount(0, $data);

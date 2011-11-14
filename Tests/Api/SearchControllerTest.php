@@ -19,7 +19,9 @@ class SearchControllerTest extends Test
     
     public function testActionDelete()
     {
-        list($data, $errors) = $this->controller->actionDelete(1);
+        $this->controller->actionDelete(1);
+        $data = $this->controller->getResults();
+	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertEquals(0, count($data));
 //        $this->assertCount(0, $data);
@@ -29,7 +31,9 @@ class SearchControllerTest extends Test
     
     public function testActionGet()
     {
-        list($data, $errors) = $this->controller->actionGet();
+        $this->controller->actionGet();
+        $data = $this->controller->getResults();
+	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertGreaterThan(0, count($data));
 //        $this->assertCount(0, $data);
@@ -39,7 +43,9 @@ class SearchControllerTest extends Test
     
     public function testActionPost()
     {
-        list($data, $errors) = $this->controller->actionPost(1, array());
+        $this->controller->actionPost(1, array());
+        $data = $this->controller->getResults();
+	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertEquals(0, count($data));
 //        $this->assertCount(0, $data);
@@ -49,7 +55,9 @@ class SearchControllerTest extends Test
     
     public function testActionPut()
     {
-        list($data, $errors) = $this->controller->actionPut(array());
+        $this->controller->actionPut(array());
+        $data = $this->controller->getResults();
+	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertEquals(0, count($data));
 //        $this->assertCount(0, $data);
@@ -59,7 +67,9 @@ class SearchControllerTest extends Test
     
     public function testActionList()
     {
-        list($data, $errors) = $this->controller->actionList(array());
+        $this->controller->actionList(array());
+        $data = $this->controller->getResults();
+	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertEquals(0, count($data));
 //        $this->assertCount(0, $data);

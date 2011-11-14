@@ -19,7 +19,9 @@ class UserControllerTest extends Test
     
     public function testActionDelete()
     {
-        list($data, $errors) = $this->controller->actionDelete(1);
+        $this->controller->actionDelete(1);
+        $data = $this->controller->getResults();
+	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertEquals(0, count($data));
 //        $this->assertCount(0, $data);
@@ -29,7 +31,9 @@ class UserControllerTest extends Test
     
     public function testActionGet()
     {
-        list($data, $errors) = $this->controller->actionGet();
+        $this->controller->actionGet();
+        $data = $this->controller->getResults();
+	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertEquals(0, count($data));
 //        $this->assertCount(0, $data);
@@ -39,7 +43,9 @@ class UserControllerTest extends Test
     
     public function testActionPost()
     {
-        list($data, $errors) = $this->controller->actionPost(1, array());
+        $this->controller->actionPost(1, array());
+        $data = $this->controller->getResults();
+	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertEquals(0, count($data));
 //        $this->assertCount(0, $data);
@@ -49,7 +55,9 @@ class UserControllerTest extends Test
     
     public function testActionPut()
     {
-        list($data, $errors) = $this->controller->actionPut(array());
+        $this->controller->actionPut(array());
+        $data = $this->controller->getResults();
+	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertEquals(0, count($data));
 //        $this->assertCount(0, $data);
@@ -59,7 +67,9 @@ class UserControllerTest extends Test
     
     public function testActionLogin()
     {
-        list($data, $errors) = $this->controller->actionLogin(null, array('email' => 'test@testing.com', 'passwd' => 'test'));
+        $this->controller->actionLogin(null, array('email' => 'test@testing.com', 'passwd' => 'test'));
+        $data = $this->controller->getResults();
+	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertEquals(0, count($data));
 //        $this->assertCount(0, $data);
