@@ -15,25 +15,21 @@ class DiscussionController extends BaseController
     
     public function actionDelete($id)
     {
-        return array($this->_mapper->deleteItem($id), array());
-//        return array(array(), array(array('code' => '100', 'message' => "Action 'DELETE' not implemented yet")));
+        $this->results[] = $this->_mapper->deleteItem($id);
     }
     
     public function actionGet()
     {
-        return array($this->_mapper->selectItem(), array());
-//        return array(array(), array(array('code' => '100', 'message' => "Action 'GET' not implemented yet")));
+        $this->results[] = $this->_mapper->selectItem();
     }
     
     public function actionItem($id)
     {
-        return array($this->_mapper->getItem($id), array());
-//        return array(array(), array(array('code' => '100', 'message' => "Action 'ITEM($id)' not implemented yet")));
+        $this->results[] = $this->_mapper->getItem($id);
     }
     
     public function actionPost($id, $data)
     {
-        return array($this->_mapper->updateItem($id, $data), array());
-//        return array(array(), array(array('code' => '100', 'message' => "Action 'POST' not implemented yet")));
+        $this->results[] = $this->_mapper->updateItem($id, $data);
     }
 }

@@ -44,7 +44,7 @@ abstract class BaseResponse
 //        }
 //    }
     
-    protected function parseResponse($object, $errors)
+    protected function parseResponse($objects, $errors)
     {
         $response = new \stdClass;
         $response->service = $this->responseType;
@@ -56,14 +56,9 @@ abstract class BaseResponse
             }
             return $response;
         }
-        $response->count = count($object);
+        $response->count = count($objects);
         $response->resultset = array();
-        foreach ($object as $row) {
-            foreach ($row as $key => $value) {
-		// TODO: use array_key_exists for better optimization
-                if (in_array($key, $this->integerFields)) $row[$key] = (int)$value;
-                if (in_array($key, $this->booleanFields)) $row[$key] = (bool)$value;
-            }
+        foreach ($objects as $row) {
             $response->resultset[] = array('result' => $row);
         }
         return $response;

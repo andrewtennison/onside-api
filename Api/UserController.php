@@ -15,11 +15,12 @@ class UserController extends BaseController
         
     public function actionLogin($id, $data)
     {
-        return array(array(), array(array('code' => '100', 'message' => "Action 'LOGIN' not implemented yet")));
+	$this->errors[] = array('code' => '100', 'message' => "Action 'LOGIN' not implemented yet ");
     }
     
     public function actionRegister($id, $data)
     {
+	// TODO
         return array($this->_mapper->addItem($data), array());
     }
     

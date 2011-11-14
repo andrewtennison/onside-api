@@ -15,31 +15,31 @@ class ChannelController extends BaseController
     
     public function actionFollow($id, $data)
     {
-        return array(array(), array(array('code' => '100', 'message' => "Action 'FOLLOW' not implemented yet")));
+	$this->errors[] = array('code' => '100', 'message' => "Action 'FOLLOW' not implemented yet ");
     }
     
     public function actionDelete($id)
     {
-        return array($this->_mapper->deleteItem($id), array());
+        $this->results[] = $this->_mapper->deleteItem($id);
     }
     
     public function actionGet()
     {
-        return array($this->_mapper->selectItem(), array());
+        $this->results[] = $this->_mapper->selectItem();
     }
     
     public function actionItem($id)
     {
-        return array($this->_mapper->getItem($id), array());
+        $this->results[] = $this->_mapper->getItem($id);
     }
     
     public function actionPost($id, $data)
     {
-        return array($this->_mapper->updateItem($id, $data), array());
+        $this->results[] = $this->_mapper->updateItem($id, $data);
     }
     
     public function actionPut($data)
     {
-        return array($this->_mapper->addItem($data), array());
+        $this->results[] = $this->_mapper->addItem($data);
     }
 }
