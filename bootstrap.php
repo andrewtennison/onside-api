@@ -3,10 +3,12 @@ use \Onside\Autoloader;
 use \Onside\Db;
 
 // Error handling
-function exceptionErrorHandler($message, $code = 500, $previous = null) {
+function exceptionErrorHandler($errno, $errstr, $errfile, $errline) {
+//function exceptionErrorHandler($message, $code = 500, $previous = null) {
     // error_reporting check is required to make @ operator work
     if (error_reporting()) {
-        throw new ErrorException($message, $code, $previous);
+	throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+//        throw new ErrorException($message, $code, $previous);
     }
 }
 set_error_handler('exceptionErrorHandler', E_ALL | E_STRICT);
