@@ -2,25 +2,23 @@
 use \Onside\Autoloader;
 use \Onside\Db;
 
-error_reporting(E_ALL ^ E_NOTICE);
-ini_set('display_errors', false);
+// Error handling
+function exceptionErrorHandler($message, $code = 500, $previous = null) {
+    // error_reporting check is required to make @ operator work
+    if (error_reporting()) {
+        throw new ErrorException($message, $code, $previous);
+    }
+}
+set_error_handler('exceptionErrorHandler', E_ALL | E_STRICT);
+
+error_reporting(E_ALL | E_STRICT);
+ini_set('display_errors', true);
 
 // Constants
 define('APPLICATION_BASE', __DIR__);
 define('APPLICATION_ENV', 'development');
 //defined('APPLICATION_ENV') or define('APPLICATION_ENV', getenv('APPLICATION_ENV'));
 define('APPLICATION_CONFIG', APPLICATION_BASE . '/Config');
-
-/**
- * Application-wise error handler
- */
-function exceptionErrorHandler($errno, $errstr, $errfile, $errline)
-{
-    // error_reporting check is required to make @ operator work
-    if (error_reporting()) {
-        throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
-    }
-}
 
 // Autoloading
 set_include_path(APPLICATION_BASE . PATH_SEPARATOR . get_include_path());
