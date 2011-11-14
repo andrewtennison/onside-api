@@ -25,7 +25,6 @@ class EventControllerTest extends Test
 	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertEquals(0, count($data));
-//        $this->assertCount(0, $data);
         $this->assertInternalType('array', $errors);
         $this->assertGreaterThan(0, count($errors));
     }
@@ -36,8 +35,7 @@ class EventControllerTest extends Test
         $data = $this->controller->getResults();
 	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
-        $this->assertEquals(0, count($data));
-//        $this->assertCount(0, $data);
+        $this->assertGreaterThan(0, count($data));
         $this->assertInternalType('array', $errors);
         $this->assertEquals(0, count($errors));
     }
@@ -48,8 +46,7 @@ class EventControllerTest extends Test
         $data = $this->controller->getResults();
 	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
-        $this->assertEquals(0, count($data));
-//        $this->assertCount(0, $data);
+        $this->assertGreaterThan(0, count($data));
         $this->assertInternalType('array', $errors);
         $this->assertEquals(0, count($errors));
     }
@@ -60,8 +57,7 @@ class EventControllerTest extends Test
         $data = $this->controller->getResults();
 	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
-        $this->assertEquals(0, count($data));
-//        $this->assertCount(0, $data);
+        $this->assertGreaterThan(0, count($data));
         $this->assertInternalType('array', $errors);
         $this->assertEquals(0, count($errors));
     }
@@ -73,7 +69,6 @@ class EventControllerTest extends Test
 	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
         $this->assertGreaterThan(0, count($data));
-//        $this->assertCount(0, $data);
         $this->assertInternalType('array', $errors);
         $this->assertEquals(0, count($errors));
     }
