@@ -5,7 +5,7 @@ class Exception extends \Exception
 {
     protected $default_status;
     protected $response_fields;
-    protected $http_headers;
+    protected $http_headers = 500;
     
     public function __construct(array $response_fields = array(), $http_status = null)
     {

@@ -53,7 +53,7 @@ class BaseApi
 	    } else {
 		throw new Exception(array(
 		    array('code' => 2001, 'message' => "This call doesn't support the '$method' method "),
-		), 401);
+		), 404);
 	    }
 	} catch (\Exception $e) {
 	    return $this->request->getResponse($this->request->getObject(), $e->getCode(), array(), $e->getResponseFields());
@@ -70,7 +70,7 @@ class BaseApi
 		array('code' => 1002, 'message' => "Unknown service '$controllerName' "),
 	    ), 404);
 	}
-	// TODO: client authentication
+	// TODO: client authentication throw 401
         
 //	return null;
     }
