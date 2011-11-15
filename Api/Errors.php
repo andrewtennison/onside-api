@@ -15,6 +15,7 @@ class Errors
 	    new Error(103, "Invalid action '?' for service '?'"),
 	    new Error(104, "Service '?' not implemented"),
 	    new Error(105, "Client login required for this call"),
+	    new Error(106, "Action '?' for service '?' not implemented"),
 	    
 	    // Client input errors
 	    new Error(201, "Missing required field '?'"),
