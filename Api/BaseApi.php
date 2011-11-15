@@ -7,6 +7,7 @@ class BaseApi
     protected $request;
     protected $directResponse;
     protected $allowedServices = array();
+    protected $errors;
     
     public function __construct($options = array())
     {
@@ -20,6 +21,7 @@ class BaseApi
             $this->directReseponse = false;
             $this->request = new Request($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD'], $_GET, $_POST);
         }
+	$this->errors = new \Api\Errors();
     }
     
     public function run()
@@ -51,9 +53,8 @@ class BaseApi
 		$action = 'action' . ucfirst($key);
 		$controller->$action($this->request->getParam('id'), $this->request->getPost());
 	    } else {
-		throw new Exception(array(
-		    array('code' => 2001, 'message' => "This call doesn't support the '$method' method "),
-		), 404);
+		$error = $this->errors->getError(103, array(ucfirst($key), $controllerName));
+		throw new Exception(array($error->getResponse()), 405);
 	    }
 	} catch (\Exception $e) {
 	    return $this->request->getResponse($this->request->getObject(), $e->getCode(), array(), $e->getResponseFields());
@@ -66,13 +67,11 @@ class BaseApi
     protected function getInvalidResponse($controllerName)
     {
 	if (!in_array(strtolower($controllerName), $this->allowedServices)) {
-	    throw new Exception(array(
-		array('code' => 1002, 'message' => "Unknown service '$controllerName' "),
-	    ), 404);
+	    $error = $this->errors->getError(102, array($controllerName));
+	    throw new Exception(array($error->getResponse()), 501);
 	}
 	// TODO: client authentication throw 401
         
-//	return null;
     }
     
     protected function getControllerName($controllerName)

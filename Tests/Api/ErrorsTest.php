@@ -34,7 +34,10 @@ class ErrorsTest extends Test
 	foreach ($values as $value)
 	    $error->addValue($value);
 	$response = $error->getResponse();
-	$object = json_decode($response);
+	$object = (object)$response;
+	
+	$this->assertEquals($code, $error->getCode());
+	$this->assertEquals($message, $error->getMessage());
 	
 	$this->assertInternalType('object', $object);
 	$this->assertObjectHasAttribute('code', $object);
@@ -49,9 +52,12 @@ class ErrorsTest extends Test
     {
 	$errors = new Errors();
 	$error = $errors->getError(103);
+	$this->assertInstanceOf('\Api\Error', $error);
 	$error->addValue('ActionName');
 	$error->addValue('ServiceName');
 	$response = $error->getResponse();
-	$object = json_decode($response, true);
+	$object = (object)$response;
+	
+	$this->assertNull($errors->getError(99999));
     }
 }
