@@ -10,6 +10,7 @@ class Api extends BaseApi
 	'discussion',
 	'event',
 	'search',
-	'user'
+	'user',
+	'sport',
     );
 }
