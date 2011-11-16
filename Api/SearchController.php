@@ -21,7 +21,11 @@ class SearchController extends BaseController
     
     public function actionGet($get = array())
     {
-        $this->results[] = array('channels' => $this->mappers['channel']->searchItem($get), 'events' => $this->mappers['event']->searchItem($get), 'articles' => $this->mappers['article']->searchItem($get));
+        $this->results[] = array(
+	    'channels' => $this->mappers['channel']->searchItem($get),
+	    'events' => $this->mappers['event']->searchItem($get),
+	    'articles' => $this->mappers['article']->searchItem($get),
+	);
     }
     
     public function actionList()
