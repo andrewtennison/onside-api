@@ -10,10 +10,9 @@ class Article extends Mapper
     public function searchItem($get = array())
     {
 	$where = array(
-	    'title' => array('LIKE', "%{$get['q']}%"),
-	    'keywords' => array('LIKE', "%{$get['q']}%"),
+	    'title' => array('LIKE', "%{$get['q']}%", 'OR'),
+	    'keywords' => array('LIKE', "%{$get['q']}%", 'OR'),
 	);
-//echo print_r($where, true);
 	return $this->_selectItem($where, array(), null);
     }
 }

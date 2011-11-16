@@ -88,9 +88,9 @@ class Mapper
         if (count($where) > 0) {
             foreach ($where as $field => $value) {
 		if (is_array($value)) {
-		    $model->setWhere($field, $value[1], $value[0], 'OR');
+		    $model->setWhere($field, $value[1], $value[0], $value[2]);
 		} else {
-		    $model->setWhere($field, $value, '=', 'OR');
+		    $model->setWhere($field, $value, '=', 'AND');
 		}
             }
         }

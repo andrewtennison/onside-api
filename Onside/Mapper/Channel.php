@@ -10,12 +10,11 @@ class Channel extends Mapper
     public function searchItem($get = array())
     {
 	$where = array(
-	    'sport' => $get['q'],
-	    'type' => $get['q'],
-	    'name' => array('LIKE', "%{$get['q']}%"),
-	    'keywords' => array('LIKE', "%{$get['q']}%"),
+	    'sport' => array('=', $get['q'], 'OR'),
+	    'type' => array('=', $get['q'], 'OR'),
+	    'name' => array('LIKE', "%{$get['q']}%", 'OR'),
+	    'keywords' => array('LIKE', "%{$get['q']}%", 'OR'),
 	);
-//echo print_r($where, true);
 	return $this->_selectItem($where, array(), null);
     }
 }
