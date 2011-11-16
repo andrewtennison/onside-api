@@ -23,7 +23,7 @@ class ChannelController extends BaseController
         $this->results[] = $this->_mapper->deleteItem($id);
     }
     
-    public function actionGet()
+    public function actionGet($data = array())
     {
         $this->results[] = $this->_mapper->selectItem();
     }

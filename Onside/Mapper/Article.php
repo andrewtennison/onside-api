@@ -13,6 +13,7 @@ class Article extends Mapper
 	    'title' => array('LIKE', "%{$get['q']}%"),
 	    'keywords' => array('LIKE', "%{$get['q']}%"),
 	);
+//echo print_r($where, true);
 	return $this->_selectItem($where, array(), null);
     }
 }

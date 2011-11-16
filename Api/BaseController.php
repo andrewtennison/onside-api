@@ -11,7 +11,7 @@ abstract class BaseController
 	$this->errors[] = array('code' => '100', 'message' => "Action 'DELETE' not implemented yet ");
     }
     
-    public function actionGet()
+    public function actionGet($data = array())
     {
 	$this->errors[] = array('code' => '100', 'message' => "Action 'GET' not implemented yet ");
     }

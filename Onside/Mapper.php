@@ -117,6 +117,7 @@ class Mapper
         $args = $model->getValues();
 //echo '$sql: ' . $sql . "\n";
 //echo '$args: ' . print_r($args, true) . "\n";
+//exit;
         return $this->_db->prepared($sql, $args)->fetchAll(\PDO::FETCH_CLASS, $this->_model);
     }
 }
