@@ -14,7 +14,8 @@ class User extends Model
 	'twitter' => 'VARCHAR(50) NULL',
 	'google' => 'VARCHAR(50) NULL',
 	'linkedin' => 'VARCHAR(50) NULL',
-//        'added' => 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
+	'language' => 'VARCHAR(5) NOT NULL default "en_us"',
+        'added' => 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
     );
     
     public $id;
@@ -25,5 +26,6 @@ class User extends Model
     public $twitter;
     public $google;
     public $linkedin;
-//    public $added;
+    public $language;
+    public $added;
 }

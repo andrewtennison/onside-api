@@ -8,6 +8,8 @@ class Channel extends Model
     protected $_definitions = array(
         'id' => 'INT(11) NOT NULL AUTO_INCREMENT',
         'name' => 'VARCHAR(100)',
+	'hash' => 'VARCHAR(10)', // for use with twitter
+	'image' => 'VARCHAR(150) NULL',
         'description' => 'TEXT',
         'sport' => 'VARCHAR(50)',
         'type' => 'VARCHAR(50)',
@@ -21,6 +23,8 @@ class Channel extends Model
     
     public $id;
     public $name; /* searchable */
+    public $hash;
+    public $image;
     public $description;
     public $sport; /* searchable */
     public $type; /* searchable */

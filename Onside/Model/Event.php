@@ -8,6 +8,7 @@ class Event extends Model
     protected $_definitions = array(
         'id' => 'INT(11) NOT NULL AUTO_INCREMENT',
         'name' => 'VARCHAR(100)',
+	'hash' => 'VARCHAR(10)', // for use with twitter
         'sport' => 'VARCHAR(50)',
         'type' => 'VARCHAR(50)',
 	'keywords' => 'TEXT',
@@ -24,6 +25,7 @@ class Event extends Model
 
     public $id;
     public $name; /* searchable */
+    public $hash;
     public $sport; /* searchable */
     public $type; /* searchable */
     public $keywords; /* comma separated - searchable */
