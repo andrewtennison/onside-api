@@ -59,12 +59,12 @@ abstract class BaseResponse
         }
         $response->count = count($objects);
         $response->resultset = array();
+	if ('search' === strtolower($this->responseType)) {
+	    $response->resultset = $objects;
+	    return $response;
+	}
         foreach ($objects as $row) {
-	    if ('search' !== strtolower($this->responseType)) {
-		$response->resultset[strtolower($this->responseType) . 's'][] = $row;
-	    } else {
-		$response->resultset[] = $row;
-	    }
+	    $response->resultset[strtolower($this->responseType) . 's'] = $row;
         }
         return $response;
     }
