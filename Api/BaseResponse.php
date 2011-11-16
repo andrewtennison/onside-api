@@ -60,7 +60,7 @@ abstract class BaseResponse
         $response->count = count($objects);
         $response->resultset = array();
         foreach ($objects as $row) {
-            $response->resultset[] = array('result' => $row);
+            $response->resultset[] = $row;
         }
         return $response;
     }
