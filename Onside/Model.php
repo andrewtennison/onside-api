@@ -32,7 +32,17 @@ class Model
     
     public function setWhere($leftside, $rightside, $operator = '=', $type = 'AND')
     {
-        $this->_where[] = $leftside . ' ' . $operator . ' ' . $rightside . ' ' . $type;
+//echo '$leftside: ' . $leftside . "\n";
+//echo '$rightside: ' . $rightside . "\n";
+//echo 'is_string($rightside): ' . (is_string($rightside) ? 'TRUE' : 'FALSE') . "\n";
+//echo 'strpos(\'PASSWORD\') === false: ' . (strpos('PASSWORD') === false ? 'FALSE' : 'TRUE') . "\n";
+	if (is_string($rightside) && strpos('PASSWORD') === false) {
+//echo 'INSIDE' . "\n";
+	    $rightside = "'$rightside'";
+	}
+//echo '$rightside: ' . $rightside . "\n";
+        $this->_where[] = '`' . $leftside . '` ' . $operator . ' ' . $rightside . ' ' . $type . ' ';
+//echo '$where: ' . print_r($this->_where, true) . "\n";
         // TODO: define where clauses considering AND/OR
     }
     
@@ -57,6 +67,7 @@ class Model
         $sql = 'SELECT * FROM ' . $this->_getTable();
         //foreach ($where as $w)
         if (count($this->_where) > 0) {
+//echo 'WHERE: ' . print_r($this->_where, true) . "\n";
             $sql .= ' WHERE ' . substr(implode('', $this->_where), 0, -3);
         }
         
@@ -68,7 +79,7 @@ class Model
         // limit
         if (null !== $this->_limit && count($this->_limit) === 2)
             $sql .= ' LIMIT ' . $this->_limit[0] . ', ' . $this->_limit[1];
-        
+//echo '$sql: ' . $sql . "\n";
         return $sql;
     }
     

@@ -87,7 +87,11 @@ class Mapper
 //        $model->setWhere(array('id' => 30));
         if (count($where) > 0) {
             foreach ($where as $field => $value) {
-                $model->setWhere($field, $value);
+		if (is_array($value)) {
+		    $model->setWhere($field, $value[1], $value[0], 'OR');
+		} else {
+		    $model->setWhere($field, $value, '=', 'OR');
+		}
             }
         }
         
@@ -111,8 +115,8 @@ class Mapper
         }
         $sql = $model->getSelectSQL();
         $args = $model->getValues();
-//echo '$sql: ' . $sql . "\n";
-//echo '$args: ' . print_r($args, true) . "\n";
+echo '$sql: ' . $sql . "\n";
+echo '$args: ' . print_r($args, true) . "\n";
         return $this->_db->prepared($sql, $args)->fetchAll(\PDO::FETCH_CLASS, $this->_model);
     }
 }

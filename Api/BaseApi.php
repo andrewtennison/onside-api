@@ -40,7 +40,7 @@ class BaseApi
 	    // handle complex GET/POST
 	    if (null === $key && in_array($method, array('GET', 'POST'))) {
 		if ($method === 'POST') $controller->actionPut($this->request->getPost());
-		if ($method === 'GET') $controller->actionGet();
+		if ($method === 'GET') $controller->actionGet($this->request->getGet());
 	    } else if (is_numeric($key) && $method !== 'PUT') {
 		if ($method === 'DELETE') $controller->actionDelete($this->request->getParam('id'));
 		if ($method === 'POST') $controller->actionPost($this->request->getParam('id'), $this->request->getPost());
@@ -71,7 +71,14 @@ class BaseApi
 	    throw new Exception(array($error->getResponse()), 501);
 	}
 	// TODO: client authentication throw 401
-        
+	
+	// basic auth
+//	$auth = new \Api\BaseAuth();
+//	$auth->canAuth(\Api\BaseAuth::BASIC);
+//	if ((!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW'])) || ($_SERVER['PHP_AUTH_USER'] !== 'isaac' || $_SERVER['PHP_AUTH_PW'] !== 'test')) {
+//	    $error = $this->errors->getError(101, array());
+//	    throw new Exception(array($error->getResponse()), 401);
+//	}
     }
     
     protected function getControllerName($controllerName)
