@@ -23,7 +23,7 @@ abstract class BaseResponse
     {
         header('HTTP/1.1 ' . $this->responseCode . ' OK');
         header('X-Content-Type-Options:nosniff');
-        header('Content-Type:application/javascript;charset=UTF-8');
+        header('Content-Type:application/json;charset=UTF-8');
         echo $this->getJson();
     }
 
@@ -61,6 +61,6 @@ abstract class BaseResponse
         foreach ($objects as $row) {
             $response->resultset[] = array('result' => $row);
         }
-        return $response;
+        return array($response);
     }
 }
