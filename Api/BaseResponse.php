@@ -60,7 +60,10 @@ abstract class BaseResponse
         $response->count = count($objects);
         $response->resultset = array();
 	if ('search' === strtolower($this->responseType)) {
-	    $response->resultset = $objects;
+//die(print_r($objects, true));
+	    $response->resultset['articles'] = $objects[0]['articles'];
+	    $response->resultset['channels'] = $objects[0]['channels'];
+	    $response->resultset['events'] = $objects[0]['events'];
 	    return $response;
 	}
         foreach ($objects as $row) {
