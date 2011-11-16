@@ -1,16 +1,16 @@
 <?php
 namespace Api;
 use \Api\BaseController;
-use \Onside\Mapper\Discussion;
+use \Onside\Mapper\Comment;
 
-class DiscussionController extends BaseController
+class CommentController extends BaseController
 {
     private $_mapper;
     
     public function __construct()
     {
         global $db;
-        $this->_mapper = new Discussion($db);
+        $this->_mapper = new Comment($db);
     }
     
     public function actionDelete($id)
@@ -18,7 +18,7 @@ class DiscussionController extends BaseController
         $this->results[] = $this->_mapper->deleteItem($id);
     }
     
-    public function actionGet()
+    public function actionGet($data = array())
     {
         $this->results[] = $this->_mapper->selectItem();
     }
@@ -31,5 +31,10 @@ class DiscussionController extends BaseController
     public function actionPost($id, $data)
     {
         $this->results[] = $this->_mapper->updateItem($id, $data);
+    }
+    
+    public function actionPut($data)
+    {
+        $this->results[] = $this->_mapper->addItem($data);
     }
 }

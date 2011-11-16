@@ -1,14 +1,14 @@
 <?php
 namespace Tests\Api;
 use \Tests\Test;
-use \Api\DiscussionController;
+use \Api\CommentController;
 
-class DiscussionControllerTest extends Test
+class CommentControllerTest extends Test
 {
     public function setUp()
     {
         parent::setUp();
-        $this->controller = new DiscussionController();
+        $this->controller = new CommentController();
     }
     
     public function tearDown()

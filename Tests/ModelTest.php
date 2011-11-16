@@ -3,7 +3,7 @@ namespace Tests;
 use \Onside\Model;
 use \Onside\Model\Article;
 use \Onside\Model\Channel;
-use \Onside\Model\Discussion;
+use \Onside\Model\Comment;
 use \Onside\Model\Event;
 use \Onside\Model\User;
 
@@ -14,7 +14,7 @@ class ModelTest extends Test
         return array(
             array('\Onside\Model\Article', Article::getModelFromArray(array('title' => 'test name article'))),
             array('\Onside\Model\Channel', Channel::getModelFromArray(array('name' => 'test name channel', 'level' => 2))),
-            array('\Onside\Model\Discussion', Discussion::getModelFromArray(array('name' => 'test name discussion'))),
+            array('\Onside\Model\Comment', Comment::getModelFromArray(array('name' => 'test name discussion'))),
             array('\Onside\Model\Event', Event::getModelFromArray(array('name' => 'test name event'))),
             array('\Onside\Model\User', User::getModelFromArray(array('name' => 'test name user'))),
         );
@@ -25,7 +25,7 @@ class ModelTest extends Test
         return array(
             array('\Onside\Model\Article', Article::getModelFromArray(array('title' => 'test name article', 'id' => 1))),
             array('\Onside\Model\Channel', Channel::getModelFromArray(array('name' => 'test name channel', 'id' => 1, 'level' => 2))),
-            array('\Onside\Model\Discussion', Discussion::getModelFromArray(array('name' => 'test name discussion', 'id' => 1))),
+            array('\Onside\Model\Comment', Comment::getModelFromArray(array('name' => 'test name discussion', 'id' => 1))),
             array('\Onside\Model\Event', Event::getModelFromArray(array('name' => 'test name event', 'id' => 1))),
             array('\Onside\Model\User', User::getModelFromArray(array('name' => 'test name user', 'id' => 1))),
         );

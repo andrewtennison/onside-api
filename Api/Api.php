@@ -7,7 +7,7 @@ class Api extends BaseApi
     protected $allowedServices = array(
 	'article',
 	'channel',
-	'discussion',
+	'comment',
 	'event',
 	'search',
 	'user',

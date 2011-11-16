@@ -4,7 +4,7 @@ use \Onside\Db;
 use \Onside\Mapper;
 use \Onside\Mapper\Article;
 use \Onside\Mapper\Channel;
-use \Onside\Mapper\Discussion;
+use \Onside\Mapper\Comment;
 use \Onside\Mapper\Event;
 use \Onside\Mapper\User;
 
@@ -26,8 +26,8 @@ class MapperTest extends Test
                 array('name' => 'this is a sample name', 'level' => 1),
             ),
             array(
-                '\Onside\Mapper\Discussion',
-                new \Onside\Mapper\Discussion($db),
+                '\Onside\Mapper\Comment',
+                new \Onside\Mapper\Comment($db),
                 array('name' => 'this is a sample name'),
             ),
             array(
@@ -63,8 +63,8 @@ class MapperTest extends Test
                 null,
             ),
             array(
-                '\Onside\Model\Discussion',
-                new \Onside\Mapper\Discussion($db),
+                '\Onside\Model\Comment',
+                new \Onside\Mapper\Comment($db),
                 array(),
                 array('id' => true),
                 null,
