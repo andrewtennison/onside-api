@@ -61,7 +61,7 @@ abstract class BaseResponse
         $response->resultset = array();
         foreach ($objects as $row) {
 	    if ('search' !== strtolower($this->responseType)) {
-		$response->resultset[] = array(strtolower($this->responseType) . 's' => $row);
+		$response->resultset[strtolower($this->responseType) . 's'][] = $row;
 	    } else {
 		$response->resultset[] = $row;
 	    }
