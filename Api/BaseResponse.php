@@ -60,7 +60,7 @@ abstract class BaseResponse
         $response->count = count($objects);
         $response->resultset = array();
         foreach ($objects as $row) {
-            $response->resultset[] = $row;
+            $response->resultset[] = array(strtolower($this->responseType) . 's' => $row);
         }
         return $response;
     }
