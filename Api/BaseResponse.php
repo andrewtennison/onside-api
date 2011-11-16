@@ -62,6 +62,6 @@ abstract class BaseResponse
         foreach ($objects as $row) {
             $response->resultset[] = array('result' => $row);
         }
-        return array($response);
+        return $response;
     }
 }
