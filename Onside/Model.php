@@ -36,7 +36,7 @@ class Model
 //echo '$rightside: ' . $rightside . "\n";
 //echo 'is_string($rightside): ' . (is_string($rightside) ? 'TRUE' : 'FALSE') . "\n";
 //echo 'strpos(\'PASSWORD\') === false: ' . (strpos('PASSWORD') === false ? 'FALSE' : 'TRUE') . "\n";
-	if (is_string($rightside) && strpos('PASSWORD') === false) {
+	if (is_string($rightside) && strpos('PASSWORD', $rightside) === false) {
 //echo 'INSIDE' . "\n";
 	    $rightside = "'$rightside'";
 	}
@@ -80,6 +80,7 @@ class Model
         if (null !== $this->_limit && count($this->_limit) === 2)
             $sql .= ' LIMIT ' . $this->_limit[0] . ', ' . $this->_limit[1];
 //echo '$sql: ' . $sql . "\n";
+//exit;
         return $sql;
     }
     
