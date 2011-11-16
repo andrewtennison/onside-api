@@ -24,6 +24,7 @@ abstract class BaseResponse
         header('HTTP/1.1 ' . $this->responseCode . ' OK');
         header('X-Content-Type-Options:nosniff');
         header('Content-Type:application/json;charset=UTF-8');
+	header('Access-Control-Allow-Origin: *');
         echo $this->getJson();
     }
 
