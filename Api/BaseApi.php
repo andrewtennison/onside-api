@@ -29,6 +29,9 @@ class BaseApi
 	try {
 	    $code = 200;
 	    
+	    // check request, authorization
+	    $this->getInvalidResponse($this->request->getObject());
+	    
 	    // handle OPTIONS request
 	    if ('OPTIONS' === $this->request->getMethod()) {
 		header('HTTP/1.1 200 OK');
@@ -41,9 +44,6 @@ class BaseApi
 //		exit;
 	    }
 	    
-	    // check request, authorization
-	    $this->getInvalidResponse($this->request->getObject());
-	    	    
 	    $controllerName = $this->getControllerName($this->request->getObject());
 	    $controller = $this->getControllerClass($this->request->getObject());
 
