@@ -40,7 +40,11 @@ class BaseApi
 	    
 	    // handle OPTIONS request
 	    if ('OPTIONS' === $method) {
-		return $this->request->getResponse($this->request->getObject(), 200);
+		header('Access-Control-Allow-Origin: *');
+		header('Access-Control-Max-Age: 3628800');
+		header('Access-Control-Allow-Methods: GET, POST, DELETE');
+		header('Access-Control-Allow-Headers: OnsideAuth');
+		exit;
 	    }
 
 	    // handle complex GET/POST
