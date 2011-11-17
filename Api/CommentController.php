@@ -5,6 +5,7 @@ use \Onside\Mapper\Comment;
 
 class CommentController extends BaseController
 {
+    protected $filters = array('article', 'channel', 'event', 'user');
     private $_mapper;
     
     public function __construct()
@@ -20,7 +21,8 @@ class CommentController extends BaseController
     
     public function actionGet($data = array())
     {
-        $this->results[] = $this->_mapper->selectItem();
+	$where = $this->getAcceptedFilters($data);
+        $this->results[] = $this->_mapper->selectItem($where);
     }
     
     public function actionItem($id)
