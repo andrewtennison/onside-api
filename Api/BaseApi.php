@@ -57,7 +57,6 @@ class BaseApi
 		throw new Exception(array($error->getResponse()), 405);
 	    }
 	} catch (\Exception $e) {
-//	    exit;
 	    return $this->request->getResponse($this->request->getObject(), $e->getCode(), array(), $e->getResponseFields());
 	}
 	$data = $controller->getResults();
