@@ -40,6 +40,7 @@ class BaseApi
 	    
 	    // handle OPTIONS request
 	    if ('OPTIONS' === $method) {
+		header('HTTP/1.1 200 OK');
 		header('Access-Control-Allow-Origin: *');
 		header('Access-Control-Max-Age: 3628800');
 		header('Access-Control-Allow-Methods: GET, POST, DELETE');
