@@ -82,11 +82,11 @@ class BaseApi
 	    throw new Exception(array($error->getResponse()), 501);
 	}
 	// TODO: client authentication throw 401
-//	$headers = apache_request_headers();
-//	if (!array_key_exists('OnsideAuth', $headers) || $headers['OnsideAuth'] !== '01a2e0d73218f42d1495c3670b79f1bd44d7afa316340679bcd365468b736482') {
-//	    $error = $this->errors->getError(101, array());
-//	    throw new Exception(array($error->getResponse()), 401);
-//	}
+	$headers = apache_request_headers();
+	if (!array_key_exists('OnsideAuth', $headers) || $headers['OnsideAuth'] !== '01a2e0d73218f42d1495c3670b79f1bd44d7afa316340679bcd365468b736482') {
+	    $error = $this->errors->getError(101, array());
+	    throw new Exception(array($error->getResponse()), 401);
+	}
 	
 	// basic auth
 //	$auth = new \Api\BaseAuth();
