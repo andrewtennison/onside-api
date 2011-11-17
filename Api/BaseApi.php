@@ -31,12 +31,18 @@ class BaseApi
 	    
 	    // check request, authorization
 	    $this->getInvalidResponse($this->request->getObject());
-	    
+	    	    
 	    $controllerName = $this->getControllerName($this->request->getObject());
 	    $controller = $this->getControllerClass($this->request->getObject());
 
 	    $key = $this->request->getKey();
 	    $method = $this->request->getMethod();
+	    
+	    // handle OPTIONS request
+	    if ('OPTIONS' === $method) {
+		return $this->request->getResponse($this->request->getObject(), 200);
+	    }
+
 	    // handle complex GET/POST
 	    if (null === $key && in_array($method, array('GET', 'POST'))) {
 		if ($method === 'POST') $controller->actionPut($this->request->getPost());
