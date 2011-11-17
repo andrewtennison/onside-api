@@ -45,7 +45,7 @@ class BaseApi
 		header('Access-Control-Max-Age: 3628800');
 		header('Access-Control-Allow-Methods: GET, POST, DELETE');
 		header('Access-Control-Allow-Headers: OnsideAuth');
-		exit;
+//		exit;
 	    }
 
 	    // handle complex GET/POST
