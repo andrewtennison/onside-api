@@ -33,7 +33,7 @@ class BaseApi
 	    $this->getInvalidResponse($this->request->getObject());
 	    
 	    // handle OPTIONS request
-	    if ('OPTIONS' === $this->request->getMethod()) {
+	    if ('OPTIONS' == $this->request->getMethod()) {
 		header('HTTP/1.1 200 OK');
 		header('Access-Control-Allow-Origin: *');
 		header('Access-Control-Max-Age: 3628800');
