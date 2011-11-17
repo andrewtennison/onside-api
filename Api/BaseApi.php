@@ -46,7 +46,7 @@ class BaseApi
 		header('Access-Control-Allow-Methods: GET, POST, DELETE');
 		header('Access-Control-Allow-Headers: OnsideAuth');
 		$headers = apache_request_headers();
-		file_put_contents('/tmp/onside.log', 'OPTIONS: ' . print_r($headers, true) . "\n===========================\n");
+		file_put_contents('/tmp/onside.log', file_get_contents('/tmp/onside.log') . 'OPTIONS: ' . print_r($headers, true) . "\n===========================\n");
 //		exit;
 	    }
 
@@ -87,7 +87,7 @@ class BaseApi
 	if ('OPTIONS' !== $this->request->getMethod()) {
 	    $headers = apache_request_headers();
 	    if (!array_key_exists('OnsideAuth', $headers) || $headers['OnsideAuth'] !== '01a2e0d73218f42d1495c3670b79f1bd44d7afa316340679bcd365468b736482') {
-file_put_contents('/tmp/onside.log', $this->request->getMethod() . ': ' . print_r($headers, true) . "\n===========================\n");
+file_put_contents('/tmp/onside.log', file_put_contents('/tmp/onside.log') . $this->request->getMethod() . ': ' . print_r($headers, true) . "\n===========================\n");
 		$error = $this->errors->getError(101, array());
 		throw new Exception(array($error->getResponse()), 401);
 	    }
