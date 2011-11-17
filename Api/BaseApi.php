@@ -85,8 +85,8 @@ class BaseApi
 	}
 	// TODO: client authentication throw 401
 //	if ('OPTIONS' !== $this->request->getMethod()) {
-//	    $headers = apache_request_headers();
-//file_put_contents('/tmp/onside.log', file_put_contents('/tmp/onside.log') . $this->request->getMethod() . ': ' . print_r($headers, true) . "\n===========================\n");
+	    $headers = apache_request_headers();
+file_put_contents('/tmp/onside.log', file_put_contents('/tmp/onside.log') . $this->request->getMethod() . ': ' . print_r($headers, true) . "\n===========================\n");
 //	    if (!array_key_exists('OnsideAuth', $headers) || $headers['OnsideAuth'] !== '01a2e0d73218f42d1495c3670b79f1bd44d7afa316340679bcd365468b736482') {
 //file_put_contents('/tmp/onside.log', file_put_contents('/tmp/onside.log') . $this->request->getMethod() . ': ' . print_r($headers, true) . "\n===========================\n");
 //		$error = $this->errors->getError(101, array());
