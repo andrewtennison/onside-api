@@ -13,7 +13,9 @@ class Event extends Model
         'type' => 'VARCHAR(50)',
 	'keywords' => 'TEXT',
 	'participants' => 'TEXT',
-	'time' => 'TEXT',
+	'stime' => 'TIMESTAMP NOT NULL',
+	'etime' => 'TIMESTAMP NOT NULL',
+	'duration' => 'VARCHAR(10) NULL',
 	'parent' => 'INT(4) NULL',
 	'location' => 'TEXT',
         'geolat' => 'DECIMAL(10,6) default NULL',
@@ -30,7 +32,9 @@ class Event extends Model
     public $type; /* searchable */
     public $keywords; /* comma separated - searchable */
     public $participants; /* needs to be defined per sport - are included in response as objects */
-    public $time;
+    public $stime;
+    public $etime;
+    public $duration;
     public $parent; /* another event - always the same type of object */
     public $location;
     public $geolat;
