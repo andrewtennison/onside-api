@@ -32,18 +32,14 @@ class Model
     
     public function setWhere($leftside, $rightside, $operator = '=', $type = 'AND')
     {
-//echo '$leftside: ' . $leftside . "\n";
-//echo '$rightside: ' . $rightside . "\n";
-//echo 'is_string($rightside): ' . (is_string($rightside) ? 'TRUE' : 'FALSE') . "\n";
-//echo 'strpos(\'PASSWORD\') === false: ' . (strpos('PASSWORD') === false ? 'FALSE' : 'TRUE') . "\n";
-	if (is_string($rightside) && strpos('PASSWORD', $rightside) === false) {
-//echo 'INSIDE' . "\n";
+	// TODO: define where clauses considering AND/OR
+	
+	// only wrap field value if its a string and is not a mysql funcation
+	// so far on PASSWORD() function is trapped
+	if (is_string($rightside) && strpos($rightside, 'PASSWORD') === false) {
 	    $rightside = "'$rightside'";
 	}
-//echo '$rightside: ' . $rightside . "\n";
         $this->_where[] = '`' . $leftside . '` ' . $operator . ' ' . $rightside . ' ' . $type . ' ';
-//echo '$where: ' . print_r($this->_where, true) . "\n";
-        // TODO: define where clauses considering AND/OR
     }
     
     public function clearSort()
@@ -65,10 +61,14 @@ class Model
     {
         $this->_values = array();
         $sql = 'SELECT * FROM ' . $this->_getTable();
-        //foreach ($where as $w)
+
+	// TODO: refactor to be more efficient
         if (count($this->_where) > 0) {
 //echo 'WHERE: ' . print_r($this->_where, true) . "\n";
-            $sql .= ' WHERE ' . substr(implode('', $this->_where), 0, -3);
+	    $parts = explode(' ', trim($this->_where[count($this->_where) - 1]));
+//echo print_r($parts, true) . "\n";
+//echo 'strlen($parts[count($parts) - 1]): ' . strlen($parts[count($parts) - 1]) . "\n";
+            $sql .= ' WHERE ' . substr(implode('', $this->_where), 0, -strlen($parts[count($parts) - 1]) - 1);
         }
         
         // sort order
