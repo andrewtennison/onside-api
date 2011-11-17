@@ -29,17 +29,8 @@ class BaseApi
 	try {
 	    $code = 200;
 	    
-	    // check request, authorization
-	    $this->getInvalidResponse($this->request->getObject());
-	    	    
-	    $controllerName = $this->getControllerName($this->request->getObject());
-	    $controller = $this->getControllerClass($this->request->getObject());
-
-	    $key = $this->request->getKey();
-	    $method = $this->request->getMethod();
-	    
 	    // handle OPTIONS request
-	    if ('OPTIONS' === $method) {
+	    if ('OPTIONS' === $this->request->getMethod()) {
 		header('HTTP/1.1 200 OK');
 		header('Access-Control-Allow-Origin: *');
 		header('Access-Control-Max-Age: 3628800');
@@ -49,6 +40,15 @@ class BaseApi
 		file_put_contents('/tmp/onside.log', file_get_contents('/tmp/onside.log') . 'OPTIONS: ' . print_r($headers, true) . "\n===========================\n");
 //		exit;
 	    }
+	    
+	    // check request, authorization
+	    $this->getInvalidResponse($this->request->getObject());
+	    	    
+	    $controllerName = $this->getControllerName($this->request->getObject());
+	    $controller = $this->getControllerClass($this->request->getObject());
+
+	    $key = $this->request->getKey();
+	    $method = $this->request->getMethod();
 
 	    // handle complex GET/POST
 	    if (null === $key && in_array($method, array('GET', 'POST'))) {
