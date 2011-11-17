@@ -5,6 +5,7 @@ abstract class BaseController
 {
     protected $results = array();
     protected $errors = array();
+    protected $filters = array();
     
     public function actionDelete($id)
     {
@@ -39,5 +40,14 @@ abstract class BaseController
     public function getErrors()
     {
 	return $this->errors;
+    }
+    
+    protected function getAcceptedFilters($data = array())
+    {
+	$where = array();
+	foreach ($this->filters as $filter)
+	    if (array_key_exists($filter, $data))
+		$where[$filter] = $data[$filter];
+	return $where;
     }
 }
