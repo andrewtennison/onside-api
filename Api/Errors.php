@@ -23,6 +23,7 @@ class Errors
 	    new Error(203, "Record failed to be created"),
 	    new Error(204, "Record failed to be updated"),
 	    new Error(205, "Record failed to be deleted"),
+	    new Error(206, "Invalid username / password"),
 	    
 	);
     }
