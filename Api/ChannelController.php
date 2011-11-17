@@ -5,6 +5,7 @@ use \Onside\Mapper\Channel;
 
 class ChannelController extends BaseController
 {
+    protected $filters = array('sport', 'type', 'user');
     private $_mapper;
     
     public function __construct()
@@ -15,6 +16,7 @@ class ChannelController extends BaseController
     
     public function actionFollow($id, $data)
     {
+	//throw new Exception('some message');
 	$this->errors[] = array('code' => '100', 'message' => "Action 'FOLLOW' not implemented yet ");
     }
     
@@ -25,7 +27,8 @@ class ChannelController extends BaseController
     
     public function actionGet($data = array())
     {
-        $this->results[] = $this->_mapper->selectItem();
+	$where = $this->getAcceptedFilters($data);
+        $this->results[] = $this->_mapper->selectItem($where);
     }
     
     public function actionItem($id)
