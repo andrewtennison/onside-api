@@ -8,6 +8,7 @@ class Model
     private $_where;
     private $_sort;
     private $_limit;
+    private $_join;
     
     protected $_schema;
     protected $_table;
@@ -25,9 +26,18 @@ class Model
         return $model;
     }
     
-    public function clearWhere()
+    public function clearWhere() { $this->_where = array(); }
+    public function clearJoin() { $this->_join = array(); }
+    
+    public function setJoin($table, $leftfield, $rightfield, $fields = array(), $type = 'JOIN')
     {
-        $this->_where = array();
+	$this->_join[] = array(
+	    'table' => $table,
+	    'type' => $type,
+	    'fields' => $fields,
+	    'leftfield' => $leftfield,
+	    'rightfield' => $rightfield,
+	);
     }
     
     public function setWhere($leftside, $rightside, $operator = '=', $type = 'AND')
@@ -60,15 +70,25 @@ class Model
     public function getSelectSQL()
     {
         $this->_values = array();
-        $sql = 'SELECT * FROM ' . $this->_getTable();
+	// TODO: list fields individually to allow
+	// programatically joins
+        $sql = 'SELECT t.* FROM ' . $this->_getTable(null, true);
 
+	// joins
+	if (count($this->_join) > 0) {
+	    foreach ($this->_join as $key => $join) {
+		// TODO: add select tables to sql
+		$sql .= ' ' . $join['type'] . ' ' . $this->_getTable($join['table']) . $key . ' ON t.' . $join['leftfield'] . ' = t' . $key . '.' . $join['rightfield'];
+	    }
+	}
+	
 	// TODO: refactor to be more efficient
         if (count($this->_where) > 0) {
 //echo 'WHERE: ' . print_r($this->_where, true) . "\n";
 	    $parts = explode(' ', trim($this->_where[count($this->_where) - 1]));
 //echo print_r($parts, true) . "\n";
 //echo 'strlen($parts[count($parts) - 1]): ' . strlen($parts[count($parts) - 1]) . "\n";
-            $sql .= ' WHERE ' . substr(implode('', $this->_where), 0, -strlen($parts[count($parts) - 1]) - 1);
+            $sql .= ' WHERE t.' . substr(implode('t.', $this->_where), 0, -strlen($parts[count($parts) - 1]) - 1);
         }
         
         // sort order
@@ -145,29 +165,14 @@ SQL;
         return true;
     }
     
-    private function _getTable()
+    private function _getTable($table = null, $alias = false)
     {
-        return ((null !== $this->_schema) ? "`{$this->_schema}`." : '') . "`{$this->_table}`";
-    }
-    /**
-    private function _getFieldValues()
-    {
-        if (null === $this->_fields) $this->_setFields();
-        $values = array();
-        foreach ($this->_fields as $field) {
-            if (null !== $this->$field)
-                $values[] = $this->$field;
-        }
-        
-        return $values;
+	if (null === $table) $table = $this->_table;
+        return ((null !== $this->_schema) ? "`{$this->_schema}`." : '') . 
+	    "`{$table}`" . 
+	    ($alias ? ' AS t' : '');
     }
     
-    private function _getFieldUpdateValues()
-    {
-        if (null === $this->_fields) $this->_setFields();
-        
-    }
-    */
     private function _getFieldDefinitions()
     {
         if (null === $this->_fields) $this->_setFields();
