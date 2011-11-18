@@ -4,6 +4,10 @@ include_once __DIR__ . '/../bootstrap.php';
 $sql = '';
 $all = count($argv) === 1;
 
+if ($all || in_array('auth', $argv)) {
+    $model = \Onside\Model\Auth::getModelFromArray(array());
+    $sql .= $model->getDropSQL() . ";\n";
+}
 if ($all || in_array('article', $argv)) {
     $model = \Onside\Model\Article::getModelFromArray(array());
     $sql .= $model->getDropSQL() . ";\n";
