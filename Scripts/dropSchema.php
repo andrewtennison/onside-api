@@ -28,5 +28,9 @@ if ($all || in_array('follower', $argv)) {
     $model = \Onside\Model\Follower::getModelFromArray(array());
     $sql .= $model->getDropSQL() . ";\n";
 }
+if ($all || in_array('logging', $argv)) {
+    $model = \Onside\Model\Logging::getModelFromArray(array());
+    $sql .= $model->getDropSQL() . ";\n";
+}
 
 $db->exec($sql);
