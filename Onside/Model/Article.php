@@ -8,6 +8,7 @@ class Article extends Model
     protected $_definitions = array(
         'id' => 'INT(11) NOT NULL AUTO_INCREMENT',
         'title' => 'VARCHAR(100) NOT NULL',
+	'content' => 'TEXT',
 	'images' => 'TEXT',
 	'videos' => 'TEXT',
 	'author' => 'VARCHAR(100) NULL',
@@ -20,6 +21,7 @@ class Article extends Model
     
     public $id;
     public $title; /* searchable */
+    public $content;
     public $images;
     public $videos;
     public $author;
