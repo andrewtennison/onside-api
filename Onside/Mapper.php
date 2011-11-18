@@ -34,7 +34,7 @@ class Mapper
     
     public function getItem($id)
     {
-        return $this->_selectItem(array('id' => $id), array(), null);
+        return $this->_selectItem(array('id' => $id), array(), null, null);
     }
     
     // TODO: ->getItem($id) ->selectItem() ..... etc ....
@@ -47,7 +47,7 @@ class Mapper
         $args = $model->getValues();
         
         $id = $this->_db->prepared($sql, $args);
-        return $this->_selectItem(array('id' => $id), null, null);
+        return $this->_selectItem(array('id' => $id), null, null, null);
         
         return $this->_db->prepared($sql, $args);
     }
@@ -61,7 +61,7 @@ class Mapper
         $args = $model->getValues();
 
         $this->_db->prepared($sql, $args);
-        return $this->_selectItem(array('id' => $id), null, null);
+        return $this->_selectItem(array('id' => $id), null, null, null);
         
         return $this->_db->prepared($sql, $args);
     }
