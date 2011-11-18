@@ -5,6 +5,8 @@ use \Onside\Mapper\User;
 
 class UserController extends BaseController
 {
+    // TODO: allow filtering using follower
+//    protected $filters = array('channel');
     private $_mapper;
     
     public function __construct()

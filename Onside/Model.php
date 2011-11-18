@@ -29,7 +29,7 @@ class Model
     public function clearWhere() { $this->_where = array(); }
     public function clearJoin() { $this->_join = array(); }
     
-    public function setJoin($table, $leftfield, $rightfield, $fields = array(), $type = 'JOIN')
+    public function setJoin($table, $leftfield, $rightfield, $wherefield, $wherevalue, $fields = array(), $type = 'JOIN')
     {
 	$this->_join[] = array(
 	    'table' => $table,
@@ -37,19 +37,24 @@ class Model
 	    'fields' => $fields,
 	    'leftfield' => $leftfield,
 	    'rightfield' => $rightfield,
+	    'wherefield' => $wherefield,
+	    'wherevalue' => $wherevalue,
 	);
     }
     
     public function setWhere($leftside, $rightside, $operator = '=', $type = 'AND')
     {
-	// TODO: define where clauses considering AND/OR
-	
+//echo "\$leftside: $leftside, \$rightside: $rightside, \$operator: $operator, \$type: $type\n";
+//echo 'strpos(): ' . (false !== strpos($leftside, '`') ? 'TRUE' : 'FALSE') . "\n";
 	// only wrap field value if its a string and is not a mysql funcation
 	// so far on PASSWORD() function is trapped
 	if (is_string($rightside) && strpos($rightside, 'PASSWORD') === false) {
 	    $rightside = "'$rightside'";
 	}
-        $this->_where[] = '`' . $leftside . '` ' . $operator . ' ' . $rightside . ' ' . $type . ' ';
+//	$this->_where[] = '`' . $leftside . '` ' . $operator . ' ' . $rightside . ' ' . $type . ' ';
+        $this->_where[] = (false !== strpos($leftside, '`') ?
+	    $leftside . $operator . ' ' . $rightside . ' ' . $type . ' ':
+	    '`' . $leftside . '` ' . $operator . ' ' . $rightside . ' ' . $type . ' ');
     }
     
     public function clearSort()
@@ -77,8 +82,15 @@ class Model
 	// joins
 	if (count($this->_join) > 0) {
 	    foreach ($this->_join as $key => $join) {
+//echo print_r($join, true) . "\n";
+
+//$leftside = 't.`' . $join['leftfield'] . '`';
+//$rightside = "t$key" . '.`' . $join['rightfield'] . '`';
+//echo "JOIN ->setWhere($leftside, $rightside)\n";
 		// TODO: add select tables to sql
-		$sql .= ' ' . $join['type'] . ' ' . $this->_getTable($join['table']) . $key . ' ON t.' . $join['leftfield'] . ' = t' . $key . '.' . $join['rightfield'];
+		$sql .= ' ' . $join['type'] . ' ' . $this->_getTable($join['table']) . ' t' . $key . ' ON t.' . $join['leftfield'] . ' = t' . $key . '.' . $join['rightfield'];
+//echo "JOIN ->setWhere('t$key.`{$join['wherefield']}`', {$join['wherevalue']}, '=')\n";
+		$this->setWhere('t' . $key . '.`' . $join['wherefield'] . '`', $join['wherevalue']);
 	    }
 	}
 	
@@ -89,6 +101,8 @@ class Model
 //echo print_r($parts, true) . "\n";
 //echo 'strlen($parts[count($parts) - 1]): ' . strlen($parts[count($parts) - 1]) . "\n";
             $sql .= ' WHERE t.' . substr(implode('t.', $this->_where), 0, -strlen($parts[count($parts) - 1]) - 1);
+	    // TODO: such a hack :(
+	    $sql = str_replace('t.t', 't', $sql);
         }
         
         // sort order
@@ -99,6 +113,7 @@ class Model
         // limit
         if (null !== $this->_limit && count($this->_limit) === 2)
             $sql .= ' LIMIT ' . $this->_limit[0] . ', ' . $this->_limit[1];
+//file_put_contents('/tmp/oside', $sql);
 //echo '$sql: ' . $sql . "\n";
 //exit;
         return $sql;

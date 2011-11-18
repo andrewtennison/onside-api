@@ -27,9 +27,9 @@ class Mapper
         return $this->_deleteItem((int) $id);
     }
     
-    public function selectItem($where = array(), $sort = array(), $limit = null)
+    public function selectItem($where = array(), $sort = array(), $limit = null, $join = array())
     {
-        return $this->_selectItem($where, $sort, $limit);
+        return $this->_selectItem($where, $sort, $limit, $join);
     }
     
     public function getItem($id)
@@ -76,12 +76,26 @@ class Mapper
         return $this->_db->prepared($sql, $args);
     }
     
-    protected function _selectItem($where, $sort, $limit)
+    protected function _selectItem($where, $sort, $limit, $joins)
     {
 //echo '$where: ' . print_r($where, true) . ', $sort: ' . print_r($sort, true) . ', $limit: ' . print_r($limit, true) . "\n";
         $class = $this->_model;
         $model = $class::getModelFromArray(array());
 
+	if (count($joins) > 0) {
+	    foreach ($joins as $join) {
+		$model->setJoin(
+		    $join['table'],
+		    $join['leftfield'],
+		    $join['rightfield'],
+		    $join['wherefield'],
+		    $join['wherevalue'],
+		    $join['fields'],
+		    $join['type']
+		);
+	    }
+	}
+	
         // TODO: where clause
         // $leftside, $rightside, $operator = '=', $type = 'AND'
 //        $model->setWhere(array('id' => 30));

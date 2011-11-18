@@ -16,8 +16,9 @@ class ChannelController extends BaseController
     
     public function actionFollow($id, $data)
     {
+	$this->results[] = $this->_mapper->addFollower($data['channel'], $data['user']);
 	//throw new Exception('some message');
-	$this->errors[] = array('code' => '100', 'message' => "Action 'FOLLOW' not implemented yet ");
+//	$this->errors[] = array('code' => '100', 'message' => "Action 'FOLLOW' not implemented yet ");
     }
     
     public function actionDelete($id)

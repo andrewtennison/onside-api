@@ -13,7 +13,7 @@ class SportController extends BaseController
         $this->_mapper = new Channel($db);
     }
     
-    public function actionGet()
+    public function actionGet($data = array())
     {
 	$this->errors[] = array('code' => '100', 'message' => "Action 'GET' not implemented yet ");
     }
