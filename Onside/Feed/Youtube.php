@@ -15,6 +15,7 @@ class Youtube extends Feed
     public function parseJson($json)
     {
 	global $db;
+	$attr = '@attributes';
 	$mapper = new \Onside\Mapper\Article($db);
 	
 	$object = json_decode($json);
@@ -24,12 +25,24 @@ class Youtube extends Feed
 	    $publish = $article->published;
 	    $content = $article->content;
 	    $source = $article->id;
+	    $videos = '';
+	    
+	    // get video
+	    $feed = $this->sendCurlRequest($source);
+	    $feedobj = json_decode($feed);
+	    foreach ($feedobj->link as $link) {
+		if ($link->$attr->rel == 'alternate') {
+		    $videos = $link->$attr->href;
+		}
+	    }
+	    
 	    $data = array(
 		'author' => $author,
 		'title' => $title,
 		'publish' => $publish,
 		'content' => $content,
 		'source' => $source,
+		'videos' => $videos,
 	    );
 	    $article = $mapper->addItem($data);
 	}
