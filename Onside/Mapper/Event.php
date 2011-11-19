@@ -15,6 +15,6 @@ class Event extends Mapper
 	    'name' => array('LIKE', "%{$get['q']}%", 'OR'),
 	    'keywords' => array('LIKE', "%{$get['q']}%", 'OR'),
 	);
-	return $this->_selectItem($where, array(), null);
+	return $this->_selectItem($where, array(), null, array());
     }
 }

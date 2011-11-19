@@ -27,7 +27,7 @@ class Channel extends Mapper
 	    'name' => array('LIKE', "%{$get['q']}%", 'OR'),
 	    'keywords' => array('LIKE', "%{$get['q']}%", 'OR'),
 	);
-	return $this->_selectItem($where, array(), null);
+	return $this->_selectItem($where, array(), null, array());
     }
     
     public function selectItem($where = array(), $sort = array(), $limit = null, $join = array())
