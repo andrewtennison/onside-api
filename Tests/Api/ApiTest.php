@@ -61,7 +61,7 @@ class ApiTest extends Test
             )),
             array(new Api(
                 array(
-                    'uri' => '/article', 'method' => 'POST', 'get' => array(), 'post' => array('title' => 'sample title', 'source' => 'test sources', 'type' => 'rss')
+                    'uri' => '/article', 'method' => 'POST', 'get' => array(), 'post' => array('title' => 'sample title', 'source' => 'test sources', 'type' => 'rss', 'link' => 'uuid')
                 )
             )),
         );

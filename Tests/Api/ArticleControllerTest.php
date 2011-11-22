@@ -68,7 +68,7 @@ class ArticleControllerTest extends Test
     
     public function testActionPut()
     {
-        $this->controller->actionPut(array('title' => 'test title', 'source' => 'test source', 'type' => 'youtube'));
+        $this->controller->actionPut(array('title' => 'test title', 'source' => 'test source', 'type' => 'youtube', 'link' => 'uuid'));
         $data = $this->controller->getResults();
 	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
