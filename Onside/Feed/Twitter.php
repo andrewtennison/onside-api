@@ -24,7 +24,8 @@ class Twitter extends Feed
 	foreach ($object->results as $article) {
 	    $author = $article->from_user_name;
 	    $title = 'unmatched';
-	    $publish = $article->created_at;
+	    $date = date_parse_from_format('D, j M Y H:i:s O', $article->created_at);
+	    $publish = "{$date['year']}-{$date['month']}-{$date['day']} {$date['hour']}:{$date['minute']}:{$date['second']}";
 	    $content = $article->text;
 	    $link = $article->source;
 	    $data = array(

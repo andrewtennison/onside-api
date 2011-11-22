@@ -5,7 +5,7 @@ use \Onside\Mapper\Article;
 
 class ArticleController extends BaseController
 {
-    protected $filters = array('author', 'source');
+    protected $filters = array('author', 'source', 'link');
     private $_mapper;
     
     public function __construct()

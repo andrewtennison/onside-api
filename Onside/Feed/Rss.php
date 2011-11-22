@@ -26,7 +26,9 @@ class Rss extends Feed
 	foreach ($object->channel->item as $article) {
 	    $author = 'unknown';
 	    $title = $article->title;
-	    $publish = $article->pubDate;
+	    $date = date_parse_from_format('D, j M Y H:i:s e', $article->pubDate);
+	    $publish = "{$date['year']}-{$date['month']}-{$date['day']} {$date['hour']}:{$date['minute']}:{$date['second']}";
+//echo '$publish: ' . $publish . "\n";
 	    $content = $article->description;
 	    $link = $article->guid;
 	    $data = array(
