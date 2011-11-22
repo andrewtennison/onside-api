@@ -20,20 +20,21 @@ class Youtube extends Feed
 	$mapper = new \Onside\Mapper\Article($db);
 	
 	$object = json_decode($json);
+	$source = 'youtube';
 	foreach ($object->entry as $article) {
 	    $author = $article->author->name;
 	    $title = $article->title;
 	    $publish = $article->published;
 	    $content = $article->content;
-	    $source = $article->id;
+	    $link = $article->id;
 	    $videos = '';
 	    
 	    // get video
-	    $feed = $this->sendCurlRequest($source);
+	    $feed = $this->sendCurlRequest($link);
 	    $feedobj = json_decode($feed);
-	    foreach ($feedobj->link as $link) {
-		if ($link->$attr->rel == 'alternate') {
-		    $videos = $link->$attr->href;
+	    foreach ($feedobj->link as $lnk) {
+		if ($lnk->$attr->rel == 'alternate') {
+		    $videos = $lnk->$attr->href;
 		}
 	    }
 	    
@@ -44,6 +45,7 @@ class Youtube extends Feed
 		'publish' => $publish,
 		'content' => $content,
 		'source' => $source,
+		'link' => $link,
 		'videos' => $videos,
 	    );
 	    $article = $mapper->addItem($data);

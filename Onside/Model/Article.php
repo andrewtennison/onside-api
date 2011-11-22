@@ -14,6 +14,7 @@ class Article extends Model
 	'videos' => 'TEXT',
 	'author' => 'VARCHAR(100) NULL',
         'source' => 'VARCHAR(100) NOT NULL',
+	'link' => 'VARCHAR(100) NOT NULL',
 	'extended' => 'TEXT',
         'publish' => 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
 	'keywords' => 'TEXT',
@@ -28,6 +29,7 @@ class Article extends Model
     public $videos;
     public $author;
     public $source; /* searchable */
+    public $link;
     public $extended;
     public $publish;
     public $keywords;

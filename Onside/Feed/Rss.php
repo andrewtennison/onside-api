@@ -21,12 +21,14 @@ class Rss extends Feed
 	
 	$object = json_decode($json);
 	$image = $object->channel->image->url;
+	$source = 'bbc.co.uk';
+//	$link = $object->channel->link;
 	foreach ($object->channel->item as $article) {
 	    $author = 'unknown';
 	    $title = $article->title;
 	    $publish = $article->pubDate;
 	    $content = $article->description;
-	    $source = $article->guid;
+	    $link = $article->guid;
 	    $data = array(
 		'type' => $this->type,
 		'author' => $author,
@@ -34,6 +36,7 @@ class Rss extends Feed
 		'publish' => $publish,
 		'content' => $content,
 		'source' => $source,
+		'link' => $link,
 		'images' => $image,
 	    );
 	    $article = $mapper->addItem($data);
