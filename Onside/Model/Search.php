@@ -17,5 +17,6 @@ class Search extends Model
     public $user;
     public $name;
     public $query;
+    // hidden from exposure
 //    public $added;
 }
