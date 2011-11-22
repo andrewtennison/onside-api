@@ -9,7 +9,7 @@ class RequestTest extends Test
     {
         return array(
             array('/article', 'GET'),
-            array('/article/8475th3293fh3ufhejwfkn', 'GET'),
+            array('/article/1', 'GET'),
         );
     }
     

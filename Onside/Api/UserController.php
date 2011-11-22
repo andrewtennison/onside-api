@@ -34,13 +34,13 @@ class UserController extends BaseController
 	}
 //echo "\n" . '$result: ' . print_r($result, true) . "\n";
 //exit;
-if (count($result[0]) > 0) {
-    $this->results[] = $result;
-} else {
+	if (count($result) > 0) {
+	    $this->results[] = $result;
+	} else {
 //    $errors = new \Api\Errors(); $error = $errors->getError(206);
 //    throw new Exception(array($error->getResponse()), 405);
-    $this->errors[] = array('code' => 206, 'message' => 'Invalid username / password');
-}
+	    $this->errors[] = array('code' => 206, 'message' => 'Invalid username / password');
+	}
 //echo '$result: ' . print_r($this->results, true) . "\n";
 //	$this->errors[] = array('code' => '100', 'message' => "Action 'LOGIN' not implemented yet ");
     }

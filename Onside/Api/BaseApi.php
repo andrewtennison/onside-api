@@ -64,7 +64,7 @@ class BaseApi
 		method_exists($controller, 'action' . ucfirst($key))
 	    ) {
 		$action = 'action' . ucfirst($key);
-		$query = $_POST ? $this->request->getPost() : $this->request->getGet();
+		$query = $method ==='POST' ? $this->request->getPost() : $this->request->getGet();
 		$controller->$action($this->request->getParam('id'), $query);
 	    } else {
 		$error = $this->errors->getError(103, array(ucfirst($key), $controllerName));

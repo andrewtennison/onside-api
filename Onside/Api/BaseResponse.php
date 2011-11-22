@@ -63,7 +63,7 @@ abstract class BaseResponse
         }
 //echo "\nOBJECTS:\n" . print_r($objects, true) . "\n";
 //echo "\nOBJECTS:\n" . count($objects) . ':' . count($objects[0]) . "\n";
-        $response->count = count($objects[0]);
+        $response->count = array_key_exists(0, $objects) ? count($objects[0]) : 0;
         $response->resultset = array();
 	if ('search' === strtolower($this->responseType)) {
 	    if (!isset($objects[0]['articles']) && !isset($objects[0]['channels']) && !isset($objects[0]['events'])) {
