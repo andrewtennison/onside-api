@@ -1,8 +1,8 @@
 <?php
 namespace Tests;
 use \Tests\Test;
-use \Api\Error;
-use \Api\Errors;
+use \Onside\Error;
+use \Onside\Errors;
 
 class ErrorsTest extends Test
 {
@@ -52,7 +52,7 @@ class ErrorsTest extends Test
     {
 	$errors = new Errors();
 	$error = $errors->getError(103);
-	$this->assertInstanceOf('\Api\Error', $error);
+	$this->assertInstanceOf('\Onside\Error', $error);
 	$error->addValue('ActionName');
 	$error->addValue('ServiceName');
 	$response = $error->getResponse();

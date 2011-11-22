@@ -1,7 +1,7 @@
 <?php
 namespace Tests\Api;
 use \Tests\Test;
-use \Api\Request;
+use \Onside\Api\Request;
 
 class RequestTest extends Test
 {
@@ -23,13 +23,13 @@ class RequestTest extends Test
             array(substr($uri, 1), null)
         ;
         $request = new Request($uri, $method, $get, $post);
-        $this->assertInstanceOf('\Api\BaseRequest', $request);
+        $this->assertInstanceOf('\Onside\Api\BaseRequest', $request);
         $this->assertEquals($object, $request->getObject());
         $this->assertEquals($key, $request->getKey());
         $this->assertEquals($method, $request->getMethod());
 
-        $response = $request->getResponse('Person', 200);
-        $this->assertInstanceOf('\Api\BaseResponse', $response);
+        $response = $request->getResponse('Article', 200, array());
+        $this->assertInstanceOf('\Onside\Api\BaseResponse', $response);
     }
     
     public function getRequestsWithParams()
@@ -59,7 +59,7 @@ class RequestTest extends Test
     public function dataGetPost()
     {
         return array(
-            array(array('a' => 'b', 'abc' => 123)),
+            array(array('description' => 'some text updated', 'abc' => 123)),
         );
     }
     
@@ -74,7 +74,7 @@ class RequestTest extends Test
     
     public function testGetGet()
     {
-	$request = new Request('/article', 'GET', array('name' => 'test article'), null);
+	$request = new Request('/article', 'GET', array('title' => 'test article'), null);
 	$get = $request->getGet();
 	$this->assertInternalType('array', $get);
     }

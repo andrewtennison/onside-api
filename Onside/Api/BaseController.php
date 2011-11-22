@@ -1,5 +1,5 @@
 <?php
-namespace Api;
+namespace Onside\Api;
 
 abstract class BaseController
 {

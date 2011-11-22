@@ -1,7 +1,7 @@
 <?php
 namespace Tests\Api;
 use \Tests\Test;
-use \Api\UserController;
+use \Onside\Api\UserController;
 
 class UserControllerTest extends Test
 {
@@ -31,7 +31,7 @@ class UserControllerTest extends Test
     
     public function testActionGet()
     {
-        $this->controller->actionGet();
+        $this->controller->actionGet(array());
         $data = $this->controller->getResults();
 	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);

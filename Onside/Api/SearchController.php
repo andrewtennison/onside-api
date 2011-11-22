@@ -1,6 +1,6 @@
 <?php
-namespace Api;
-use \Api\BaseController;
+namespace Onside\Api;
+use \Onside\Api\BaseController;
 use \Onside\Mapper\Article;
 use \Onside\Mapper\Channel;
 use \Onside\Mapper\Event;

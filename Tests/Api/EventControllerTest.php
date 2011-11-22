@@ -1,7 +1,7 @@
 <?php
 namespace Tests\Api;
 use \Tests\Test;
-use \Api\EventController;
+use \Onside\Api\EventController;
 
 class EventControllerTest extends Test
 {

@@ -45,8 +45,11 @@ class Mapper
         $model = $class::getModelFromArray($data);
         $sql = $model->getInsertSQL();
         $args = $model->getValues();
-        
+//echo '$sql: ' . $sql . "\n";
+//echo '$args: ' . print_r($args, true) . "\n";
+//exit;
         $id = $this->_db->prepared($sql, $args);
+//echo '_addItem(): $id: ' . $id . "\n";
         return $this->_selectItem(array('id' => $id), null, null, null);
         
         return $this->_db->prepared($sql, $args);

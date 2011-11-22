@@ -1,7 +1,7 @@
 <?php
 namespace Tests\Api;
 use \Tests\Test;
-use \Api\Api;
+use \Onside\Api\Api;
 use \Tests\Api\MockController;
 
 class ApiTest extends Test
@@ -28,7 +28,7 @@ class ApiTest extends Test
     
     public function testApi()
     {
-        $this->assertInstanceOf('\Api\BaseApi', $this->api);
+        $this->assertInstanceOf('\Onside\Api\BaseApi', $this->api);
     }
     
     public function dataHttpMethods()
@@ -51,7 +51,7 @@ class ApiTest extends Test
             )),
             array(new Api(
                 array(
-                    'uri' => '/channel/follow', 'method' => 'GET', 'get' => array('id' => 123), 'post' => array()
+                    'uri' => '/channel/follow', 'method' => 'POST', 'get' => array(), 'post' => array('channel' => 123, 'user' => 321)
                 )
             )),
             array(new Api(
@@ -61,7 +61,7 @@ class ApiTest extends Test
             )),
             array(new Api(
                 array(
-                    'uri' => '/article', 'method' => 'POST', 'get' => array(), 'post' => array('title' => 'sample title', 'source' => 'test sources')
+                    'uri' => '/article', 'method' => 'POST', 'get' => array(), 'post' => array('title' => 'sample title', 'source' => 'test sources', 'type' => 'rss')
                 )
             )),
         );
@@ -73,7 +73,7 @@ class ApiTest extends Test
     public function testRun($api)
     {
         $result = $api->run();
-        $this->assertInstanceOf('\Api\Response', $result);
+        $this->assertInstanceOf('\Onside\Api\Response', $result);
         
     }
 }

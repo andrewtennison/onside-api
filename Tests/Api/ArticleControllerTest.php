@@ -1,7 +1,7 @@
 <?php
 namespace Tests\Api;
 use \Tests\Test;
-use \Api\ArticleController;
+use \Onside\Api\ArticleController;
 
 class ArticleControllerTest extends Test
 {
@@ -68,7 +68,7 @@ class ArticleControllerTest extends Test
     
     public function testActionPut()
     {
-        $this->controller->actionPut(array('title' => 'test title', 'source' => 'test source'));
+        $this->controller->actionPut(array('title' => 'test title', 'source' => 'test source', 'type' => 'youtube'));
         $data = $this->controller->getResults();
 	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);

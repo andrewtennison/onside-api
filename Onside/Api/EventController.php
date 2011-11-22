@@ -1,6 +1,6 @@
 <?php
-namespace Api;
-use \Api\BaseController;
+namespace Onside\Api;
+use \Onside\Api\BaseController;
 use \Onside\Mapper\Event;
 
 class EventController extends BaseController

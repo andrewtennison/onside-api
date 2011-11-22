@@ -1,5 +1,5 @@
 <?php
-namespace Api;
+namespace Onside;
 
 class Error
 {

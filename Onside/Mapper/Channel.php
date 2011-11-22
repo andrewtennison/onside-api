@@ -7,10 +7,16 @@ class Channel extends Mapper
     protected $_table = 'channel';
     protected $_model = '\Onside\Model\Channel';
     
+    public function te()
+    {
+	throw new \Exception('default exception', 99999);
+    }
+    
     public function addFollower($channel, $user)
     {
 	// TODO: check for existance first
 	$model = \Onside\Model\Follower::getModelFromArray(array('channel' => $channel, 'user' => $user));
+
 	$sql = $model->getInsertSQL();
         $args = $model->getValues();
 

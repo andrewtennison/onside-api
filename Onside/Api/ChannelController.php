@@ -1,6 +1,6 @@
 <?php
-namespace Api;
-use \Api\BaseController;
+namespace Onside\Api;
+use \Onside\Api\BaseController;
 use \Onside\Mapper\Channel;
 
 class ChannelController extends BaseController
@@ -17,7 +17,12 @@ class ChannelController extends BaseController
     public function actionFollow($id, $data)
     {
 	$this->results[] = $this->_mapper->addFollower($data['channel'], $data['user']);
-	//throw new Exception('some message');
+    }
+    
+    public function actionUnfollow($id, $data)
+    {
+	$this->_mapper->te();
+//    throw new Exception(array('some message standard exception'), 999);
 //	$this->errors[] = array('code' => '100', 'message' => "Action 'FOLLOW' not implemented yet ");
     }
     

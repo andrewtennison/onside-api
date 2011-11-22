@@ -1,5 +1,5 @@
 <?php
-namespace Api;
+namespace Onside\Api;
 
 abstract class BaseResponse
 {
@@ -50,6 +50,7 @@ abstract class BaseResponse
     
     protected function parseResponse($objects, $errors)
     {
+//	echo print_r($objects, true) . "\n";
         $response = new \stdClass;
         $response->service = $this->responseType;
 //        $response->code = $this->responseCode;
@@ -60,6 +61,8 @@ abstract class BaseResponse
             }
             return $response;
         }
+//echo "\nOBJECTS:\n" . print_r($objects, true) . "\n";
+//echo "\nOBJECTS:\n" . count($objects) . ':' . count($objects[0]) . "\n";
         $response->count = count($objects[0]);
         $response->resultset = array();
 	if ('search' === strtolower($this->responseType)) {
@@ -73,6 +76,8 @@ abstract class BaseResponse
         foreach ($objects as $row) {
 	    $response->resultset[strtolower($this->responseType) . 's'] = $row;
         }
+//echo "\n" . '$response: ' . print_r($response, true) . "\n";
+	
         return $response;
     }
 }

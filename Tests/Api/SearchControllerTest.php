@@ -1,7 +1,7 @@
 <?php
 namespace Tests\Api;
 use \Tests\Test;
-use \Api\SearchController;
+use \Onside\Api\SearchController;
 
 class SearchControllerTest extends Test
 {
@@ -19,6 +19,7 @@ class SearchControllerTest extends Test
     
     public function testActionDelete()
     {
+        $this->markTestIncomplete('test for error response');
         $this->controller->actionDelete(1);
         $data = $this->controller->getResults();
 	$errors = $this->controller->getErrors();
@@ -31,7 +32,7 @@ class SearchControllerTest extends Test
     
     public function testActionGet()
     {
-        $this->controller->actionGet();
+        $this->controller->actionGet(array('q' => 'football'));
         $data = $this->controller->getResults();
 	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
@@ -43,6 +44,7 @@ class SearchControllerTest extends Test
     
     public function testActionPost()
     {
+	$this->markTestIncomplete('test for error response');
         $this->controller->actionPost(1, array());
         $data = $this->controller->getResults();
 	$errors = $this->controller->getErrors();
@@ -55,6 +57,7 @@ class SearchControllerTest extends Test
     
     public function testActionPut()
     {
+	$this->markTestIncomplete('test for error response');
         $this->controller->actionPut(array());
         $data = $this->controller->getResults();
 	$errors = $this->controller->getErrors();
@@ -67,7 +70,7 @@ class SearchControllerTest extends Test
     
     public function testActionList()
     {
-        $this->controller->actionList(array());
+        $this->controller->actionList(array('q' => 'football'));
         $data = $this->controller->getResults();
 	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);

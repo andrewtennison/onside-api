@@ -33,7 +33,7 @@ class AutoloaderTest extends Test
             array('Onside\Onside'),
             array('Onside\Queue'),
 //            array('Onside\Rule'),
-            array('Api\ArticleController'),
+            array('Onside\Api\ArticleController'),
         );
     }
     

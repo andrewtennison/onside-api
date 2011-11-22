@@ -1,6 +1,6 @@
 <?php
-namespace Api;
-use \Api\Error;
+namespace Onside;
+use \Onside\Error;
 
 class Errors
 {

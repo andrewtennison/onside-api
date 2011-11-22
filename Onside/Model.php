@@ -235,6 +235,7 @@ SQL;
     {
         $fields = array();
         $refect = new \ReflectionClass($this);
+	$defaults = $refect->getDefaultProperties();
         foreach ($refect->getProperties(\ReflectionProperty::IS_PUBLIC) as $reflectp) {
             if ('id' !== $reflectp->name)
                 $fields[] = $reflectp->name;

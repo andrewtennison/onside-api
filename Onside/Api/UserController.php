@@ -1,6 +1,6 @@
 <?php
-namespace Api;
-use \Api\BaseController;
+namespace Onside\Api;
+use \Onside\Api\BaseController;
 use \Onside\Mapper\User;
 
 class UserController extends BaseController
@@ -21,15 +21,19 @@ class UserController extends BaseController
 //echo '$data: ' . print_r($data, true) . "\n";
 	if (array_key_exists('email', $data) && array_key_exists('password', $data)) {
 	    $result = $this->_mapper->doOnsideLogin($data['email'], $data['password']);
-	} else if (array_key_exists('facebook', $data)) {
-	    $result = $this->_mapper->doFacebookLogin($data['facebook']);
-	} else if (array_key_exists('twitter', $data)) {
-	    $result = $this->_mapper->doTwitterLogin($data['twitter']);
-	} else if (array_key_exists('google', $data)) {
-	    $result = $this->_mapper->doGoogleLogin($data['google']);
+	} else if (array_key_exists('email', $data) && array_key_exists('facebook', $data)) {
+	    $result = $this->_mapper->doFacebookLogin($data['facebook'], $data['email']);
+	} else if (array_key_exists('email', $data) && array_key_exists('twitter', $data)) {
+	    $result = $this->_mapper->doTwitterLogin($data['twitter'], $data['email']);
+	} else if (array_key_exists('email', $data) && array_key_exists('google', $data)) {
+	    $result = $this->_mapper->doGoogleLogin($data['google'], $data['email']);
 	} else {
 	    // TODO: handle invalid request
+	    $result = array();
+	    $this->errors[] = array('code' => 201, 'message' => 'Missing required field \'?\'');
 	}
+//echo "\n" . '$result: ' . print_r($result, true) . "\n";
+//exit;
 if (count($result[0]) > 0) {
     $this->results[] = $result;
 } else {

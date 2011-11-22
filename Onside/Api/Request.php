@@ -1,6 +1,6 @@
 <?php
-namespace Api;
-use \Api\BaseRequest;
+namespace Onside\Api;
+use \Onside\Api\BaseRequest;
 
 class Request extends BaseRequest
 {

@@ -1,6 +1,6 @@
 <?php
-namespace Api;
-use \Api\BaseApi;
+namespace Onside\Api;
+use \Onside\Api\BaseApi;
 
 class Api extends BaseApi
 {

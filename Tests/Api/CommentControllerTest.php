@@ -1,7 +1,7 @@
 <?php
 namespace Tests\Api;
 use \Tests\Test;
-use \Api\CommentController;
+use \Onside\Api\CommentController;
 
 class CommentControllerTest extends Test
 {
@@ -54,7 +54,7 @@ class CommentControllerTest extends Test
     
     public function testActionPost()
     {
-        $this->controller->actionPost(1, array('name' => 'test discussion'));
+        $this->controller->actionPost(1, array('comment' => 'test comment'));
         $data = $this->controller->getResults();
 	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
@@ -65,12 +65,12 @@ class CommentControllerTest extends Test
     
     public function testActionPut()
     {
-        $this->controller->actionPut(array('name' => 'test discussion'));
+        $this->controller->actionPut(array('comment' => 'test comment'));
         $data = $this->controller->getResults();
 	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
-        $this->assertEquals(0, count($data));
+        $this->assertGreaterThan(0, count($data));
         $this->assertInternalType('array', $errors);
-        $this->assertGreaterThan(0, count($errors));
+        $this->assertEquals(0, count($errors));
     }
 }

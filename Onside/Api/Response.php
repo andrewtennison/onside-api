@@ -1,6 +1,6 @@
 <?php
-namespace Api;
-use \Api\BaseResponse;
+namespace Onside\Api;
+use \Onside\Api\BaseResponse;
 
 class Response extends BaseResponse
 {

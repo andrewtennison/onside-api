@@ -7,6 +7,7 @@ class Article extends Model
     protected $_table = 'article';
     protected $_definitions = array(
         'id' => 'INT(11) NOT NULL AUTO_INCREMENT',
+	'type' => 'ENUM("rss","twitter","youtube") NOT NULL Default "rss"', // TODO: update structure [rss/youtube/twitter/google]
         'title' => 'VARCHAR(100) NOT NULL',
 	'content' => 'TEXT',
 	'images' => 'TEXT',
@@ -20,6 +21,7 @@ class Article extends Model
     );
     
     public $id;
+    public $type;
     public $title; /* searchable */
     public $content;
     public $images;

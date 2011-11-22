@@ -1,5 +1,5 @@
 <?php
-namespace Api;
+namespace Onside\Api;
 
 class BaseApi
 {
@@ -21,14 +21,14 @@ class BaseApi
             $this->directReseponse = false;
             $this->request = new Request($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD'], $_GET, $_POST);
         }
-	$this->errors = new \Api\Errors();
+	$this->errors = new \Onside\Errors();
     }
     
     public function run()
     {
 	try {
 	    $code = 200;
-	    
+//throw new Exception('this is an api exception');
 	    // check request, authorization
 	    $this->getInvalidResponse($this->request->getObject());
 	    
@@ -111,7 +111,7 @@ class BaseApi
     
     protected function getControllerClass($controllerName)
     {
-	$className = '\Api\\' . ucfirst($controllerName) . 'Controller';
+	$className = '\Onside\Api\\' . ucfirst($controllerName) . 'Controller';
         return new $className();
     }
     

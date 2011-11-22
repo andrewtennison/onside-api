@@ -7,7 +7,10 @@ class Db extends PDO
     public function prepared($sql, array $args = array())
     {
 //echo '$sql: ' . $sql . "\n";
-//echo '$args: ' . print_r($args, true) . "\n";
+//echo '$args: ';
+//var_dump($args);
+//. print_r($args, true) .
+//echo "\n";
         try {
             $stmt = $this->prepare($sql);
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -20,13 +23,14 @@ class Db extends PDO
             }
             
             $r = $stmt->execute();
+//echo print_r($this->errorInfo(), true) . "\n";
 //echo '$r: ' . ($r ? 'TRUE' : 'FALSE') . "\n";
             if ($this->_isNonModifyingQuery($sql))
                 return $stmt;
         } catch (PDOException $e) {
             // TODO: return error object
-            throw $e;
 //echo print_r($e->getTraceAsString(), true) . "\n";
+            throw $e;
         }
 //echo 'lastInsertId(): ' . $this->lastInsertId() . "\n";
 //echo 'rowCount(): ' . $stmt->rowCount() . "\n";

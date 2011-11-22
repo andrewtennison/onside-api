@@ -1,6 +1,6 @@
 <?php
-namespace Api;
-use \Api\Response;
+namespace Onside\Api;
+use \Onside\Api\Response;
 
 abstract class BaseRequest
 {

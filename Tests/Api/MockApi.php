@@ -1,6 +1,6 @@
 <?php
 namespace Tests\Api;
-use \Api\BaseApi;
+use \Onside\Api\BaseApi;
 use \Tests\Api\MockController;
 
 class MockApi extends BaseApi
