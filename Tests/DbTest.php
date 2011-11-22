@@ -52,6 +52,7 @@ class DbTest extends Test
     
     public function testReturnRowCount()
     {
+	$this->markTestIncomplete('waiting for logs table');
         $db = $this->getValidDb();
         $count = $db->prepared('INSERT INTO `logs` (message) VALUES("message one"), ("message two")');
         $this->assertGreaterThan(1, $count);

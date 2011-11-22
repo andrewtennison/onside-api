@@ -33,10 +33,10 @@ class LogTest extends Test
     
     public function testWrite()
     {
-	$db_before = $this->countTable('logs');
-        $this->assertTrue($this->logdb->write('this is an example logging message'));
-	$db_after = $this->countTable('logs');
-	$this->assertGreaterThan($db_before, $db_after);
+//	$db_before = $this->countTable('logs');
+//        $this->assertTrue($this->logdb->write('this is an example logging message'));
+//	$db_after = $this->countTable('logs');
+//	$this->assertGreaterThan($db_before, $db_after);
 	
 	$file_before = file_get_contents($this->config->log->file);
         $this->assertTrue($this->logfile->write('this is an example logging message'));

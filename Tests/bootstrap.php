@@ -20,10 +20,11 @@ use \Onside\Db;
 $db = new Db('mysql:host=127.0.0.1;user=onside;pass=On2011Side;dbname=onside_unittest', 'onside', 'On2011Side');
 $db->setAttribute(Db::ATTR_ERRMODE, Db::ERRMODE_EXCEPTION);
 
+$sql = '';
 foreach ($tables as $table) {
     $class = '\Onside\Model\\' . ucfirst($table);
     $model = $class::getModelFromArray(array());
-    $sql = $model->getDropSQL() . ";\n";
+    $sql .= $model->getDropSQL() . ";\n";
     $sql .= $model->getCreateSQL() . ";\n";
 }
 
