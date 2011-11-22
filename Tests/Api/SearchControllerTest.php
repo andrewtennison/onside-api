@@ -70,7 +70,7 @@ class SearchControllerTest extends Test
     
     public function testActionList()
     {
-        $this->controller->actionList(array('q' => 'football'));
+        $this->controller->actionList(null, array('user' => 1));
         $data = $this->controller->getResults();
 	$errors = $this->controller->getErrors();
         $this->assertInternalType('array', $data);
