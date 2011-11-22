@@ -10,15 +10,17 @@ try {
 
     require_once __DIR__ . '/../bootstrap.php';
 
-    $a = new \Api\Api();
+    $a = new \Onside\Api\Api();
     $res = $a->run();
     $res->sendResponse();
 
 } catch (Exception $e) {
+//    throw $e;
     if (!headers_sent()) {
         header("HTTP/1.1 500 error");
         header('Content-Type:application/javascript;charset=UTF-8');
     }
     echo json_encode(array('Code' => $e->getCode(), 'Message' => 'something bad has happened', 'Trace' => $e->getTraceAsString()));
+//    throw $e;*/
     exit(1);
 }
