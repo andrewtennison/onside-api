@@ -4,6 +4,7 @@ use \Onside\Api\BaseController;
 use \Onside\Mapper\Article;
 use \Onside\Mapper\Channel;
 use \Onside\Mapper\Event;
+use \Onside\Mapper\Search;
 
 class SearchController extends BaseController
 {
@@ -16,6 +17,7 @@ class SearchController extends BaseController
 	    'article' => new Article($db),
 	    'channel' => new Channel($db),
 	    'event' => new Event($db),
+	    'search' => new Search($db),
 	);
     }
     
@@ -29,8 +31,15 @@ class SearchController extends BaseController
 	);
     }
     
-    public function actionList()
+    public function actionSave($id, $data)
     {
-	$this->errors[] = array('code' => '100', 'message' => "Action 'LIST' not implemented yet ");
+	$this->results[] = $this->mappers['search']->addItem($data);
+//	$this->errors[] = array('code' => '100', 'message' => "Action 'SAVE' not implemented yet ");
+    }
+    
+    public function actionList($id, $data)
+    {
+	$this->results[] = $this->mappers['search']->selectItem($data);
+//	$this->errors[] = array('code' => '100', 'message' => "Action 'LIST' not implemented yet ");
     }
 }

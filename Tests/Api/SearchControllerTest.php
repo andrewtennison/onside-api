@@ -79,4 +79,7 @@ class SearchControllerTest extends Test
         $this->assertInternalType('array', $errors);
         $this->assertGreaterThan(0, count($errors));
     }
+    
+    public function testActionSave()
+    {}
 }

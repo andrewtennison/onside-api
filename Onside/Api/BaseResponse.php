@@ -66,11 +66,16 @@ abstract class BaseResponse
         $response->count = count($objects[0]);
         $response->resultset = array();
 	if ('search' === strtolower($this->responseType)) {
-	    $response->count = count($objects[0]['articles']) + count($objects[0]['channels']) + count($objects[0]['events']);
-//die(print_r($objects, true));
-	    $response->resultset['articles'] = $objects[0]['articles'];
-	    $response->resultset['channels'] = $objects[0]['channels'];
-	    $response->resultset['events'] = $objects[0]['events'];
+	    if (!isset($objects[0]['articles']) && !isset($objects[0]['channels']) && !isset($objects[0]['events'])) {
+		$response->resultset['searches'] = $objects[0];
+	    } else {
+		$response->count = count($objects[0]['articles']) + count($objects[0]['channels']) + count($objects[0]['events']);
+    //die(print_r($objects, true));
+		$response->resultset['articles'] = $objects[0]['articles'];
+		$response->resultset['channels'] = $objects[0]['channels'];
+		$response->resultset['events'] = $objects[0]['events'];
+	    }
+	    
 	    return $response;
 	}
         foreach ($objects as $row) {
