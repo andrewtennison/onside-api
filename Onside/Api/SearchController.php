@@ -34,12 +34,10 @@ class SearchController extends BaseController
     public function actionSave($id, $data)
     {
 	$this->results[] = $this->mappers['search']->addItem($data);
-//	$this->errors[] = array('code' => '100', 'message' => "Action 'SAVE' not implemented yet ");
     }
     
     public function actionList($id, $data)
     {
 	$this->results[] = $this->mappers['search']->selectItem($data);
-//	$this->errors[] = array('code' => '100', 'message' => "Action 'LIST' not implemented yet ");
     }
 }
