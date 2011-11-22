@@ -25,9 +25,14 @@
                             return data;
                         },
                         success: function(data){
+			    console.log(data);
                             //json = data;
                             //$('textarea[name=response]').val(data.toString());
-                        }
+                        },
+			error: function(code, status){
+			    console.log(code);
+			    console.log('STATUS: '+status);
+			}
                     });
                     return false;
                 });
