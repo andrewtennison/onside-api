@@ -5,6 +5,7 @@ use \Onside\Feed;
 class Rss extends Feed
 {
     protected $isXml = true;
+    protected $type = 'rss';
     
     public function getFeed()
     {
@@ -27,6 +28,7 @@ class Rss extends Feed
 	    $content = $article->description;
 	    $source = $article->guid;
 	    $data = array(
+		'type' => $this->type,
 		'author' => $author,
 		'title' => $title,
 		'publish' => $publish,

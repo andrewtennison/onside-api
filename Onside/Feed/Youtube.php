@@ -5,6 +5,7 @@ use \Onside\Feed;
 class Youtube extends Feed
 {
     protected $isXml = true;
+    protected $type = 'youtube';
     
     public function getFeed()
     {
@@ -37,6 +38,7 @@ class Youtube extends Feed
 	    }
 	    
 	    $data = array(
+		'type' => $this->type,
 		'author' => $author,
 		'title' => $title,
 		'publish' => $publish,

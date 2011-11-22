@@ -5,6 +5,7 @@ use \Onside\Feed;
 class Twitter extends Feed
 {
     protected $isJson = true;
+    protected $type = 'twitter';
     
     public function getFeed()
     {
@@ -26,6 +27,7 @@ class Twitter extends Feed
 	    $content = $article->text;
 	    $source = $article->source;
 	    $data = array(
+		'type' => $this->type,
 		'author' => $author,
 		'title' => $title,
 		'publish' => $publish,
