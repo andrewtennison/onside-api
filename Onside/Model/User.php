@@ -15,6 +15,8 @@ class User extends Model
 	'google' => 'VARCHAR(50) NULL',
 	'language' => 'VARCHAR(5) NOT NULL default "en_gb"',
         'added' => 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
+	'admin' => 'BOOLEAN NOT NULL Default false',
+	'enabled' => 'BOOLEAN NOT NULL Default false',
     );
     
     public $id;
@@ -26,4 +28,6 @@ class User extends Model
     public $google;
     public $language;
     public $added;
+    public $admin;
+    public $enabled;
 }
