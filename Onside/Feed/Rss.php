@@ -20,7 +20,7 @@ class Rss extends Feed
 	$mapper = new \Onside\Mapper\Article($db);
 	
 	$object = json_decode($json);
-	$image = $object->channel->image->url;
+//	$image = $object->channel->image->url;
 	$source = 'bbc.co.uk';
 //	$link = $object->channel->link;
 	foreach ($object->channel->item as $article) {
@@ -39,7 +39,7 @@ class Rss extends Feed
 		'content' => $content,
 		'source' => $source,
 		'link' => $link,
-		'images' => $image,
+//		'images' => $image,
 	    );
 	    $article = $mapper->addItem($data);
 	}
