@@ -27,7 +27,7 @@ class SearchController extends BaseController
         $this->results[] = array(
 	    'channels' => $this->mappers['channel']->searchItem($get),
 	    'events' => $this->mappers['event']->searchItem($get),
-	    'articles' => $this->mappers['article']->searchItem($get),
+	    'articles' => $this->mappers['article']->searchItem($get, array('publish' => false)),
 	);
     }
     

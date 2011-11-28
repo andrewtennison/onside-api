@@ -114,8 +114,10 @@ class Mapper
         
         // sort order
         if (count($sort) > 0) {
-            foreach ($sort as $field => $order)
+            foreach ($sort as $field => $order) {
+//echo "SORT: ($field, $order)\n";
                 $model->setSort($field, $order);
+	    }
         }
         
         // limit

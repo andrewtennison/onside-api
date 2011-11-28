@@ -22,7 +22,7 @@ class ArticleController extends BaseController
     public function actionGet($data = array())
     {
 	$where = $this->getAcceptedFilters($data);
-        $this->results[] = $this->_mapper->selectItem($where);
+        $this->results[] = $this->_mapper->selectItem($where, array('publish' => false));
     }
     
     public function actionItem($id)
