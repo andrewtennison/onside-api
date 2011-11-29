@@ -7,8 +7,7 @@ class Article extends Model
     protected $_table = 'article';
     protected $_definitions = array(
         'id' => 'INT(11) NOT NULL AUTO_INCREMENT',
-	'type' => 'ENUM("rss","twitter","youtube") NOT NULL Default "rss"', // TODO: update structure [rss/youtube/twitter/google]
-        'title' => 'VARCHAR(100) NOT NULL',
+	'type' => 'ENUM("rss","twitter","youtube","google") NOT NULL Default "rss"',        'title' => 'VARCHAR(100) NOT NULL',
 	'content' => 'TEXT',
 	'images' => 'TEXT',
 	'videos' => 'TEXT',
@@ -18,6 +17,7 @@ class Article extends Model
 	'extended' => 'TEXT',
         'publish' => 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
 	'keywords' => 'TEXT',
+	'original' => 'TEXT',
 //        'added' => 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
     );
     
@@ -33,6 +33,7 @@ class Article extends Model
     public $extended;
     public $publish;
     public $keywords;
+    public $original;
 //    public $added;
 }
 

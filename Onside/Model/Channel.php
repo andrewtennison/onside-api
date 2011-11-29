@@ -15,6 +15,7 @@ class Channel extends Model
         'type' => 'VARCHAR(50)',
         'level' => 'INT(1) NOT NULL default 1',
 	'keywords' => 'TEXT',
+	'branding' => 'VARCHAR(100) NULL',
         'geolat' => 'DECIMAL(10,6) default NULL',
         'geolng' => 'DECIMAL(10,6) default NULL',
 
@@ -30,6 +31,7 @@ class Channel extends Model
     public $type; /* searchable */
     public $level;
     public $keywords; /* searchable */
+    public $branding;
     public $geolat;
     public $geolng;
 //    public $added;

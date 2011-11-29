@@ -15,4 +15,35 @@ class Article extends Mapper
 	);
 	return $this->_selectItem($where, $sort, null, array());
     }
+    
+    
+    public function selectItem($where = array(), $sort = array(), $limit = null, $join = array())
+    {
+	if (array_key_exists('channel', $where)) {
+//	    $join[] = array(
+//		'table' => 'channel',
+//		'leftfield' => 'id',
+//		'rightfield' => 'channel',
+//		'type' => 'JOIN',
+//		'fields' => array(),
+//		'wherefield' => 'user',
+//		'wherevalue' => $where['user'],
+//	    );
+	    unset($where['channel']);
+	}
+	if (array_key_exists('event', $where)) {
+//	    $join[] = array(
+//		'table' => 'channel',
+//		'leftfield' => 'id',
+//		'rightfield' => 'channel',
+//		'type' => 'JOIN',
+//		'fields' => array(),
+//		'wherefield' => 'user',
+//		'wherevalue' => $where['user'],
+//	    );
+	    unset($where['event']);
+	}
+	
+        return $this->_selectItem($where, $sort, $limit, $join);
+    }
 }
