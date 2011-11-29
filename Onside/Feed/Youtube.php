@@ -7,6 +7,24 @@ class Youtube extends Feed
     protected $isXml = true;
     protected $type = 'youtube';
     
+    protected $baseUrl = 'http://gdata.youtube.com/feeds/api/users/{user}/uploads?orderby=updated';
+    protected $urls = array();
+    
+    public function addUser($user)
+    {
+	$this->urls[] = preg_replace('/\{user\}/', $user, $this->baseUrl);
+    }
+    
+    public function getFeeds()
+    {
+	foreach ($this->urls as $url) {
+echo '$url: ' . $url . "\n";
+	    $json = $this->sendCurlRequest($url);
+//file_put_contents('/tmp/' . $url, $json);
+	    $this->parseJson($json);
+	}
+    }
+    
     public function getFeed()
     {
 	$url = 'http://gdata.youtube.com/feeds/api/users/LiverpoolFC/uploads?orderby=updated';
@@ -47,8 +65,15 @@ class Youtube extends Feed
 		'source' => $source,
 		'link' => $link,
 		'videos' => $videos,
+		'original' => json_encode($article),
 	    );
+	    // TODO: Fix
+if (gettype($content) == 'object') {
+//echo '$article: ' . json_encode($article) . "\n";
+//echo print_r($data, true) . "\n";
+} else {
 	    $article = $mapper->addItem($data);
+}
 	}
     }
 }

@@ -40,6 +40,7 @@ class Rss extends Feed
 		'source' => $source,
 		'link' => $link,
 //		'images' => $image,
+		'original' => json_encode($article),
 	    );
 	    $article = $mapper->addItem($data);
 	}

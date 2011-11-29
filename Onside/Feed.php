@@ -6,6 +6,8 @@ abstract class Feed
     protected $isJson = false;
     protected $isXml = false;
     
+    protected $baseUrl;
+    
     abstract public function getFeed();
 //    public function addSource($options);
 //    public function storeToFile($filename = null);

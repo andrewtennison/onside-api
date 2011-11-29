@@ -7,6 +7,23 @@ class Twitter extends Feed
     protected $isJson = true;
     protected $type = 'twitter';
     
+    protected $baseUrl = 'http://search.twitter.com/search.json?q=';
+    protected $urls = array();
+    
+    public function addUser($user)
+    {
+	$this->urls[] = $this->baseUrl . $user;
+    }
+    
+    public function getFeeds()
+    {
+	foreach ($this->urls as $url) {
+//echo '$url: ' . $url . "\n";
+	    $json = $this->sendCurlRequest($url);
+	    $this->parseJson($json);
+	}
+    }
+    
     public function getFeed()
     {
 	$url = 'http://search.twitter.com/search.json?q=football';
@@ -27,15 +44,18 @@ class Twitter extends Feed
 	    $date = date_parse_from_format('D, j M Y H:i:s O', $article->created_at);
 	    $publish = "{$date['year']}-{$date['month']}-{$date['day']} {$date['hour']}:{$date['minute']}:{$date['second']}";
 	    $content = $article->text;
-	    $link = $article->source;
+	    $link = html_entity_decode($article->source); // extract url only
+	    $image = isset($article->profile_image_url) ? $article->profile_image_url : '';
 	    $data = array(
 		'type' => $this->type,
 		'author' => $author,
 		'title' => $title,
+		'images' => $image,
 		'publish' => $publish,
 		'content' => $content,
 		'source' => $source,
 		'link' => $link,
+		'original' => json_encode($article),
 	    );
 	    $article = $mapper->addItem($data);
 	}
