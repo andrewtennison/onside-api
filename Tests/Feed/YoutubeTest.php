@@ -24,17 +24,17 @@ class YoutubeTest extends Test
     public function testGetFeeds()
     {
 	$users = array(
-	    'mcfcofficial',
-	    'LiverpoolFC',
-	    'SwfcHighlights',
-	    'ProductionsWazza',
-	    'wwwcyclingtv',
-	    'badmintonpassion',
-	    'playgolf'
+	    'Manchester City Football Club' => 'mcfcofficial',
+	    'Liverpool Football Club' => 'LiverpoolFC',
+	    'Sheffield Wednesday Football Club' => 'SwfcHighlights',
+	    'Wayne Rooney' => 'ProductionsWazza',
+	    'UK Cycling' => 'wwwcyclingtv',
+	    'Badminton' => 'badmintonpassion',
+	    'Golf' => 'playgolf'
 	);
 	$youtube = new Youtube();
-	foreach ($users as $user) {
-	    $youtube->addUser($user);
+	foreach ($users as $channel => $user) {
+	    $youtube->addUser($user, $channel);
 	}
 //echo print_r($youtube, true) . "\n";
 	$result = $youtube->getFeeds();

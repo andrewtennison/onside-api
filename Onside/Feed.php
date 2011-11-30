@@ -40,4 +40,20 @@ abstract class Feed
 	}
 	return $feed;
     }
+    
+    protected function associateWithChannel($article, $channel)
+    {
+//echo "associateWithChannel($article, $channel)\n";
+	global $db;
+	
+	// Lookup channel id from name
+	$model = \Onside\Model\Channel::getModelFromArray(array());
+	$model->setWhere('name', $channel);
+	$sql = $model->getSelectSQL();
+        $args = $model->getValues();
+	$c = $db->prepared($sql, $args)->fetchAll(\PDO::FETCH_CLASS, '\Onside\Model\Channel');
+	
+	$model = \Onside\Model\Carticle::getModelFromArray(array('article' => $article, 'channel' => $c[0]->id));
+	$carticle = $db->prepared($model->getInsertSQL(), $model->getValues());
+    }
 }

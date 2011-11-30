@@ -12,6 +12,7 @@ class Model
     
     protected $_schema;
     protected $_table;
+    protected $_index = array();
     protected $_definitions = array();
     
     final static public function getModelFromArray($data)
@@ -152,7 +153,7 @@ class Model
         return <<<SQL
 CREATE TABLE IF NOT EXISTS {$this->_getTable()} (
     {$this->_getFieldDefinitions()},
-    PRIMARY KEY (`id`)
+    {$this->_getIndexDefinition()}
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 
 SQL;
     }
@@ -172,6 +173,11 @@ SQL;
         }
         
         return true;
+    }
+    
+    private function _getIndexDefinition()
+    {
+	return implode(",\n", array_merge(array('PRIMARY KEY (`id`)'), $this->_index));
     }
     
     private function _validateField($field)

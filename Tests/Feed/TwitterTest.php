@@ -24,57 +24,73 @@ class TwitterTest extends Test
     public function testGetFeeds()
     {
 	$users = array(
-	    '@mcfc',
-	    '@Liam_Stirrup',
-	    '@mcfcblurbs',
-	    '@dan_mancity',
-	    '@OliverKayTimes',
-	    '@ManCity_FFC',
+	    'Manchester City Football Club' => array(
+		'@mcfc',
+		'@Liam_Stirrup',
+		'@mcfcblurbs',
+		'@dan_mancity',
+		'@OliverKayTimes',
+		'@ManCity_FFC',
+	    ),
 	    
-	    '@LFCTV',
-	    '@JakeLFCTV',
-	    '@LFCTransferSpec',
-	    '@MicroLFC',
-	    '@AnfieldOpinion',
-	    '@anfieldonline',
+	    'Liverpool Football Club' => array(
+		'@LFCTV',
+		'@JakeLFCTV',
+		'@LFCTransferSpec',
+		'@MicroLFC',
+		'@AnfieldOpinion',
+		'@anfieldonline',
+	    ),
 	    
-	    '@Owlstalk',
-	    '@wednesdayite',
-	    '@mark_hazell',
-	    '@KivoLee',
-	    '@Robert_swfc',
-	    '@OwlsAlive',
+	    'Sheffield Wednesday Football Club' => array(
+		'@Owlstalk',
+		'@wednesdayite',
+		'@mark_hazell',
+		'@KivoLee',
+		'@Robert_swfc',
+		'@OwlsAlive',
+	    ),
 	    
-	    '@WayneRooney',
-	    '@manchesterunews',
-	    '@UnitedsRedArmy',
-	    '@unitednights',
-	    '@GG_ManUtd',
-	    '@ViewFromTier3',
+	    'Wayne Rooney' => array(
+		'@WayneRooney',
+		'@manchesterunews',
+		'@UnitedsRedArmy',
+		'@unitednights',
+		'@GG_ManUtd',
+		'@ViewFromTier3',
+	    ),
 	    
-	    '@MarkCavendish',
-	    '@taylorphinney',
-	    '@GregLemond',
-	    '@RobbieHunter',
-	    '@ChristianVDV',
-	    '@Mark_Renshaw',
+	    'UK Cycling' => array(
+		'@MarkCavendish',
+		'@taylorphinney',
+		'@GregLemond',
+		'@RobbieHunter',
+		'@ChristianVDV',
+		'@Mark_Renshaw',
+	    ),
 	    
-	    '@BADMNTONWorld',
-	    '@BADMlNTONEnglnd',
-	    '@bwfmedia',
-	    '@markphelanGPM',
-	    '@DeLoong',
+	    'Badminton' => array(
+		'@BADMNTONWorld',
+		'@BADMlNTONEnglnd',
+		'@bwfmedia',
+		'@markphelanGPM',
+		'@DeLoong',
+	    ),
 	    
-	    '@GolfTodayCoUk',
-	    '@Golf_Naked',
-	    '@RyanBallengeeGC',
-	    '@RandallMellGC',
-	    '@GolfweekWildMan',
-	    '@JeffShain',
+	    'Golf' => array(
+		'@GolfTodayCoUk',
+		'@Golf_Naked',
+		'@RyanBallengeeGC',
+		'@RandallMellGC',
+		'@GolfweekWildMan',
+		'@JeffShain',
+	    ),
 	);
 	$twitter = new Twitter();
-	foreach ($users as $user) {
-	    $twitter->addUser($user);
+	foreach ($users as $channel => $userlist) {
+	    foreach ($userlist as $user) {
+		$twitter->addUser($user, $channel);
+	    }
 	}
 //echo print_r($twitter, true) . "\n";
 	$result = $twitter->getFeeds();

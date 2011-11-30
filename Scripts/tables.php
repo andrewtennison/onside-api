@@ -10,4 +10,5 @@ $tables = array(
     'search',
     'sport',
     'user',
+    'carticle'
 );

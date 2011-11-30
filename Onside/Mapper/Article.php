@@ -20,15 +20,15 @@ class Article extends Mapper
     public function selectItem($where = array(), $sort = array(), $limit = null, $join = array())
     {
 	if (array_key_exists('channel', $where)) {
-//	    $join[] = array(
-//		'table' => 'channel',
-//		'leftfield' => 'id',
-//		'rightfield' => 'channel',
-//		'type' => 'JOIN',
-//		'fields' => array(),
-//		'wherefield' => 'user',
-//		'wherevalue' => $where['user'],
-//	    );
+	    $join[] = array(
+		'table' => 'carticle',
+		'leftfield' => 'id',
+		'rightfield' => 'article',
+		'type' => 'JOIN',
+		'fields' => array(),
+		'wherefield' => 'channel',
+		'wherevalue' => $where['channel'],
+	    );
 	    unset($where['channel']);
 	}
 	if (array_key_exists('event', $where)) {

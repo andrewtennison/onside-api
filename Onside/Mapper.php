@@ -45,11 +45,11 @@ class Mapper
         $model = $class::getModelFromArray($data);
         $sql = $model->getInsertSQL();
         $args = $model->getValues();
-//echo '$sql: ' . $sql . "\n";
-//echo '$args: ' . print_r($args, true) . "\n";
+echo '$sql: ' . $sql . "\n";
+echo '$args: ' . print_r($args, true) . "\n";
 //exit;
         $id = $this->_db->prepared($sql, $args);
-//echo '_addItem(): $id: ' . $id . "\n";
+echo '_addItem(): $id: ' . $id . "\n";
         return $this->_selectItem(array('id' => $id), null, null, null);
         
         return $this->_db->prepared($sql, $args);
@@ -81,7 +81,7 @@ class Mapper
     
     protected function _selectItem($where, $sort, $limit, $joins)
     {
-//echo '$where: ' . print_r($where, true) . ', $sort: ' . print_r($sort, true) . ', $limit: ' . print_r($limit, true) . "\n";
+//echo '$where: ' . print_r($where, true) . ', $sort: ' . print_r($sort, true) . ', $limit: ' . print_r($limit, true) . ', $joins: ' . print_r($joins, true) . "\n";
         $class = $this->_model;
         $model = $class::getModelFromArray(array());
 

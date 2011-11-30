@@ -10,17 +10,17 @@ class Twitter extends Feed
     protected $baseUrl = 'http://search.twitter.com/search.json?q=';
     protected $urls = array();
     
-    public function addUser($user)
+    public function addUser($user, $channel = null)
     {
-	$this->urls[] = $this->baseUrl . $user;
+	$this->urls[$this->baseUrl . $user] = $channel;
     }
     
     public function getFeeds()
     {
-	foreach ($this->urls as $url) {
+	foreach ($this->urls as $url => $channel) {
 //echo '$url: ' . $url . "\n";
 	    $json = $this->sendCurlRequest($url);
-	    $this->parseJson($json);
+	    $this->parseJson($json, $channel);
 	}
     }
     
@@ -31,7 +31,7 @@ class Twitter extends Feed
 	return $this->sendCurlRequest($url);
     }
 
-    public function parseJson($json)
+    public function parseJson($json, $channel = null)
     {
 	global $db;
 	$mapper = new \Onside\Mapper\Article($db);
@@ -58,6 +58,7 @@ class Twitter extends Feed
 		'original' => json_encode($article),
 	    );
 	    $article = $mapper->addItem($data);
+	    $this->associateWithChannel($article[0]->id, $channel);
 	}
     }
 }

@@ -14,7 +14,7 @@ class Rss extends Feed
 	return $this->sendCurlRequest($url);
     }
 
-    public function parseJson($json)
+    public function parseJson($json, $channel = null)
     {
 	global $db;
 	$mapper = new \Onside\Mapper\Article($db);

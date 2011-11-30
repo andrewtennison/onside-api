@@ -10,18 +10,18 @@ class Youtube extends Feed
     protected $baseUrl = 'http://gdata.youtube.com/feeds/api/users/{user}/uploads?orderby=updated';
     protected $urls = array();
     
-    public function addUser($user)
+    public function addUser($user, $channel = null)
     {
-	$this->urls[] = preg_replace('/\{user\}/', $user, $this->baseUrl);
+	$this->urls[preg_replace('/\{user\}/', $user, $this->baseUrl)] = $channel;
     }
     
     public function getFeeds()
     {
-	foreach ($this->urls as $url) {
-echo '$url: ' . $url . "\n";
+	foreach ($this->urls as $url => $channel) {
+//echo '$url: ' . $url . "\n";
 	    $json = $this->sendCurlRequest($url);
 //file_put_contents('/tmp/' . $url, $json);
-	    $this->parseJson($json);
+	    $this->parseJson($json, $channel);
 	}
     }
     
@@ -31,7 +31,7 @@ echo '$url: ' . $url . "\n";
 	return $this->sendCurlRequest($url);
     }
     
-    public function parseJson($json)
+    public function parseJson($json, $channel = null)
     {
 	global $db;
 	$attr = '@attributes';
@@ -73,6 +73,7 @@ if (gettype($content) == 'object') {
 //echo print_r($data, true) . "\n";
 } else {
 	    $article = $mapper->addItem($data);
+	    $this->associateWithChannel($article[0]->id, $channel);
 }
 	}
     }
