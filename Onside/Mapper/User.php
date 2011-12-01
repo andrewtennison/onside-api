@@ -14,9 +14,10 @@ class User extends Mapper
     
     public function doFacebookLogin($uid, $email)
     {
+//echo "doFacebookLogin($uid, $email)\n";
 	$return = $this->selectItem(array('facebook' => $uid), array(), null);
 	if (count($return) == 0) {
-	    $return = $this->addItem(array('facebook' => $uid, 'email' => $email, 'language' => 'en_gb'));
+	    $return = $this->addItem(array('facebook' => $uid, 'email' => $email, 'language' => 'en_gb', 'enabled' => 0, 'admin' => 0, 'status' => 0));
 	    // TODO: insert will fail if email address already exists in the system
 	}
 	
@@ -27,7 +28,7 @@ class User extends Mapper
     {
 	$return = $this->selectItem(array('twitter' => $uid), array(), null);
 	if (count($return) == 0) {
-	    $return = $this->addItem(array('twitter' => $uid, 'email' => $email, 'language' => 'en_gb'));
+	    $return = $this->addItem(array('twitter' => $uid, 'email' => $email, 'language' => 'en_gb', 'enabled' => 0, 'admin' => 0, 'status' => 0));
 	}
 	
 	return $return;
@@ -37,7 +38,7 @@ class User extends Mapper
     {
 	$return = $this->selectItem(array('google' => $uid), array(), null);
 	if (count($return) == 0) {
-	    $return = $this->addItem(array('google' => $uid, 'email' => $email, 'language' => 'en_gb'));
+	    $return = $this->addItem(array('google' => $uid, 'email' => $email, 'language' => 'en_gb', 'enabled' => 0, 'admin' => 0, 'status' => 0));
 	}
 	
 	return $return;
