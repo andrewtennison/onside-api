@@ -45,6 +45,11 @@ class UserController extends BaseController
 //	$this->errors[] = array('code' => '100', 'message' => "Action 'LOGIN' not implemented yet ");
     }
     
+    public function actionPost($id, $data)
+    {
+        $this->results[] = $this->_mapper->updateItem($id, $data);
+    }
+    
     public function actionRegister($id, $data)
     {
 	// TODO
