@@ -15,8 +15,8 @@ class User extends Model
 	'google' => 'VARCHAR(50) NULL',
 	'language' => 'VARCHAR(5) NOT NULL default "en_gb"',
         'added' => 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
-	'admin' => 'BOOLEAN NOT NULL Default false',
-	'enabled' => 'BOOLEAN NOT NULL Default false',
+	'admin' => 'INT(1) NOT NULL Default 0',
+	'enabled' => 'INT(1) NOT NULL Default 0',
     );
     
     public $id;
