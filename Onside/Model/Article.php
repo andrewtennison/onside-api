@@ -7,7 +7,8 @@ class Article extends Model
     protected $_table = 'article';
     protected $_definitions = array(
         'id' => 'INT(11) NOT NULL AUTO_INCREMENT',
-	'type' => 'ENUM("rss","twitter","youtube","google") NOT NULL Default "rss"',        'title' => 'VARCHAR(100) NOT NULL',
+	'type' => 'ENUM("rss","twitter","youtube","google","custom") NOT NULL Default "rss"',
+	'title' => 'VARCHAR(100) NOT NULL',
 	'content' => 'TEXT',
 	'images' => 'TEXT',
 	'videos' => 'TEXT',
