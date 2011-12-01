@@ -17,7 +17,7 @@ class User extends Model
         'added' => 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
 	'admin' => 'BOOLEAN NOT NULL Default false',
 	'enabled' => 'BOOLEAN NOT NULL Default false',
-	'status' => 'INT(1) NOT NULL Default 0',
+	'status' => 'TINYINT(1) NOT NULL Default 0',
     );
     
     public $id;
