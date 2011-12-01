@@ -5,6 +5,9 @@ use \Onside\Model;
 class User extends Model
 {
     protected $_table = 'user';
+    protected $_index = array(
+	'UNIQUE KEY `email` (`email`)',
+    );
     protected $_definitions = array(
         'id' => 'INT(11) NOT NULL AUTO_INCREMENT',
         'name' => 'VARCHAR(100)',
