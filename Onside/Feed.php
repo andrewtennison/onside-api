@@ -34,6 +34,8 @@ abstract class Feed
 	
 	// TODO: handle CURL errors
 	
+//	$xml = simplexml_load_string($feed);
+//	if ($this->isXml || $xml !== false) {
 	if ($this->isXml) {
 	    $json = $this->xmlToJson($feed);
 	    return $json;
@@ -52,7 +54,7 @@ abstract class Feed
 	$sql = $model->getSelectSQL();
         $args = $model->getValues();
 	$c = $db->prepared($sql, $args)->fetchAll(\PDO::FETCH_CLASS, '\Onside\Model\Channel');
-	
+
 	$model = \Onside\Model\Carticle::getModelFromArray(array('article' => $article, 'channel' => $c[0]->id));
 	$carticle = $db->prepared($model->getInsertSQL(), $model->getValues());
     }

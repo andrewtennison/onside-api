@@ -18,9 +18,7 @@ class Youtube extends Feed
     public function getFeeds()
     {
 	foreach ($this->urls as $url => $channel) {
-//echo '$url: ' . $url . "\n";
 	    $json = $this->sendCurlRequest($url);
-//file_put_contents('/tmp/' . $url, $json);
 	    $this->parseJson($json, $channel);
 	}
     }

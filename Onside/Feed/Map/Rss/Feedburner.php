@@ -22,18 +22,21 @@ class Feedburner extends Rss
 	if (isset($article->author->name))
 	    $data['author'] = $article->author->name;
 	if (isset($article->title))
-	    $data['title'] = $article->title;
+	    $data['title'] = 'unknown';
+	    //$data['title'] = $article->title;
 //	$data['date'] = date('Y-m-y H:i:s'); // defaulted because liverpoolfc don't provide date/time
 	if (isset($article->published))
 	    $data['date'] = $article->published;
 	if (isset($article->content))
-	    $data['content'] = $article->content;
+	    $data['content'] = $this->parseContent($article->content);
 	if (isset($article->id))
 	    $data['link'] = $article->id;
-	if (isset($article->link))
+	$data['link'] = '';
+	if (isset($article->link) && (string)$article->link == $article->link)
 	    $data['link'] = $article->link;
 	
 	$data['original'] = json_encode($article);
+	$data['type'] = $this->type;
 	$data['source'] = ''; // TODO: pass in
 	
 //	echo print_r($data, true) . "\n";

@@ -18,16 +18,17 @@ class Gazettelive extends Rss
 	$data = array();
 	$data['author'] = 'unknown';
 	if (isset($article->title))
-	    $data['title'] = $article->title;
+	    $data['title'] = (string)$article->title;
 //	$data['date'] = date('Y-m-y H:i:s'); // defaulted because liverpoolfc don't provide date/time
 	if (isset($article->lastBuildDate))
 	    $data['date'] = $this->parseDate($article->lastBuildDate);
 	if (isset($article->description))
-	    $data['content'] = $article->description;
+	    $data['content'] = $this->parseContent($article->description);
 	if (isset($article->link))
 	    $data['link'] = $article->link;
 	
 	$data['original'] = json_encode($article);
+	$data['type'] = $this->type;
 	$data['source'] = ''; // TODO: pass in
 	
 //	echo print_r($data, true) . "\n";

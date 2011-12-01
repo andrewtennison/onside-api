@@ -52,7 +52,8 @@ class RssTest extends Test
 	    $this->assertNotEmpty($article['date'], 'Empty required field: date');
 	    
 	    $this->assertArrayHasKey('content', $article, 'Missing field: content');
-	    $this->assertNotEmpty($article['content'], 'Empty required field: content');
+//	    $this->assertNotEmpty($article['content'], 'Empty required field: content');
+	    $this->assertInternalType('string', $article['content'], 'Invalid data for field: content');
 	    
 	    $this->assertArrayHasKey('source', $article, 'Missing field: source');
 //	    $this->assertNotEmpty($article['source'], 'Empty required field: source');

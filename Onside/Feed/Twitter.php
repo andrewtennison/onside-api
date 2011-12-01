@@ -18,7 +18,6 @@ class Twitter extends Feed
     public function getFeeds()
     {
 	foreach ($this->urls as $url => $channel) {
-//echo '$url: ' . $url . "\n";
 	    $json = $this->sendCurlRequest($url);
 	    $this->parseJson($json, $channel);
 	}
