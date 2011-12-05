@@ -6,7 +6,7 @@ class Search extends Model
 {
     protected $_table = 'search';
     protected $_index = array(
-	'UNIQUE KEY `name` (`name`)',
+	'UNIQUE KEY `query` (`query`)',
     );
     protected $_definitions = array(
         'id' => 'INT(11) NOT NULL AUTO_INCREMENT',
