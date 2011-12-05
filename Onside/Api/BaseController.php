@@ -6,6 +6,7 @@ abstract class BaseController
     protected $results = array();
     protected $errors = array();
     protected $filters = array();
+    protected $limit = null;
     
     public function actionDelete($id)
     {
@@ -44,6 +45,10 @@ abstract class BaseController
     
     protected function getAcceptedFilters($data = array())
     {
+	if (array_key_exists('limit', $data)) {
+	    $this->limit = $data['limit'];
+	}
+	
 	$where = array();
 	foreach ($this->filters as $filter)
 	    if (array_key_exists($filter, $data))

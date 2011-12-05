@@ -25,7 +25,7 @@ class Channel extends Mapper
 	return $id == 0 ? array('status' => 'user already following channel') : array('status' => 'user now following channel');
     }
     
-    public function searchItem($get = array())
+    public function searchItem($get = array(), $sort = array(), $limit = null)
     {
 	$where = array(
 	    'sport' => array('=', $get['q'], 'OR'),
@@ -33,7 +33,7 @@ class Channel extends Mapper
 	    'name' => array('LIKE', "%{$get['q']}%", 'OR'),
 	    'keywords' => array('LIKE', "%{$get['q']}%", 'OR'),
 	);
-	return $this->_selectItem($where, array(), null, array());
+	return $this->_selectItem($where, $sort, $limit, array());
     }
     
     public function selectItem($where = array(), $sort = array(), $limit = null, $join = array())

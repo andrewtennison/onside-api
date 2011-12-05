@@ -22,7 +22,7 @@ class EventController extends BaseController
     public function actionGet($data = array())
     {
 	$where = $this->getAcceptedFilters($data);
-	$this->results[] = $this->_mapper->selectItem($where);
+	$this->results[] = $this->_mapper->selectItem($where, array(), $this->limit);
     }
     
     public function actionItem($id)

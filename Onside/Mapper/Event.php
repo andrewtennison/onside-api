@@ -7,7 +7,7 @@ class Event extends Mapper
     protected $_table = 'event';
     protected $_model = '\Onside\Model\Event';
     
-    public function searchItem($get = array())
+    public function searchItem($get = array(), $sort = array(), $limit = null)
     {
 	$where = array(
 	    'sport' => array('=', $get['q'], 'OR'),
@@ -15,6 +15,6 @@ class Event extends Mapper
 	    'name' => array('LIKE', "%{$get['q']}%", 'OR'),
 	    'keywords' => array('LIKE', "%{$get['q']}%", 'OR'),
 	);
-	return $this->_selectItem($where, array(), null, array());
+	return $this->_selectItem($where, $sort, $limit, array());
     }
 }
