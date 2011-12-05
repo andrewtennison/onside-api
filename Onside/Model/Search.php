@@ -5,6 +5,9 @@ use \Onside\Model;
 class Search extends Model
 {
     protected $_table = 'search';
+    protected $_index = array(
+	'UNIQUE KEY `name` (`name`)',
+    );
     protected $_definitions = array(
         'id' => 'INT(11) NOT NULL AUTO_INCREMENT',
 	'user' => 'INT(11) NULL',
