@@ -23,7 +23,7 @@ class SearchController extends BaseController
     
     public function actionGet($get = array())
     {
-//die(print_r($get, true));
+//echo print_r($get, true) . "<br />\n";
 	$where = $this->getAcceptedFilters($get); // Here only to create limit
         $this->results[] = array(
 	    'channels' => $this->mappers['channel']->searchItem($get, array(), $this->limit),
