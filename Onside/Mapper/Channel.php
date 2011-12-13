@@ -25,6 +25,27 @@ class Channel extends Mapper
 	return $id == 0 ? array('status' => 'user already following channel') : array('status' => 'user now following channel');
     }
     
+    public function removeFollower($channel, $user)
+    {
+	$model = \Onside\Model\Follower::getModelFromArray(array());
+	$model->setWhere('channel', $channel);
+	$model->setWhere('user', $user);
+	
+	$sql = $model->getSelectSQL();
+	$args = $model->getValues();
+	
+	$row = $this->_db->prepared($sql, $args)->fetch();
+	// Perform delete
+	if (is_array($row) && array_key_exists('id', $row)) {
+	    $model = \Onside\Model\Follower::getModelFromArray($row);
+	    $sql = $model->getDeleteSQL();
+	    $args = $model->getValues();
+	    $this->_db->prepared($sql, $args);
+	    return array('status' => 'user no longer following channel');
+	}
+	return array('status' => 'user not following channel');
+    }
+    
     public function searchItem($get = array(), $sort = array(), $limit = null)
     {
 	$where = array(
