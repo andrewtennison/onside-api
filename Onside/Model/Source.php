@@ -7,6 +7,7 @@ class Source extends Model
     protected $_table = 'source';
     protected $_definitions = array(
         'id' => 'INT(11) NOT NULL AUTO_INCREMENT',
+	'url' => 'VARCHAR(100) NOT NULL',
 	'channels' => 'VARCHAR(100) NULL',
 	'map_type' => 'VARCHAR(100) NULL',
 	'map_article' => 'VARCHAR(100) NULL',
@@ -23,6 +24,7 @@ class Source extends Model
     );
     
     public $id;
+    public $url;
     public $channels;
     public $map_type;
     public $map_article;
