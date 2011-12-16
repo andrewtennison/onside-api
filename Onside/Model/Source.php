@@ -9,6 +9,7 @@ class Source extends Model
         'id' => 'INT(11) NOT NULL AUTO_INCREMENT',
 	'url' => 'VARCHAR(100) NOT NULL',
 	'channels' => 'VARCHAR(100) NULL',
+	'frequency' => 'VARCHAR(100) NULL',
 	'map_type' => 'VARCHAR(100) NULL',
 	'map_article' => 'VARCHAR(100) NULL',
 	'map_title' => 'VARCHAR(100) NULL',
@@ -26,6 +27,7 @@ class Source extends Model
     public $id;
     public $url;
     public $channels;
+    public $frequency;
     public $map_type;
     public $map_article;
     public $map_title;
