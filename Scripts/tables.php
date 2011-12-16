@@ -8,6 +8,7 @@ $tables = array(
     'follower',
     'logging',
     'search',
+    'source',
     'sport',
     'user',
     'carticle'

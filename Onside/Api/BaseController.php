@@ -33,15 +33,9 @@ abstract class BaseController
 	$this->errors[] = array('code' => '100', 'message' => "Action 'PUT' not implemented yet ");
     }
     
-    public function getResults()
-    {
-	return $this->results;
-    }
+    public function getResults() { return $this->results; }
     
-    public function getErrors()
-    {
-	return $this->errors;
-    }
+    public function getErrors() { return $this->errors; }
     
     protected function getAcceptedFilters($data = array())
     {

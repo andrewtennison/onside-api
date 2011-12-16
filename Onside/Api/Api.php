@@ -12,5 +12,6 @@ class Api extends BaseApi
 	'search',
 	'user',
 	'sport',
+	'source',
     );
 }
