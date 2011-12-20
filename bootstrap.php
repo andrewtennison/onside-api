@@ -30,6 +30,7 @@ spl_autoload_register(array(new Autoloader(), 'loader'), true);
 
 // Load required config
 $commonConfig = new \Onside\Config(APPLICATION_ENV, 'Common.ini');
+$queueConfig = new \Onside\Config(APPLICATION_ENV, 'Queue.ini');
 $sourcesConfig = new \Onside\Config\Common(APPLICATION_ENV, 'Sources.ini');
 
 //die(print_r($commonConfig, true));
