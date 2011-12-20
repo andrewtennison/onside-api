@@ -22,7 +22,7 @@ class File implements Log
     public function write($message)
     {
         if ($this->fh === null) $this->open();
-        fwrite($this->fh, date('Y-m-d H:i:s') . "\t" . $message . "\n");
+        fwrite($this->fh, date('Y-m-d H:i:s') . " - " . $message . "\n");
 	
 	return true;
     }
