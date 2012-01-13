@@ -2,6 +2,7 @@
 namespace Onside\Api;
 use \Onside\Api\BaseController;
 use \Onside\Mapper\User;
+use \Onside\Session;
 
 class UserController extends BaseController
 {
@@ -17,8 +18,6 @@ class UserController extends BaseController
         
     public function actionLogin($id, $data)
     {
-//echo '$id: ' . $id . "\n";
-//echo '$data: ' . print_r($data, true) . "\n";
 	if (array_key_exists('email', $data) && array_key_exists('password', $data)) {
 	    $result = $this->_mapper->doOnsideLogin($data['email'], $data['password']);
 	} else if (array_key_exists('email', $data) && array_key_exists('facebook', $data)) {
@@ -32,17 +31,14 @@ class UserController extends BaseController
 	    $result = array();
 	    $this->errors[] = array('code' => 201, 'message' => 'Missing required field \'?\'');
 	}
-//echo "\n" . '$result: ' . print_r($result, true) . "\n";
-//exit;
 	if (count($result) > 0) {
+	    $result['token'] = $this->getToken($result[0]);
 	    $this->results[] = $result;
 	} else {
 //    $errors = new \Api\Errors(); $error = $errors->getError(206);
 //    throw new Exception(array($error->getResponse()), 405);
 	    $this->errors[] = array('code' => 206, 'message' => 'Invalid username / password');
 	}
-//echo '$result: ' . print_r($this->results, true) . "\n";
-//	$this->errors[] = array('code' => '100', 'message' => "Action 'LOGIN' not implemented yet ");
     }
     
     public function actionList($id, $data)
@@ -62,4 +58,15 @@ class UserController extends BaseController
         return array($this->_mapper->addItem($data), array());
     }
     
+    private function getToken(\Onside\Model\User $user)
+    {
+	$token = '';
+	$timeHex = sprintf("%08x", time());
+	$salt = $timeHex . md5(uniqid('', true));
+	$token = $salt . md5($salt . $user->id . $user->email);
+	Session::startSession($token);
+	//$_SESSION[$token] = $id; // set in memcache generally
+	//$_SESSION['id'] = $user->id;
+	return $token;
+    }
 }

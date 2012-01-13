@@ -22,7 +22,16 @@ class BaseApi
             $this->request = new Request($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD'], $_GET, $_POST);
         }
 	$this->errors = new \Onside\Errors();
+	$this->init();
     }
+    
+    private function init()
+    {
+	global $commonConfig;
+	ini_set('session.save_handler', 'memcached');
+	ini_set('session.save_path', "{$commonConfig->cache->host}:{$commonConfig->cache->port}");
+	ini_set('session.use_cookies', false);
+}
     
     public function run()
     {
