@@ -7,6 +7,7 @@ $tables = array(
     'event',
     'follower',
     'logging',
+    'logs',
     'search',
     'source',
     'sport',

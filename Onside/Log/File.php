@@ -7,10 +7,12 @@ class File implements Log
 {
     protected $config;
     protected $fh;
+    protected $level;
     
     public function __construct(Config $config)
     {
 	$this->config = $config;
+	$this->level = 'error';
     }
     
     public function __destruct()
@@ -19,10 +21,11 @@ class File implements Log
             fclose($this->fh);
     }
 
-    public function write($message)
+    public function write($message, $level = null)
     {
         if ($this->fh === null) $this->open();
-        fwrite($this->fh, date('Y-m-d H:i:s') . " - " . $message . "\n");
+	if ($level == null) $level = $this->level;
+        fwrite($this->fh, date('Y-m-d H:i:s') . " - $level - $message\n");
 	
 	return true;
     }

@@ -27,7 +27,7 @@ class Source extends Model
     );
     
     public $id;
-    public $status;
+    public $status = 'processed';
     public $lastfetched;
     public $url;
     public $channels;

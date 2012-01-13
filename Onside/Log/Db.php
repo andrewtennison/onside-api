@@ -7,16 +7,19 @@ class Db implements Log
 {
     protected $db;
     protected $config;
+    protected $level;
     
     public function __construct(Config $config)
     {
 	$this->config = $config;
+	$this->level = 'error';
     }
     
-    public function write($message)
+    public function write($message, $level = null)
     {
         if (is_null($this->db)) $this->connect();
-        $stmt = $this->db->prepared('INSERT INTO `logs` (message) VALUES(?)', array($message));
+	if ($level == null) $level = $this->level;
+        $stmt = $this->db->prepared('INSERT INTO `logs` (message, level) VALUES(?,?)', array($message, $level));
 	return ($stmt === false) ? false : true;
     }
     
