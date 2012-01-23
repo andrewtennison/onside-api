@@ -14,7 +14,6 @@ class User extends Mapper
     
     public function doFacebookLogin($uid, $email)
     {
-//echo "doFacebookLogin($uid, $email)\n";
 	$return = $this->selectItem(array('facebook' => $uid), array(), null);
 	if (count($return) == 0) {
 	    $return = $this->addItem(array('facebook' => $uid, 'email' => $email, 'language' => 'en_gb', 'enabled' => 0, 'admin' => 0, 'status' => 0));
