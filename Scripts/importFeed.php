@@ -48,7 +48,7 @@ foreach ($articles as $article) {
 	exit;
     }
 }
-//sleep(120);
+$logger->write("Import feed $id: Imported " . count($articles) . " articles from feed", 'info');
 
 // Set lastfetched and status to processed
 $model->id = $id;
