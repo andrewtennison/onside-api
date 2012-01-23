@@ -5,7 +5,7 @@ use \Onside\Mapper\Source;
 
 class SourceController extends BaseController
 {
-    protected $filters = array();
+    protected $filters = array('status');
     private $_mapper;
     
     public function __construct()

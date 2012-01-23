@@ -7,7 +7,7 @@ class Source extends Model
     protected $_table = 'source';
     protected $_definitions = array(
         'id' => 'INT(11) NOT NULL AUTO_INCREMENT',
-	'status' => 'ENUM("processed","running") NOT NULL Default "processed"',
+	'status' => 'ENUM("processed","running", "failed") NOT NULL Default "processed"',
 	'lastfetched' => 'TIMESTAMP NOT NULL Default CURRENT_TIMESTAMP',
 	'url' => 'VARCHAR(100) NOT NULL',
 	'channels' => 'VARCHAR(100) NULL',
