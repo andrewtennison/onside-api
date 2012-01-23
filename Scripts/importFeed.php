@@ -25,14 +25,35 @@ if ($result) {
 }
 
 // Process the feed
-echo print_r($row, true) . "\n";
+//echo print_r($row, true) . "\n";
+$source = new \Onside\Feed\Source($row);
+$articles = $source->getArticles();
+//echo print_r($articles, true) . "\n";
 
 // TODO: dedupe across sources only inserting if its unique
-sleep(120);
+foreach ($articles as $article) {
+    
+    $sql = $article->getInsertSQL();
+    $args = $article->getValues();
+    $result = $db->prepared($sql, $args);
+    if (!$result) {
+	// (incorrect fields)ID=12(title)/15(title)/38(title)/39(???)/40(title) (fatal)ID=20
+	$logger->write("Problem inserting new article, source: $id will be flagged as 'failed'", 'warn');
+	$model->status = 'failed';
+	$model->id = $id;
+	$sql = $model->getUpdateSQL();
+	$args = $model->getValues();
+	$result = $db->prepared($sql, $args);
+	// Stop all processing and exit
+	exit;
+    }
+}
+//sleep(120);
 
 // Set lastfetched and status to processed
+$model->id = $id;
 $model->status = 'processed';
-//$model->lastfetched = date('Y-m-d H:i:s');
+$model->lastfetched = date('Y-m-d H:i:s');
 $sql = $model->getUpdateSQL();
 $args = $model->getValues();
 $result = $db->prepared($sql, $args);
