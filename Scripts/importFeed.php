@@ -31,24 +31,39 @@ $articles = $source->getArticles();
 //echo print_r($articles, true) . "\n";
 
 // TODO: dedupe across sources only inserting if its unique
+$inserted = 0;
 foreach ($articles as $article) {
-    
-    $sql = $article->getInsertSQL();
-    $args = $article->getValues();
-    $result = $db->prepared($sql, $args);
-    if (!$result) {
-	// (incorrect fields)ID=12(title)/15(title)/38(title)/39(???)/40(title) (fatal)ID=20
-	$logger->write("Problem inserting new article, source: $id will be flagged as 'failed'", 'warn');
-	$model->status = 'failed';
-	$model->id = $id;
-	$sql = $model->getUpdateSQL();
-	$args = $model->getValues();
+    $article1 = \Onside\Model\Article::getModelFromArray(array());
+//    $article1->title = $article->title;
+//    $article1->source = $article->source;
+//    $article1->publish = $article->publish;
+    $article1->setWhere('title', $article->title);
+    $article1->setWhere('source', $article->source);
+    if (!empty($article->publish))
+        $article1->setWhere('publish', $article->publish);
+//echo print_r($article, true) . "\n\n";
+    $sql = $article1->getSelectSQL();
+    $args = $article1->getValues();
+    $rows = $db->prepared($sql, $args)->fetchAll();
+    if (count($rows) == 0) {
+	$sql = $article->getInsertSQL();
+	$args = $article->getValues();
 	$result = $db->prepared($sql, $args);
-	// Stop all processing and exit
-	exit;
+	if (!$result) {
+	    // (incorrect fields)ID=12(title)/15(title)/38(title)/39(???)/40(title) (fatal)ID=20
+	    $logger->write("Problem inserting new article, source: $id will be flagged as 'failed'", 'warn');
+	    $model->status = 'failed';
+	    $model->id = $id;
+	    $sql = $model->getUpdateSQL();
+	    $args = $model->getValues();
+	    $result = $db->prepared($sql, $args);
+	    // Stop all processing and exit
+	    exit;
+	}
+	$inserted++;
     }
 }
-$logger->write("Import feed $id: Imported " . count($articles) . " articles from feed", 'info');
+$logger->write("Import feed $id: Imported $inserted / " . count($articles) . " articles from feed", 'info');
 
 // Set lastfetched and status to processed
 $model->id = $id;
