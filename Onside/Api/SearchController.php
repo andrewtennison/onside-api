@@ -23,7 +23,8 @@ class SearchController extends BaseController
     
     public function actionGet($get = array())
     {
-//echo print_r($get, true) . "<br />\n";
+	// Strip token
+	unset($get['token']);
 	$where = $this->getAcceptedFilters($get); // Here only to create limit
         $this->results[] = array(
 	    'channels' => $this->mappers['channel']->searchItem($get, array(), $this->limit),
@@ -34,11 +35,15 @@ class SearchController extends BaseController
     
     public function actionSave($id, $data)
     {
+	// Strip token
+	unset($get['token']);
 	$this->results[] = $this->mappers['search']->addItem($data);
     }
     
     public function actionList($id, $data)
     {
+	// Strip token
+	unset($data['token']);
 	$where = $this->getAcceptedFilters($data); // Here only to create limit
 	$this->results[] = $this->mappers['search']->selectItem($data, array(), $this->limit);
     }
