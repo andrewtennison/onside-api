@@ -4,6 +4,7 @@ $tables = array(
     'article',
     'channel',
     'comment',
+    'email',
     'event',
     'follower',
     'logging',
