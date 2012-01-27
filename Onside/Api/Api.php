@@ -8,6 +8,7 @@ class Api extends BaseApi
 	'article',
 	'channel',
 	'comment',
+	'email',
 	'event',
 	'search',
 	'user',
