@@ -54,8 +54,7 @@ class UserController extends BaseController
     
     public function actionRegister($id, $data)
     {
-	// TODO
-        return array($this->_mapper->addItem($data), array());
+        $this->results[] = $this->_mapper->addItem($data);
     }
     
     private function getToken(\Onside\Model\User $user)
