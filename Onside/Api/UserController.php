@@ -54,7 +54,9 @@ class UserController extends BaseController
     
     public function actionRegister($id, $data)
     {
-        $this->results[] = $this->_mapper->addItem($data);
+	$result = $this->_mapper->addItem($data);
+	$result[0]->token = $this->getToken($result[0]);
+        $this->results[] = $result;
     }
     
     private function getToken(\Onside\Model\User $user)
