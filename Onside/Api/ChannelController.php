@@ -22,9 +22,16 @@ class ChannelController extends BaseController
     public function actionUnfollow($id, $data)
     {
 	$this->results[] = $this->_mapper->removeFollower($data['channel'], $data['user']);
-//	$this->_mapper->te();
-//    throw new Exception(array('some message standard exception'), 999);
-//	$this->errors[] = array('code' => '100', 'message' => "Action 'FOLLOW' not implemented yet ");
+    }
+    
+    public function actionChannel($id, $data)
+    {
+	$this->results[] = $this->_mapper->addChannel($data['channel1'], $data['channel2']);
+    }
+    
+    public function actionNochannel($id, $data)
+    {
+	$this->results[] = $this->_mapper->removeChannel($data['channel1'], $data['channel2']);
     }
     
     public function actionDelete($id)

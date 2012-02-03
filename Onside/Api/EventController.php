@@ -14,6 +14,16 @@ class EventController extends BaseController
         $this->_mapper = new Event($db);
     }
     
+        public function actionChannel($id, $data)
+    {
+	$this->results[] = $this->_mapper->addChannel($data['channel'], $data['event']);
+    }
+    
+    public function actionNochannel($id, $data)
+    {
+	$this->results[] = $this->_mapper->removeChannel($data['channel'], $data['event']);
+    }
+    
     public function actionDelete($id)
     {
 	$this->results[] = $this->_mapper->deleteItem($id);

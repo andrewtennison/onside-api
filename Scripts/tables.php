@@ -13,5 +13,7 @@ $tables = array(
     'source',
     'sport',
     'user',
-    'carticle'
+    'carticle',
+    'cchannel',
+    'cevent',
 );

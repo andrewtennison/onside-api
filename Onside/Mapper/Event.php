@@ -17,4 +17,37 @@ class Event extends Mapper
 	);
 	return $this->_selectItem($where, $sort, $limit, array());
     }
+    
+    public function addChannel($channel, $event)
+    {
+	$model = \Onside\Model\Cevent::getModelFromArray(array('channel' => $channel, 'event' => $event));
+
+	$sql = $model->getInsertSQL();
+        $args = $model->getValues();
+
+        $id = $this->_db->prepared($sql, $args);
+	// TODO: feed back success using http code
+	return $id == 0 ? array('status' => 'event already associated with channel') : array('status' => 'event now associated with channel');
+    }
+    
+    public function removeChannel($channel, $event)
+    {
+	$model = \Onside\Model\Cevent::getModelFromArray(array());
+	$model->setWhere('channel', $channel);
+	$model->setWhere('event', $event);
+	
+	$sql = $model->getSelectSQL();
+	$args = $model->getValues();
+	
+	$row = $this->_db->prepared($sql, $args)->fetch();
+	// Perform delete
+	if (is_array($row) && array_key_exists('id', $row)) {
+	    $model = \Onside\Model\Cevent::getModelFromArray($row);
+	    $sql = $model->getDeleteSQL();
+	    $args = $model->getValues();
+	    $this->_db->prepared($sql, $args);
+	    return array('status' => 'event no longer associated with channel');
+	}
+	return array('status' => 'event not associated with channel');
+    }
 }

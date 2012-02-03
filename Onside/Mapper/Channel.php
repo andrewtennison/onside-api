@@ -46,6 +46,51 @@ class Channel extends Mapper
 	return array('status' => 'user not following channel');
     }
     
+    public function addChannel($channel1, $channel2)
+    {
+	// force no dupes
+	$channels = array($channel1, $channel2);
+	sort($channels);
+	$channel1 = $channels[0];
+	$channel2 = $channels[1];
+	
+	$model = \Onside\Model\Cchannel::getModelFromArray(array('channel1' => $channel1, 'channel2' => $channel2));
+
+	$sql = $model->getInsertSQL();
+        $args = $model->getValues();
+
+        $id = $this->_db->prepared($sql, $args);
+	// TODO: feed back success using http code
+	return $id == 0 ? array('status' => 'channel already associated with channel') : array('status' => 'channel now associated with channel');
+    }
+    
+    public function removeChannel($channel1, $channel2)
+    {
+	// force no dupes
+	$channels = array($channel1, $channel2);
+	sort($channels);
+	$channel1 = $channels[0];
+	$channel2 = $channels[1];
+	
+	$model = \Onside\Model\Cchannel::getModelFromArray(array());
+	$model->setWhere('channel1', $channel1);
+	$model->setWhere('channel2', $channel2);
+	
+	$sql = $model->getSelectSQL();
+	$args = $model->getValues();
+	
+	$row = $this->_db->prepared($sql, $args)->fetch();
+	// Perform delete
+	if (is_array($row) && array_key_exists('id', $row)) {
+	    $model = \Onside\Model\Cchannel::getModelFromArray($row);
+	    $sql = $model->getDeleteSQL();
+	    $args = $model->getValues();
+	    $this->_db->prepared($sql, $args);
+	    return array('status' => 'channel no longer associated with channel');
+	}
+	return array('status' => 'channel not associated with channel');
+    }
+    
     public function searchItem($get = array(), $sort = array(), $limit = null)
     {
 	$where = array(
