@@ -134,6 +134,19 @@ class Channel extends Mapper
 	    unset($where['event']);
 	}
 	
+	if (array_key_exists('channel', $where)) {
+	    $join[] = array(
+		'table' => 'cchannel',
+		'leftfield' => array('id', 'id'),
+		'rightfield' => array('channel1', 'channel2'),
+		'type' => 'JOIN',
+		'fields' => array(),
+		'wherefield' => array(),
+		'wherevalue' => $where['channel'],
+	    );
+	    unset($where['channel']);
+	}
+	
         return $this->_selectItem($where, $sort, $limit, $join);
     }
 }

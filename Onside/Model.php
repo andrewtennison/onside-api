@@ -84,14 +84,29 @@ class Model
 	if (count($this->_join) > 0) {
 	    foreach ($this->_join as $key => $join) {
 //echo print_r($join, true) . "\n";
-
-//$leftside = 't.`' . $join['leftfield'] . '`';
-//$rightside = "t$key" . '.`' . $join['rightfield'] . '`';
-//echo "JOIN ->setWhere($leftside, $rightside)\n";
-		// TODO: add select tables to sql
-		$sql .= ' ' . $join['type'] . ' ' . $this->_getTable($join['table']) . ' t' . $key . ' ON t.' . $join['leftfield'] . ' = t' . $key . '.' . $join['rightfield'];
-//echo "JOIN ->setWhere('t$key.`{$join['wherefield']}`', {$join['wherevalue']}, '=')\n";
-		$this->setWhere('t' . $key . '.`' . $join['wherefield'] . '`', $join['wherevalue']);
+		
+		// only works for channel <-> channel relationship
+		if (is_array($join['leftfield']) && is_array($join['rightfield']) && count($join['leftfield']) == count($join['rightfield'])) {
+		    $on = '';
+		    for($i = 0; $i < count($join['leftfield']); $i++) {
+			$otherfield = $i ? $join['rightfield'][0] : $join['rightfield'][1];
+			$on .= '(t.' . $join['leftfield'][$i] . ' = t' . $key . '.' . $join['rightfield'][$i] . ' AND t' . $key . '.' . $otherfield . ' = ' . $join['wherevalue'] . ') OR ';
+		    }
+		    $on = ' ON (' . substr($on, 0, -4) . ')';
+		    $sql .= ' ' . $join['type'] . ' ' . $this->_getTable($join['table']) . ' t' . $key . $on;
+		    
+		    
+		} else {
+		    // TODO: add select tables to sql
+		    $sql .= ' ' . $join['type'] . ' ' . $this->_getTable($join['table']) . ' t' . $key . ' ON t.' . $join['leftfield'] . ' = t' . $key . '.' . $join['rightfield'];
+		}
+		
+		if (is_array($join['wherefield'])) {
+//		    foreach ($join['wherefield'] as $wherefield)
+//			$this->setWhere('t' . $key . '.`' . $wherefield . '`', $join['wherevalue']);
+		} else {
+		    $this->setWhere('t' . $key . '.`' . $join['wherefield'] . '`', $join['wherevalue']);
+		}
 	    }
 	}
 	
@@ -99,8 +114,6 @@ class Model
         if (count($this->_where) > 0) {
 //echo 'WHERE: ' . print_r($this->_where, true) . "\n";
 	    $parts = explode(' ', trim($this->_where[count($this->_where) - 1]));
-//echo print_r($parts, true) . "\n";
-//echo 'strlen($parts[count($parts) - 1]): ' . strlen($parts[count($parts) - 1]) . "\n";
             $sql .= ' WHERE t.' . substr(implode('t.', $this->_where), 0, -strlen($parts[count($parts) - 1]) - 1);
 	    // TODO: such a hack :(
 	    $sql = str_replace('t.t', 't', $sql);

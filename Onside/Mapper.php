@@ -102,8 +102,8 @@ class Mapper
 	
         // TODO: where clause
         // $leftside, $rightside, $operator = '=', $type = 'AND'
-//        $model->setWhere(array('id' => 30));
         if (count($where) > 0) {
+//echo 'where: ' . print_r($where, true) . "<br/>\n";
             foreach ($where as $field => $value) {
 		if (is_array($value)) {
 		    $model->setWhere($field, $value[1], $value[0], $value[2]);
