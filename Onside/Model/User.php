@@ -17,6 +17,7 @@ class User extends Model
 	'twitter' => 'VARCHAR(50) NULL',
 	'google' => 'VARCHAR(50) NULL',
 	'language' => 'VARCHAR(5) NOT NULL default "en_gb"',
+	'avatar' => 'VARCHAR(100) NULL',
         'added' => 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
 	'admin' => 'BOOLEAN NOT NULL Default false',
 	'enabled' => 'BOOLEAN NOT NULL Default false',
@@ -31,6 +32,7 @@ class User extends Model
     public $twitter;
     public $google;
     public $language;
+    public $avatar;
     public $added;
     public $admin;
     public $enabled;
