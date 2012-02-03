@@ -121,7 +121,18 @@ class Channel extends Mapper
 	    // TODO: where clause adding ` round it which doesn't work for aliases
 	}
 	
-	
+	if (array_key_exists('event', $where)) {
+	    $join[] = array(
+		'table' => 'cevent',
+		'leftfield' => 'id',
+		'rightfield' => 'channel',
+		'type' => 'JOIN',
+		'fields' => array(),
+		'wherefield' => 'event',
+		'wherevalue' => $where['event'],
+	    );
+	    unset($where['event']);
+	}
 	
         return $this->_selectItem($where, $sort, $limit, $join);
     }
