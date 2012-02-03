@@ -5,7 +5,7 @@ use \Onside\Mapper\Event;
 
 class EventController extends BaseController
 {
-    protected $filters = array('sport', 'type');
+    protected $filters = array('sport', 'type', 'channel');
     private $_mapper;
     
     public function __construct()

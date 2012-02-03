@@ -50,4 +50,22 @@ class Event extends Mapper
 	}
 	return array('status' => 'event not associated with channel');
     }
+    
+    public function selectItem($where = array(), $sort = array(), $limit = null, $join = array())
+    {
+	if (array_key_exists('channel', $where)) {
+	    $join[] = array(
+		'table' => 'cevent',
+		'leftfield' => 'id',
+		'rightfield' => 'event',
+		'type' => 'JOIN',
+		'fields' => array(),
+		'wherefield' => 'channel',
+		'wherevalue' => $where['channel'],
+	    );
+	    unset($where['channel']);
+	}
+	
+        return $this->_selectItem($where, $sort, $limit, $join);
+    }
 }

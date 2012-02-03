@@ -120,6 +120,9 @@ class Channel extends Mapper
 //exit;
 	    // TODO: where clause adding ` round it which doesn't work for aliases
 	}
+	
+	
+	
         return $this->_selectItem($where, $sort, $limit, $join);
     }
 }

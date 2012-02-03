@@ -86,6 +86,7 @@ class Mapper
         $model = $class::getModelFromArray(array());
 
 	if (count($joins) > 0) {
+//echo 'joins: ' . print_r($joins, true) . "<br/>\n";
 	    foreach ($joins as $join) {
 		$model->setJoin(
 		    $join['table'],
