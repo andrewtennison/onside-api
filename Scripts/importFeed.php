@@ -26,7 +26,7 @@ if ($result) {
 
 // Check if it has basic mapping - sanity check
 $error = '';
-$fields = array('map_article', 'map_type', 'map_title', 'map_source', 'map_link', 'map_publish');
+$fields = array('map_article', 'map_type', 'map_title', 'map_link', 'map_publish');
 foreach ($fields as $field) {
     if (empty($row->$field) || is_null($row->$field)) {
 	$error .= "required field '$field' is empty\n";
@@ -48,6 +48,17 @@ if ($error !== '') {
 $source = new \Onside\Feed\Source($row);
 $articles = $source->getArticles();
 //echo print_r($articles, true) . "\n";
+
+if (count($articles) == 0) {
+    $logger->write("No articles found from mapping source: $id will be flagged as 'failed'", 'warn');
+    $model->status = 'failed';
+    $model->id = $id;
+    $model->failed_reason = 'unknown error';
+    $sql = $model->getUpdateSQL();
+    $args = $model->getValues();
+    $result = $db->prepared($sql, $args);
+    exit;
+}
 
 // TODO: dedupe across sources only inserting if its unique
 $inserted = 0;

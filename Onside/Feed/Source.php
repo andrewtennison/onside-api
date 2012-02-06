@@ -47,8 +47,8 @@ class Source
     
     private function xmlToJson($xml)
     {
-	$sxml = simplexml_load_string($xml);
-	return json_encode($sxml);
+	$sxml = @simplexml_load_string($xml);
+	return $sxml ? json_encode($sxml) : $xml;
     }
 
     private function loadCurlResponse($id)
@@ -100,7 +100,7 @@ class Source
     
     private function parseArticle($parent, $object)
     {
-echo print_r($object, true) . "\n";
+//echo print_r($object, true) . "\n";
 	$data = array();
 	$source = $this->parseSource($this->getElementMap($parent, $object, 'map_source'));
 	$data['source'] = empty($source) ? 
@@ -113,7 +113,7 @@ echo print_r($object, true) . "\n";
 	$data['content'] = $this->parseContent($this->getElementMap($parent, $object, 'map_content'));
 	$data['link'] = $this->parseLink($this->getElementMap($parent, $object, 'map_link'));
 	$data['images'] = $this->parseImages($this->getElementMap($parent, $object, 'map_images'));
-echo print_r($data, true) . "\n\n";
+//echo print_r($data, true) . "\n\n";
 //die();
 	$this->articles[] = Article::getModelFromArray($data);
     }
@@ -168,18 +168,13 @@ echo print_r($data, true) . "\n\n";
     private function parseTitle($value)
     {
 	// TODO: source ID=12
-echo 'parseTitle($value): ' . print_r($value, true) . "\n\n";
+//echo 'parseTitle($value): ' . print_r($value, true) . "\n\n";
 	
-
-	$strvalue = (string)$value;
-	if (!empty($strvalue))
-	    return $strvalue;
-
 	if (is_object($value)) {
-	    $value = (array)$value;
-	    if (empty($value))
-		return;
-	    // TODO: handle when content exists
+	    $strvalue = (string)$value;
+	    if (!empty($strvalue))
+		return $strvalue;
+	    return;
 	}
 
 	return $value;
