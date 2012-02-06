@@ -47,4 +47,9 @@ class SearchController extends BaseController
 	$where = $this->getAcceptedFilters($data); // Here only to create limit
 	$this->results[] = $this->mappers['search']->selectItem($data, array(), $this->limit);
     }
+    
+    public function actionDelete($id)
+    {
+        $this->results[] = $this->mappers['search']->deleteItem($id);
+    }
 }
