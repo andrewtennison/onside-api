@@ -16,8 +16,8 @@ class Source
 	$this->mapLookups = array();
 	$this->source = $source;
 	$this->decodeMappings();
-	$json = $this->loadCurlResponse($source->id); // offline use
-//	$json = $this->sendCurlRequest($source->url); // online use
+//	$json = $this->loadCurlResponse($source->id); // offline use
+	$json = $this->sendCurlRequest($source->url); // online use
 //echo "$json\n";
 	$this->parseJson($json);
     }
