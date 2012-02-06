@@ -16,8 +16,8 @@ class Source
 	$this->mapLookups = array();
 	$this->source = $source;
 	$this->decodeMappings();
-//	$json = $this->loadCurlResponse($source->id); // offline use
-	$json = $this->sendCurlRequest($source->url); // online use
+	$json = $this->loadCurlResponse($source->id); // offline use
+//	$json = $this->sendCurlRequest($source->url); // online use
 //echo "$json\n";
 	$this->parseJson($json);
     }
@@ -98,52 +98,50 @@ class Source
 //echo print_r($items, true) . "\n";	
 	foreach ($items as $article) {
 //echo print_r($article, true) . "\n\n";
-	    $this->parseArticle($article);
+	    $this->parseArticle($json, $article);
 	}
     }
     
-    private function parseArticle($object)
+    private function parseArticle($parent, $object)
     {
-	/**
-	 * author
-	 * date
-	 * title
-	 * content
-	 * link
-	 * original
-	 * type
-	 * source
-	 */
+//echo print_r($object, true) . "\n";
 	$data = array();
-	$data['source'] = $this->source->url;
+	$source = $this->parseSource($this->getElementMap($parent, $object, 'map_source'));
+	$data['source'] = empty($source) ? 
+		$this->source->url : $source;
 	$data['original'] = json_encode($object);
-	$data['type'] = $this->parseType($this->getElementMap($object, 'map_type'));
-	$data['author'] = $this->parseAuthor($this->getElementMap($object, 'map_author'));
-	$data['title'] = $this->parseTitle($this->getElementMap($object, 'map_title'));
-	$data['date'] = $this->parseDate($this->getElementMap($object, 'map_publish'));
-	$data['content'] = $this->parseContent($this->getElementMap($object, 'map_content'));
-	$data['link'] = $this->parseLink($this->getElementMap($object, 'map_link'));
-	$data['images'] = $this->parseImages($this->getElementMap($object, 'map_images'));
+	$data['type'] = $this->parseType($this->getElementMap($parent, $object, 'map_type'));
+	$data['author'] = $this->parseAuthor($this->getElementMap($parent, $object, 'map_author'));
+	$data['title'] = $this->parseTitle($this->getElementMap($parent, $object, 'map_title'));
+	$data['publish'] = $this->parseDate($this->getElementMap($parent, $object, 'map_publish'));
+	$data['content'] = $this->parseContent($this->getElementMap($parent, $object, 'map_content'));
+	$data['link'] = $this->parseLink($this->getElementMap($parent, $object, 'map_link'));
+	$data['images'] = $this->parseImages($this->getElementMap($parent, $object, 'map_images'));
 //echo print_r($data, true) . "\n\n";
 //die();
 	$this->articles[] = Article::getModelFromArray($data);
     }
         
-    private function getElementMap($object, $lookup)
+    private function getElementMap($parent, $object, $lookup)
     {
+//echo print_r($parent, true) . "\n";
 	if ($this->mapLookups[$lookup]['isLiteral']) {
 	    return $this->mapLookups[$lookup]['value'];
 	} else {
-	    $fields = is_array($this->mapLookups[$lookup]['value']) ? $this->mapLookups[$lookup]['value'] : array($this->mapLookups[$lookup]['value']);
+	    $fields = is_array($this->mapLookups[$lookup]['value']) ? 
+		$this->mapLookups[$lookup]['value'] : 
+		array($this->mapLookups[$lookup]['value']);
 //echo 'getElementMap: ' . print_r($fields, true) . "\n\n";
 	    foreach ($fields as $field) {
 		$field = substr($field, 2);
 		$parts = explode('->', $field);
-//echo 'getElementMap: ' . print_r($parts, true) . "\n\n";
-		if (strpos($field, '@') !== false) {
-//    echo "manual: " . $object->enclosure->@attributes->url . "\n\n";
-		    $array = (array)$object->$parts[0];
-//echo "->enclosure->@attributes->url: " . print_r($array, true) . "\n\n";
+		if (strpos($field, '@') !== false || count($parts) > 1) {
+		    if (property_exists($object, $parts[0])) {
+			$array = (array)$object->$parts[0];
+		    }
+		    if (property_exists($parent, $parts[0])) {
+			$array = (array)$parent->$parts[0];
+		    }
 		    for($i = 1; $i < count($parts); $i++) {
 			if (is_array($array)) {
 			    $array = $array[$parts[$i]];
@@ -151,11 +149,20 @@ class Source
 			    $array = $array->$parts[$i];
 			}
 		    }
-//echo 'final $array: ' . $array . "\n\n";
+		    
 		    return $array;
 		}
-		if (isset($object->$field))
+//echo "\$field: $field\n";
+		if (property_exists($object, $field)) {
+//		if (isset($object->$field)) {
+//echo "isset(\$object->$field): " . print_r($object->$field, true) . "\n";
 			return $object->$field;
+		}
+		if (property_exists($parent, $field)) {
+//		if (isset($parent->$field)) {
+//echo "isset(\$parent->$field): " . print_r($parent->$field, true) . "\n";
+			return $parent->$field;
+		}
 	    }
 	}
     }
@@ -229,6 +236,17 @@ class Source
 	    // TODO: handle when content exists
 	}
 
+	return $value;
+    }
+    private function parseSource($value)
+    {
+//echo 'parseSource($value): ' . print_r($value, true) . "\n\n";
+	if (is_object($value)) {
+	    $value = (array)$value;
+	    if (empty($value))
+		return;
+	    // TODO: handle when content exists
+	}
 	return $value;
     }
 }

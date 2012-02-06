@@ -24,6 +24,7 @@ class Source extends Model
 	'map_extended' => 'VARCHAR(100) NULL',
         'map_publish' => 'VARCHAR(100) NULL',
 	'map_keywords' => 'VARCHAR(100) NULL',
+	'failed_reason' => 'TEXT NULL',
     );
     
     public $id;
@@ -44,4 +45,5 @@ class Source extends Model
     public $map_extended;
     public $map_publish;
     public $map_keywords;
+    public $failed_reason;
 }

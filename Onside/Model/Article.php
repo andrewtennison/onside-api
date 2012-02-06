@@ -21,6 +21,7 @@ class Article extends Model
 	'original' => 'TEXT',
 //        'added' => 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
     );
+    protected $_required = array('type', 'title', 'source', 'link', 'publish');
     
     public $id;
     public $type;
@@ -36,6 +37,18 @@ class Article extends Model
     public $keywords;
     public $original;
 //    public $added;
+    
+    public function isValid($return = false)
+    {
+	$error = null;
+	foreach ($this->_required as $field) {
+	    if (empty($this->$field)) {
+echo print_r($this, true) . "\n";
+		$error .= "required field '$field' is empty\n";
+	    }
+	}
+	return (is_null($error) ? true : ($return ? $error : false));
+    }
 }
 
 

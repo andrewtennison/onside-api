@@ -33,10 +33,11 @@ $articles = $source->getArticles();
 // TODO: dedupe across sources only inserting if its unique
 $inserted = 0;
 foreach ($articles as $article) {
+    $failed_reason = '';
+    if (!$article->isValid()) {
+	$failed_reason = $article->isValid(true);
+    }
     $article1 = \Onside\Model\Article::getModelFromArray(array());
-//    $article1->title = $article->title;
-//    $article1->source = $article->source;
-//    $article1->publish = $article->publish;
     $article1->setWhere('title', $article->title);
     $article1->setWhere('source', $article->source);
     if (!empty($article->publish))
@@ -48,12 +49,14 @@ foreach ($articles as $article) {
     if (count($rows) == 0) {
 	$sql = $article->getInsertSQL();
 	$args = $article->getValues();
+//echo "$sql\n\n" . print_r($args, true) . "\n";
 	$result = $db->prepared($sql, $args);
 	if (!$result) {
 	    // (incorrect fields)ID=12(title)/15(title)/38(title)/39(???)/40(title) (fatal)ID=20
 	    $logger->write("Problem inserting new article, source: $id will be flagged as 'failed'", 'warn');
 	    $model->status = 'failed';
 	    $model->id = $id;
+	    $model->failed_reason = $failed_reason;
 	    $sql = $model->getUpdateSQL();
 	    $args = $model->getValues();
 	    $result = $db->prepared($sql, $args);
@@ -69,6 +72,7 @@ $logger->write("Import feed $id: Imported $inserted / " . count($articles) . " a
 $model->id = $id;
 $model->status = 'processed';
 $model->lastfetched = date('Y-m-d H:i:s');
+$model->failed_reason = null;
 $sql = $model->getUpdateSQL();
 $args = $model->getValues();
 $result = $db->prepared($sql, $args);
