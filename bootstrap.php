@@ -18,8 +18,8 @@ ini_set('display_errors', true);
 
 // Constants
 define('APPLICATION_BASE', __DIR__);
-define('APPLICATION_ENV', 'development');
-//defined('APPLICATION_ENV') or define('APPLICATION_ENV', getenv('APPLICATION_ENV'));
+//define('APPLICATION_ENV', 'development');
+defined('APPLICATION_ENV') or define('APPLICATION_ENV', getenv('APPLICATION_ENV'));
 define('APPLICATION_CONFIG', APPLICATION_BASE . '/Config');
 
 // Autoloading
