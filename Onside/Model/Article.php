@@ -43,7 +43,7 @@ class Article extends Model
 	$error = null;
 	foreach ($this->_required as $field) {
 	    if (empty($this->$field)) {
-echo print_r($this, true) . "\n";
+//echo print_r($this, true) . "\n";
 		$error .= "required field '$field' is empty\n";
 	    }
 	}

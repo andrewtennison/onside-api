@@ -24,6 +24,25 @@ if ($result) {
     $logger->write("Import feed $id: Start fetching and updated feed to running", 'info');
 }
 
+// Check if it has basic mapping - sanity check
+$error = '';
+$fields = array('map_article', 'map_type', 'map_title', 'map_source', 'map_link', 'map_publish');
+foreach ($fields as $field) {
+    if (empty($row->$field) || is_null($row->$field)) {
+	$error .= "required field '$field' is empty\n";
+    }
+}
+if ($error !== '') {
+    $logger->write("Problem with mapping source: $id will be flagged as 'failed'", 'warn');
+    $model->status = 'failed';
+    $model->id = $id;
+    $model->failed_reason = $error;
+    $sql = $model->getUpdateSQL();
+    $args = $model->getValues();
+    $result = $db->prepared($sql, $args);
+    exit;
+}
+
 // Process the feed
 //echo print_r($row, true) . "\n";
 $source = new \Onside\Feed\Source($row);

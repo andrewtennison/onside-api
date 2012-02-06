@@ -84,12 +84,8 @@ class Source
     
     private function parseJson($json)
     {
-	$json = json_decode($json);
 //die(print_r($json, true));
-//	$parts = explode('->', substr($this->mapLookups['map_article']['value'], 2));
-//	foreach ($parts as $part) {
-//	    $json = $this->getElement($json, $part);
-//	}
+	$json = json_decode($json);
 //die(print_r($json, true));
 	
 	$lookup = '$items = $json' . $this->mapLookups['map_article']['value'] . ';';
@@ -104,7 +100,7 @@ class Source
     
     private function parseArticle($parent, $object)
     {
-//echo print_r($object, true) . "\n";
+echo print_r($object, true) . "\n";
 	$data = array();
 	$source = $this->parseSource($this->getElementMap($parent, $object, 'map_source'));
 	$data['source'] = empty($source) ? 
@@ -117,7 +113,7 @@ class Source
 	$data['content'] = $this->parseContent($this->getElementMap($parent, $object, 'map_content'));
 	$data['link'] = $this->parseLink($this->getElementMap($parent, $object, 'map_link'));
 	$data['images'] = $this->parseImages($this->getElementMap($parent, $object, 'map_images'));
-//echo print_r($data, true) . "\n\n";
+echo print_r($data, true) . "\n\n";
 //die();
 	$this->articles[] = Article::getModelFromArray($data);
     }
@@ -172,8 +168,13 @@ class Source
     private function parseTitle($value)
     {
 	// TODO: source ID=12
-//echo 'parseTitle($value): ' . print_r($value, true) . "\n\n";
+echo 'parseTitle($value): ' . print_r($value, true) . "\n\n";
 	
+
+	$strvalue = (string)$value;
+	if (!empty($strvalue))
+	    return $strvalue;
+
 	if (is_object($value)) {
 	    $value = (array)$value;
 	    if (empty($value))
