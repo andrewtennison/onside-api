@@ -47,7 +47,10 @@ class Source
     
     private function xmlToJson($xml)
     {
+//echo print_r($xml, true) . "\n";
 	$sxml = @simplexml_load_string($xml);
+	return $sxml ? $sxml : json_decode($xml);
+	
 	return $sxml ? json_encode($sxml) : $xml;
     }
 
@@ -84,8 +87,8 @@ class Source
     
     private function parseJson($json)
     {
-//die(print_r($json, true));
-	$json = json_decode($json);
+//echo print_r($json, true) . "\n";
+//	$json = json_decode($json);
 //die(print_r($json, true));
 	
 	$lookup = '$items = $json' . $this->mapLookups['map_article']['value'] . ';';
@@ -212,15 +215,25 @@ class Source
     {
 	// TODO: source ID=14/25
 	if (is_object($value)) {
-	    $value = (array)$value;
-	    if (empty($value))
-		return;
-	    // TODO: handle when content exists
+	     $strvalue = (string)$value;
+	    if (!empty($strvalue))
+		return $strvalue;
+	    return;
 	}
 	
 	return $value;
     }
-    private function parseLink($value) { return $value; }
+    private function parseLink($value)
+    {
+	if (is_object($value)) {
+	     $strvalue = (string)$value;
+	    if (!empty($strvalue))
+		return $strvalue;
+	    return;
+	}
+	
+	return $value;
+    }
     private function parseImages($value)
     {
 	// TODO: source ID=8/13/36/37
@@ -238,10 +251,10 @@ class Source
     {
 //echo 'parseSource($value): ' . print_r($value, true) . "\n\n";
 	if (is_object($value)) {
-	    $value = (array)$value;
-	    if (empty($value))
-		return;
-	    // TODO: handle when content exists
+	    $strvalue = (string)$value;
+	    if (!empty($strvalue))
+		return $strvalue;
+	    return;
 	}
 	return $value;
     }

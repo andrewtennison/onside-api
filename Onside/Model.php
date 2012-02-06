@@ -50,7 +50,7 @@ class Model
 	// only wrap field value if its a string and is not a mysql funcation
 	// so far on PASSWORD() function is trapped
 	if (is_string($rightside) && strpos($rightside, 'PASSWORD') === false) {
-	    $rightside = "'$rightside'";
+	    $rightside = "'" . $this->_addSlashes($rightside) . "'";
 	}
 //	$this->_where[] = '`' . $leftside . '` ' . $operator . ' ' . $rightside . ' ' . $type . ' ';
         $this->_where[] = (false !== strpos($leftside, '`') ?
@@ -186,6 +186,12 @@ SQL;
         }
         
         return true;
+    }
+    
+    
+    private function _addSlashes($sql)
+    {
+	return addslashes($sql);
     }
     
     private function _getIndexDefinition()

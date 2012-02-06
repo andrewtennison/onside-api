@@ -49,6 +49,7 @@ $source = new \Onside\Feed\Source($row);
 $articles = $source->getArticles();
 //echo print_r($articles, true) . "\n";
 
+/**
 if (count($articles) == 0) {
     $logger->write("No articles found from mapping source: $id will be flagged as 'failed'", 'warn');
     $model->status = 'failed';
@@ -59,6 +60,7 @@ if (count($articles) == 0) {
     $result = $db->prepared($sql, $args);
     exit;
 }
+*/
 
 // TODO: dedupe across sources only inserting if its unique
 $inserted = 0;
@@ -75,7 +77,12 @@ foreach ($articles as $article) {
 //echo print_r($article, true) . "\n\n";
     $sql = $article1->getSelectSQL();
     $args = $article1->getValues();
-    $rows = $db->prepared($sql, $args)->fetchAll();
+//echo "$sql\n\n" . print_r($args, true) . "\n";
+    try {
+	$rows = $db->prepared($sql, $args)->fetchAll();
+    } catch (\PDOException $e) {
+	echo print_r($e->getTraceAsString(), true) . "\n";
+    }
     if (count($rows) == 0) {
 	$sql = $article->getInsertSQL();
 	$args = $article->getValues();
@@ -91,7 +98,7 @@ foreach ($articles as $article) {
 	    $args = $model->getValues();
 	    $result = $db->prepared($sql, $args);
 	    // Stop all processing and exit
-	    exit;
+	    continue(1);
 	}
 	$inserted++;
     }
