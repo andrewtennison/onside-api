@@ -166,7 +166,16 @@ class Source
 	}
     }
     
-    private function parseAuthor($value) { return $value; }
+    private function parseAuthor($value)
+    {
+	if (is_object($value)) {
+	    $strvalue = (string)$value;
+	    if (!empty($strvalue))
+		return $strvalue;
+	    return;
+	}
+	return $value;
+    }
     private function parseType($value) { return $value; }
     private function parseTitle($value)
     {
