@@ -15,6 +15,10 @@ $logger->write("Import feed: ID passed in $id", 'info');
 $model = \Onside\Model\Source::getModelFromArray(array());
 $model->setWhere('id', $id);
 $row = $db->prepared($model->getSelectSQL())->fetchAll(\PDO::FETCH_CLASS, '\Onside\Model\Source');
+if (count($row) == 0) {
+    $logger->write("Import feed: $id no mapping source found, exiting", 'info');
+    exit;
+}
 $row = $row[0];
 $model->status = 'running';
 $sql = $model->getUpdateSQL();
