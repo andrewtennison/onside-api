@@ -108,7 +108,7 @@ foreach ($articles as $article) {
 	// Associate article with channel(s)
 	$channels = strpos($model->channels, ',') === false ? array($model->channels) : explode(',', $model->channels);
 	foreach ($channels as $channel) {
-	    $carticle = \Onside\Model\Carticle::getModelFromArray(array('article' => $result->id, 'channel' => $channel));
+	    $carticle = \Onside\Model\Carticle::getModelFromArray(array('article' => $result, 'channel' => $channel));
 	    $carticle = $db->prepared($carticle->getInsertSQL(), $carticle->getValues());
 	}
 	$inserted++;
