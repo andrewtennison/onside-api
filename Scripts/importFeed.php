@@ -104,6 +104,13 @@ foreach ($articles as $article) {
 	    // Stop all processing and exit
 	    continue(1);
 	}
+	// Associate article with channel(s)
+	
+	$channels = strpos($model->channels, ',') === false ? array($model->channels) : explode(',', $model->channels);
+	foreach ($channels as $channel) {
+	    $carticle = \Onside\Model\Carticle::getModelFromArray(array('article' => $article->id, 'channel' => $channel));
+	    $carticle = $db->prepared($carticle->getInsertSQL(), $carticle->getValues());
+	}
 	$inserted++;
     }
 }
