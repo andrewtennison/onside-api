@@ -5,7 +5,7 @@ use \Onside\Mapper\Channel;
 
 class ChannelController extends BaseController
 {
-    protected $filters = array('sport', 'type', 'user', 'event', 'channel');
+    protected $filters = array('sport', 'type', 'user', 'event', 'channel', 'status');
     private $_mapper;
     
     public function __construct()
