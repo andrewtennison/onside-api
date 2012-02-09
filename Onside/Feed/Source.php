@@ -120,6 +120,7 @@ class Source
 	}
 	$data['link'] = $this->parseLink($this->getElementMap($parent, $object, 'map_link'));
 	$data['images'] = $this->parseImages($this->getElementMap($parent, $object, 'map_images'));
+	$data['videos'] = $this->parseVideos($this->getElementMap($parent, $object, 'map_videos'));
 //echo print_r($data, true) . "\n\n";
 //die();
 	$this->articles[] = Article::getModelFromArray($data);
@@ -256,6 +257,18 @@ class Source
 	    if (empty($value))
 		return;
 	    // TODO: handle when content exists
+	}
+
+	return $value;
+    }
+    private function parseVideos($value)
+    {
+//echo 'parseVideos($value): ' . print_r($value, true) . "\n\n";
+	if (is_object($value)) {
+	    $strvalue = (string)$value;
+	    if (!empty($strvalue))
+		return $strvalue;
+	    return;
 	}
 
 	return $value;
