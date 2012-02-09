@@ -114,6 +114,10 @@ class Source
 	$data['title'] = $this->parseTitle($this->getElementMap($parent, $object, 'map_title'));
 	$data['publish'] = $this->parseDate($this->getElementMap($parent, $object, 'map_publish'));
 	$data['content'] = $this->parseContent($this->getElementMap($parent, $object, 'map_content'));
+	if (strlen($data['content']) > 250) {
+	    $data['extended'] = $data['content'];
+	    $data['content'] = substr($data['content'], 0, 250);
+	}
 	$data['link'] = $this->parseLink($this->getElementMap($parent, $object, 'map_link'));
 	$data['images'] = $this->parseImages($this->getElementMap($parent, $object, 'map_images'));
 //echo print_r($data, true) . "\n\n";
