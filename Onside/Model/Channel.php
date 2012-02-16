@@ -19,10 +19,11 @@ class Channel extends Model
 	'branding' => 'VARCHAR(100) NULL',
         'geolat' => 'DECIMAL(10,6) default NULL',
         'geolng' => 'DECIMAL(10,6) default NULL',
+        'search_term' => 'VARCHAR(50)',
 
 //        'added' => 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
     );
-    
+
     public $id;
     public $name; /* searchable */
     public $hash;
@@ -36,15 +37,16 @@ class Channel extends Model
     public $branding;
     public $geolat;
     public $geolng;
+    public $search_term;
 //    public $added;
 }
 
 /**
  * source(s) can be [fliker/rss/twitter/youtube]
- * 
+ *
  * users (admin)
  * followers
- * 
+ *
  * can save a search as a source for channe, this will
  * associate channel/event/articles* to this channel
  */
