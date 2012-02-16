@@ -9,7 +9,7 @@ use \Onside\Mapper\Search;
 class SearchController extends BaseController
 {
     private $mappers;
-    
+
     public function __construct()
     {
 	global $db;
@@ -20,7 +20,7 @@ class SearchController extends BaseController
 	    'search' => new Search($db),
 	);
     }
-    
+
     public function actionGet($get = array())
     {
 	// Strip token
@@ -32,14 +32,14 @@ class SearchController extends BaseController
 	    'articles' => $this->mappers['article']->searchItem($get, array('publish' => false), $this->limit),
 	);
     }
-    
+
     public function actionSave($id, $data)
     {
 	// Strip token
-	unset($get['token']);
+	unset($data['token']);
 	$this->results[] = $this->mappers['search']->addItem($data);
     }
-    
+
     public function actionList($id, $data)
     {
 	// Strip token
@@ -47,7 +47,7 @@ class SearchController extends BaseController
 	$where = $this->getAcceptedFilters($data); // Here only to create limit
 	$this->results[] = $this->mappers['search']->selectItem($data, array(), $this->limit);
     }
-    
+
     public function actionDelete($id)
     {
         $this->results[] = $this->mappers['search']->deleteItem($id);
