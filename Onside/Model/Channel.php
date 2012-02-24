@@ -15,7 +15,7 @@ class Channel extends Model
         'type' => 'VARCHAR(50)',
         'level' => 'INT(1) NOT NULL default 1',
 	'keywords' => 'TEXT',
-	'status' => 'ENUM("active","hidden") default "hidden")',
+	'status' => 'ENUM("active","hidden") default "hidden"',
 	'branding' => 'VARCHAR(100) NULL',
         'geolat' => 'DECIMAL(10,6) default NULL',
         'geolng' => 'DECIMAL(10,6) default NULL',
