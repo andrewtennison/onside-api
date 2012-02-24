@@ -5,56 +5,61 @@ class Mapper
 {
     protected $_db;
     protected $_model;
-    
+
     public function __construct(Db $db)
     {
         assert('null !== $db');
         $this->_db = $db;
     }
-    
+
     public function addItem(array $data)
     {
         return $this->_addItem($data);
     }
-    
+
     public function updateItem($id, array $data)
     {
         return $this->_updateItem((int) $id, $data);
     }
-    
+
     public function deleteItem($id)
     {
         return $this->_deleteItem((int) $id);
     }
-    
+
     public function selectItem($where = array(), $sort = array(), $limit = null, $join = array())
     {
         return $this->_selectItem($where, $sort, $limit, $join);
     }
-    
+
     public function getItem($id)
     {
         return $this->_selectItem(array('id' => $id), array(), null, null);
     }
-    
+
     // TODO: ->getItem($id) ->selectItem() ..... etc ....
-    
+
     protected function _addItem($data)
     {
         $class = $this->_model;
         $model = $class::getModelFromArray($data);
         $sql = $model->getInsertSQL();
         $args = $model->getValues();
+
+        error_log($sql);
+        error_log(print_r($args, true));
+        error_log(print_r($data, true));
+
 //echo '$sql: ' . $sql . "\n";
 //echo '$args: ' . print_r($args, true) . "\n";
 //exit;
         $id = $this->_db->prepared($sql, $args);
 //echo '_addItem(): $id: ' . $id . "\n";
         return $this->_selectItem(array('id' => $id), null, null, null);
-        
+
         return $this->_db->prepared($sql, $args);
     }
-    
+
     protected function _updateItem($id, $data)
     {
         $data['id'] = $id;
@@ -65,10 +70,10 @@ class Mapper
 
         $this->_db->prepared($sql, $args);
         return $this->_selectItem(array('id' => $id), null, null, null);
-        
+
         return $this->_db->prepared($sql, $args);
     }
-    
+
     protected function _deleteItem($id)
     {
         $class = $this->_model;
@@ -78,7 +83,7 @@ class Mapper
 
         return $this->_db->prepared($sql, $args);
     }
-    
+
     protected function _selectItem($where, $sort, $limit, $joins)
     {
 //echo '$where: ' . print_r($where, true) . ', $sort: ' . print_r($sort, true) . ', $limit: ' . print_r($limit, true) . ', $joins: ' . print_r($joins, true) . "\n";
@@ -99,7 +104,7 @@ class Mapper
 		);
 	    }
 	}
-	
+
         // TODO: where clause
         // $leftside, $rightside, $operator = '=', $type = 'AND'
         if (count($where) > 0) {
@@ -112,7 +117,7 @@ class Mapper
 		}
             }
         }
-        
+
         // sort order
         if (count($sort) > 0) {
             foreach ($sort as $field => $order) {
@@ -120,7 +125,7 @@ class Mapper
                 $model->setSort($field, $order);
 	    }
         }
-        
+
         // limit
         if (null !== $limit) {
             if (is_array($limit)) {

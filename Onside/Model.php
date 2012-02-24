@@ -9,12 +9,12 @@ class Model
     private $_sort;
     private $_limit;
     private $_join;
-    
+
     protected $_schema;
     protected $_table;
     protected $_index = array();
     protected $_definitions = array();
-    
+
     final static public function getModelFromArray($data)
     {
         $class = get_called_class();
@@ -26,10 +26,10 @@ class Model
         }
         return $model;
     }
-    
+
     public function clearWhere() { $this->_where = array(); }
     public function clearJoin() { $this->_join = array(); }
-    
+
     public function setJoin($table, $leftfield, $rightfield, $wherefield, $wherevalue, $fields = array(), $type = 'JOIN')
     {
 	$this->_join[] = array(
@@ -42,7 +42,7 @@ class Model
 	    'wherevalue' => $wherevalue,
 	);
     }
-    
+
     public function setWhere($leftside, $rightside, $operator = '=', $type = 'AND')
     {
 //echo "\$leftside: $leftside, \$rightside: $rightside, \$operator: $operator, \$type: $type\n";
@@ -57,17 +57,17 @@ class Model
 	    $leftside . $operator . ' ' . $rightside . ' ' . $type . ' ':
 	    '`' . $leftside . '` ' . $operator . ' ' . $rightside . ' ' . $type . ' ');
     }
-    
+
     public function clearSort()
     {
         $this->_sort = array();
     }
-    
+
     public function setSort($field, $ascend = true)
     {
         $this->_sort[] = $field . ' ' . ($ascend ? 'asc' : 'desc');
     }
-    
+
     public function setLimit($limit, $offset = 0)
     {
         $this->_limit = array($offset, $limit);
@@ -84,7 +84,7 @@ class Model
 	if (count($this->_join) > 0) {
 	    foreach ($this->_join as $key => $join) {
 //echo print_r($join, true) . "\n";
-		
+
 		// only works for channel <-> channel relationship
 		if (is_array($join['leftfield']) && is_array($join['rightfield']) && count($join['leftfield']) == count($join['rightfield'])) {
 		    $on = '';
@@ -94,13 +94,13 @@ class Model
 		    }
 		    $on = ' ON (' . substr($on, 0, -4) . ')';
 		    $sql .= ' ' . $join['type'] . ' ' . $this->_getTable($join['table']) . ' t' . $key . $on;
-		    
-		    
+
+
 		} else {
 		    // TODO: add select tables to sql
 		    $sql .= ' ' . $join['type'] . ' ' . $this->_getTable($join['table']) . ' t' . $key . ' ON t.' . $join['leftfield'] . ' = t' . $key . '.' . $join['rightfield'];
 		}
-		
+
 		if (is_array($join['wherefield'])) {
 //		    foreach ($join['wherefield'] as $wherefield)
 //			$this->setWhere('t' . $key . '.`' . $wherefield . '`', $join['wherevalue']);
@@ -109,7 +109,7 @@ class Model
 		}
 	    }
 	}
-	
+
 	// TODO: refactor to be more efficient
         if (count($this->_where) > 0) {
 //echo 'WHERE: ' . print_r($this->_where, true) . "\n";
@@ -118,12 +118,12 @@ class Model
 	    // TODO: such a hack :(
 	    $sql = str_replace('t.t', 't', $sql);
         }
-        
+
         // sort order
         if (is_array($this->_sort) && count($this->_sort) > 0) {
             $sql .= ' ORDER BY ' . implode(', ', $this->_sort);
         }
-        
+
         // limit
         if (null !== $this->_limit && count($this->_limit) === 2)
             $sql .= ' LIMIT ' . $this->_limit[0] . ', ' . $this->_limit[1];
@@ -132,140 +132,156 @@ class Model
 //exit;
         return $sql;
     }
-    
+
     public function getInsertSQL()
     {
         $this->_values = array();
         return 'INSERT INTO ' . $this->_getTable() . ' (' . $this->_getFieldList() . ') VALUES (' . $this->_getFieldPlaceholders() . ')';
     }
-    
+
     public function getUpdateSQL()
     {
         $this->_values = array();
         return 'UPDATE ' . $this->_getTable() . ' SET ' . $this->_getFieldListPlaceholders() . ' WHERE id = ?';
     }
-    
+
     public function getDeleteSQL()
     {
         $this->_values = array($this->id);
         return 'DELETE FROM ' . $this->_getTable() . ' WHERE id = ?';
     }
-    
+
     public function getDropSQL()
     {
         return 'DROP TABLE IF EXISTS ' . $this->_getTable();
     }
-    
+
     public function getTruncateSQL()
     {
         return 'TRUNCATE TABLE ' . $this->_getTable();
     }
-    
+
     public function getCreateSQL()
     {
         return <<<SQL
 CREATE TABLE IF NOT EXISTS {$this->_getTable()} (
     {$this->_getFieldDefinitions()},
     {$this->_getIndexDefinition()}
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1
 SQL;
     }
-    
+
     public function getValues()
     {
         return $this->_values;
     }
-    
+
     public function validate()
     {
         if (null === $this->_fields) $this->_setFields();
-        
+
         foreach ($this->_fields as $field) {
             if (!$this->_validateField($field))
                 return false;
         }
-        
+
         return true;
     }
-    
-    
+
+
     private function _addSlashes($sql)
     {
 	return addslashes($sql);
     }
-    
+
     private function _getIndexDefinition()
     {
 	return implode(",\n", array_merge(array('PRIMARY KEY (`id`)'), $this->_index));
     }
-    
+
     private function _validateField($field)
     {
-        
+
         return true;
     }
-    
+
     private function _getTable($table = null, $alias = false)
     {
 	if (null === $table) $table = $this->_table;
-        return ((null !== $this->_schema) ? "`{$this->_schema}`." : '') . 
-	    "`{$table}`" . 
+        return ((null !== $this->_schema) ? "`{$this->_schema}`." : '') .
+	    "`{$table}`" .
 	    ($alias ? ' AS t' : '');
     }
-    
+
     private function _getFieldDefinitions()
     {
         if (null === $this->_fields) $this->_setFields();
-        
+
         $str = '`id` ' . $this->_definitions['id'];
         foreach ($this->_fields as $field) {
             $str .= ', `' . $field . '` ' . $this->_definitions[$field];
         }
         return $str;
     }
-    
+
     private function _getFieldList()
     {
         if (null === $this->_fields) $this->_setFields();
-        
-        return '`' . implode('`, `', $this->_fields) . '`';
+
+        $filteredFields = array_filter($this->_fields, array($this, 'filterPasswordField'));
+
+        return '`' . implode('`, `', $filteredFields) . '`';
     }
-    
+
+    private function filterPasswordField($field)
+    {
+        return $field !== 'password';
+    }
+
     private function _getFieldListPlaceholders()
     {
         if (null === $this->_fields) $this->_setFields();
-        
+
         $str = '';
         foreach ($this->_fields as $field) {
             if (null !== $this->$field) {
-                $this->_values[] = $this->$field;
-                $str .= ', `' . $field . '` = ?';
+                if ($field === 'password') {
+                    if ($this->$field) {
+                        $this->_values[] = $this->$field;
+                        $str .= ', `' . $field . '` = PASSWORD(?)';
+                    }
+                } else {
+                    $this->_values[] = $this->$field;
+                    $str .= ', `' . $field . '` = ?';
+                }
             }
         }
         $this->_values[] = $this->id;
-        
+
         return substr($str, 2);
     }
-    
+
     private function _getFieldPlaceholders()
     {
         if (null === $this->_fields) $this->_setFields();
-        
+
 	$placeholders = '';
         foreach ($this->_fields as $field) {
-	    if (substr($this->$field, 0, 8) === 'PASSWORD') {
-		$placeholders .= ', ' . $this->$field . ' ';
+	    if ($field === 'password') {
+                if ($this->$field) {
+                    $this->_values[] = $this->$field;
+		    $placeholders .= ', PASSWORD(?)';
+                }
 	    } else {
-		$this->_values[] = $this->$field;
+                $this->_values[] = $this->$field;
 		$placeholders .= ', ?';
 	    }
 	}
 	$placeholders = substr($placeholders, 2);
-	
+
 	return $placeholders;
-        return substr(str_repeat(', ?', count($this->_fields)), 2);
     }
-    
+
     private function _setFields()
     {
         $fields = array();

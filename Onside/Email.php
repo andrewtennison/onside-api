@@ -6,46 +6,46 @@ namespace Onside;
  */
 class Email
 {
-    private $email;
-    
-    public function __construct($data = array())
+    private $template;
+
+    public function __construct(\Onside\Model\Email $template)
     {
-	$this->email = $data;
+	$this->template = $template;
     }
-    
+
     /**
      * @param array $data Data to be used for substitution
      */
-    public function sendEmail($data = array())
+    public function sendEmail(array $data = array())
     {
 	// subject
-	$this->email['subject'] = $this->replaceWithValues($this->email['subject'], $data);
-	
+	$this->template->subject = $this->replaceWithValues($this->template->subject, $data);
+
 	// plain text part
-	$this->email['text'] = $this->replaceWithValues($this->email['text'], $data);
-	
+	$this->template->text = $this->replaceWithValues($this->template->text, $data);
+
 	// html part
-	$this->email['html'] = $this->replaceWithValues($this->email['html'], $data);
-	
+	$this->template->html = $this->replaceWithValues($this->template->html, $data);
+
 	$headers  = 'MIME-Version: 1.0' . "\r\n";
-	$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+	$headers .= 'Content-type: text/plain; charset=iso-8859-1' . "\r\n";
 	$headers .= 'From: website@onside.me' . "\r\n";
-	if (!empty($this->email['cc']))
-		$headers .= 'Cc: ' . $this->email['cc'] . "\r\n";
-	if (!empty($this->email['bcc']))
-		$headers .= 'Bcc: ' . $this->email['cc'] . "\r\n";
-	
-	mail($this->email['to'], $this->email['subject'], $this->email['html'], $headers, '-f');
+	if (!empty($this->template->cc))
+		$headers .= 'Cc: ' . $this->template->cc . "\r\n";
+	if (!empty($this->template->bcc))
+		$headers .= 'Bcc: ' . $this->template->bcc . "\r\n";
+
+	mail($this->template->to, $this->template->subject, $this->template->text, $headers, '-fwebsite@onside.me');
     }
-    
-    private function replaceWithValues($field, $data = array())
+
+    private function replaceWithValues($field, array $data = array())
     {
-	preg_match_all('/(|([a-z_]+)|)/', $field, $matches);
+	preg_match_all('/\|([a-z_]+)\|/', $field, $matches);
 	for ($i = 0; $i < count($matches[1]); $i++) {
-	    $replace = (isset($data[$matches[2][$i]])) ? $data[$matches[2][$i]] : '';
-	    $field = preg_replace('/' . $data[$matches[1][$i]] . '/', $data[$matches[2][$i]], $field);
+	    $replace = (isset($data[$matches[1][$i]])) ? $data[$matches[1][$i]] : '';
+	    $field = preg_replace('/\|' . $matches[1][$i] . '\|/', $replace, $field);
 	}
-	
+
 	return $field;
     }
 }
