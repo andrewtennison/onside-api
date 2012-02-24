@@ -251,8 +251,18 @@ SQL;
     {
         if (null === $this->_fields) $this->_setFields();
         
-        foreach ($this->_fields as $field)
-            $this->_values[] = $this->$field;
+	$placeholders = '';
+        foreach ($this->_fields as $field) {
+	    if (substr($this->$field, 0, 8) === 'PASSWORD') {
+		$placeholders .= ', ' . $this->$field . ' ';
+	    } else {
+		$this->_values[] = $this->$field;
+		$placeholders .= ', ?';
+	    }
+	}
+	$placeholders = substr($placeholders, 2);
+	
+	return $placeholders;
         return substr(str_repeat(', ?', count($this->_fields)), 2);
     }
     

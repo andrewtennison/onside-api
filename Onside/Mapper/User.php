@@ -42,4 +42,28 @@ class User extends Mapper
 	
 	return $return;
     }
+    
+    public function addItem(array $data)
+    {
+//echo print_r($data, true) . "\n";
+	// generate random password
+	$passwd = $this->getRandomPassword();
+	$data['password'] = 'PASSWORD("' . $passwd . '")';
+	
+	// create user
+	$return  = $this->_addItem($data);
+	
+	// send email
+	$mapper = new Email($this->_db);
+	$template = $mapper->selectItem(array('name' => 'registration'));
+	$email = new \Onside\Email($template[0]);
+	$email->sendEmail($return);
+	
+	return $return;
+    }
+    
+    private function getRandomPassword()
+    {
+	return uniqid();
+    }
 }
