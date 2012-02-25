@@ -5,6 +5,11 @@ use \Onside\Model;
 class Article extends Model
 {
     protected $_table = 'article';
+
+    protected $_index = array(
+        'INDEX `title_source_idx` (`title`, `source`)',
+    );
+
     protected $_definitions = array(
         'id' => 'INT(11) NOT NULL AUTO_INCREMENT',
 	'type' => 'ENUM("rss","twitter","youtube","google","custom") NOT NULL Default "rss"',
@@ -22,7 +27,7 @@ class Article extends Model
 //        'added' => 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
     );
     protected $_required = array('type', 'title', 'source', 'link', 'publish');
-    
+
     public $id;
     public $type;
     public $title; /* searchable */
@@ -37,7 +42,7 @@ class Article extends Model
     public $keywords;
     public $original;
 //    public $added;
-    
+
     public function isValid($return = false)
     {
 	$error = null;
@@ -61,11 +66,11 @@ class Article extends Model
  * source (link)
  * extended (link for more)
  * publication date // searchable
- * 
+ *
  * type - will be need to be defined by the processing engine
- * 
- * 
- * 
+ *
+ *
+ *
 
 [title] => Kurucz eyes loan deal
 [description] => West Ham goalkeeper Peter Kurucz has revealed he is willing to go out on loan to League Two in order to find first-team football.
