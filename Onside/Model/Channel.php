@@ -5,6 +5,12 @@ use \Onside\Model;
 class Channel extends Model
 {
     protected $_table = 'channel';
+
+    protected $_index = array(
+        'UNIQUE KEY `channel_name_idx` (`name`)',
+        'UNIQUE KEY `channel_search_term_idx` (`search_term`)',
+    );
+
     protected $_definitions = array(
         'id' => 'INT(11) NOT NULL AUTO_INCREMENT',
         'name' => 'VARCHAR(100)',
@@ -40,7 +46,7 @@ class Channel extends Model
     public $geolng;
     public $search_term;
     public $user;
-    
+
 //    public $added;
 }
 
