@@ -46,10 +46,6 @@ class Mapper
         $sql = $model->getInsertSQL();
         $args = $model->getValues();
 
-        error_log($sql);
-        error_log(print_r($args, true));
-        error_log(print_r($data, true));
-
 //echo '$sql: ' . $sql . "\n";
 //echo '$args: ' . print_r($args, true) . "\n";
 //exit;
