@@ -14,16 +14,20 @@ class Db extends PDO
         try {
             $stmt = $this->prepare($sql);
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
-            
+
             $i = 1;
             // can't use execute($args) because of apparent PHP bug — 'invalid syntax for booelan ""'
             foreach($args as $value) {
                 assert('is_scalar($value) || NULL === $value');
                 $stmt->bindValue($i++, $value, is_string($value) ? PDO::PARAM_STR : (is_int($value) ? PDO::PARAM_INT : (null === $value ? PDO::PARAM_NULL : PDO::PARAM_BOOL)));
             }
-            
+
             $r = $stmt->execute();
-//echo print_r($this->errorInfo(), true) . "\n";
+            if ($stmt->errorCode() != '00000') {
+                $errorInfo = $stmt->errorInfo();
+                throw new \Onside\Exception(array(array('code' => $errorInfo[1], 'message' => $errorInfo[2])));
+            }
+//echo print_r($stmt->errorInfo(), true) . "\n";
 //echo '$r: ' . ($r ? 'TRUE' : 'FALSE') . "\n";
             if ($this->_isNonModifyingQuery($sql))
                 return $stmt;
@@ -36,7 +40,7 @@ class Db extends PDO
 //echo 'rowCount(): ' . $stmt->rowCount() . "\n";
         return $this->lastInsertId() > 0 ? $this->lastInsertId() : $stmt->rowCount();
     }
-    
+
     private function _isNonModifyingQuery($sql)
     {
         return !preg_match('/^\s*(?:INSERT|DELETE|UPDATE|BEGIN|ALTER|CREATE)\s/i', $sql);

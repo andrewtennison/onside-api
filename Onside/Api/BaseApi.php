@@ -8,7 +8,7 @@ class BaseApi
     protected $directResponse;
     protected $allowedServices = array();
     protected $errors;
-    
+
     public function __construct($options = array())
     {
         $this->assertOptions($options);
@@ -24,7 +24,7 @@ class BaseApi
 	$this->errors = new \Onside\Errors();
 	$this->init();
     }
-    
+
     private function init()
     {
 	global $commonConfig;
@@ -32,7 +32,7 @@ class BaseApi
 	ini_set('session.save_path', "{$commonConfig->cache->host}:{$commonConfig->cache->port}");
 	ini_set('session.use_cookies', false);
 }
-    
+
     public function run()
     {
 	try {
@@ -40,7 +40,7 @@ class BaseApi
 //throw new Exception('this is an api exception');
 	    // check request, authorization
 	    $this->getInvalidResponse($this->request->getObject());
-	    
+
 	    // handle OPTIONS request
 	    if ('OPTIONS' == $this->request->getMethod()) {
 		header('HTTP/1.1 200 OK');
@@ -52,7 +52,7 @@ class BaseApi
 		//file_put_contents('/tmp/onside.log', file_get_contents('/tmp/onside.log') . 'OPTIONS: ' . print_r($headers, true) . "\n===========================\n");
 //		exit;
 	    }
-	    
+
 	    $controllerName = $this->getControllerName($this->request->getObject());
 	    $controller = $this->getControllerClass($this->request->getObject());
 
@@ -68,8 +68,8 @@ class BaseApi
 		if ($method === 'POST') $controller->actionPost($this->request->getParam('id'), $this->request->getPost());
 		if ($method === 'GET') $controller->actionItem($key);
 	    } else if (
-		(string)$key === $key && 
-		in_array($method, array('GET', 'POST')) && 
+		(string)$key === $key &&
+		in_array($method, array('GET', 'POST')) &&
 		method_exists($controller, 'action' . ucfirst($key))
 	    ) {
 		$action = 'action' . ucfirst($key);
@@ -79,15 +79,23 @@ class BaseApi
 		$error = $this->errors->getError(103, array(ucfirst($key), $controllerName));
 		throw new Exception(array($error->getResponse()), 405);
 	    }
-	} catch (\Exception $e) {
-	    throw $e;
-//	    return $this->request->getResponse($this->request->getObject(), $e->getCode(), array(), $e->getResponseFields());
+	}
+        catch (\Onside\Exception $e) {
+            error_log($e->getMessage());
+            error_log($e->getTraceAsString());
+            return $this->request->getResponse($this->request->getObject(), $e->getCode(), array(), $e->getResponseFields());
+        }
+        catch (\Exception $e) {
+            $errorString = print_r($e, true);
+            error_log($e->getMessage());
+            error_log($e->getTraceAsString());
+            return $this->request->getResponse($this->request->getObject(), 500, array(), array(array('code' => 500, 'message' => $errorString)));
 	}
 	$data = $controller->getResults();
 	$errors = $controller->getErrors();
         return $this->request->getResponse($controllerName, $code, $data, $errors);
     }
-    
+
     protected function getInvalidResponse($controllerName)
     {
 	if (!in_array(strtolower($controllerName), $this->allowedServices)) {
@@ -104,7 +112,7 @@ class BaseApi
 //		throw new Exception(array($error->getResponse()), 401);
 //	    }
 //	}
-	
+
 	// basic auth
 //	$auth = new \Api\BaseAuth();
 //	$auth->canAuth(\Api\BaseAuth::BASIC);
@@ -113,18 +121,18 @@ class BaseApi
 //	    throw new Exception(array($error->getResponse()), 401);
 //	}
     }
-    
+
     protected function getControllerName($controllerName)
     {
         return ucfirst($controllerName);
     }
-    
+
     protected function getControllerClass($controllerName)
     {
 	$className = '\Onside\Api\\' . ucfirst($controllerName) . 'Controller';
         return new $className();
     }
-    
+
     protected function assertOptions($options)
     {
         if (count($options) == 0)
