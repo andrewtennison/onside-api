@@ -20,6 +20,7 @@ class Channel extends Model
         'geolat' => 'DECIMAL(10,6) default NULL',
         'geolng' => 'DECIMAL(10,6) default NULL',
         'search_term' => 'VARCHAR(50)',
+        'user' => 'INT(11) default NULL',
 
 //        'added' => 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
     );
@@ -38,6 +39,8 @@ class Channel extends Model
     public $geolat;
     public $geolng;
     public $search_term;
+    public $user;
+    
 //    public $added;
 }
 
