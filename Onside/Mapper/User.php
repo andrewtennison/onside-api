@@ -58,7 +58,7 @@ class User extends Mapper
 
             // send email
             $mapper = new Email($this->_db);
-            $template = $mapper->selectItem(array('name' => 'registration'));
+            $template = $mapper->selectItem(array('name' => 'user_enabled'));
             $template[0]->to = $user->email;
             $email = new \Onside\Email($template[0]);
             $user->password = $passwd; //So that the user sees an unencrypted password
@@ -70,6 +70,17 @@ class User extends Mapper
             return $this->_updateItem($id, $data);
         }
 
+    }
+
+    public function addItem(array $data)
+    {
+        $users = $this->_addItem($data);
+        $mapper = new Email($this->_db);
+        $templates = $mapper->selectItem(array('name' => 'registration'));
+        $templates[0]->to = $users[0]->email;
+        $email = new \Onside\Email($templates[0]);
+        $email->sendEmail((array) $users[0]);
+        return $users;
     }
 
     //TODO: This needs to be done by not selecting the password from the DB in the first place
