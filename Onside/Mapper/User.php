@@ -74,6 +74,10 @@ class User extends Mapper
 
     public function addItem(array $data)
     {
+        if (!isset($data['name'])) {
+            $emailParts = explode('@', $data['email']);
+            $data['name'] = ucfirst($emailParts[0]);
+        }
         $users = $this->_addItem($data);
         $mapper = new Email($this->_db);
         $templates = $mapper->selectItem(array('name' => 'registration'));
