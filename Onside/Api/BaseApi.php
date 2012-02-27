@@ -86,9 +86,8 @@ class BaseApi
             return $this->request->getResponse($this->request->getObject(), $e->getCode(), array(), $e->getResponseFields());
         }
         catch (\Exception $e) {
-            $errorString = print_r($e, true);
-            error_log($e->getMessage());
-            error_log($e->getTraceAsString());
+            $errorString = $e->getMessage() . "\n" . $e->getTraceAsString();
+            error_log($errorString);
             return $this->request->getResponse($this->request->getObject(), 500, array(), array(array('code' => 500, 'message' => $errorString)));
 	}
 	$data = $controller->getResults();
