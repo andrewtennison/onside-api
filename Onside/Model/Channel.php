@@ -27,8 +27,7 @@ class Channel extends Model
         'geolng' => 'DECIMAL(10,6) default NULL',
         'search_term' => 'VARCHAR(50)',
         'user' => 'INT(11) default NULL',
-
-//        'added' => 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
+        'added' => 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
     );
 
     public $id;
