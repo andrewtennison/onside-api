@@ -85,7 +85,8 @@ foreach ($articles as $article) {
     try {
 	$rows = $db->prepared($sql, $args)->fetchAll();
     } catch (\PDOException $e) {
-	echo print_r($e->getTraceAsString(), true) . "\n";
+	$logger->write($e->getMessage() . "\n",'error');
+        $logger->write($e->getTraceAsString() . "\n",'error');
     }
     if (count($rows) == 0) {
 	$sql = $article->getInsertSQL();
@@ -104,7 +105,7 @@ foreach ($articles as $article) {
 	    // Stop all processing and exit
 	    continue(1);
 	}
-	
+
 	// Associate article with channel(s)
 	$channels = strpos($row->channels, ',') === false ? array($row->channels) : explode(',', $row->channels);
 	foreach ($channels as $c) {
