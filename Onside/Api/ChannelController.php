@@ -42,7 +42,8 @@ class ChannelController extends BaseController
     public function actionGet($data = array())
     {
 	$where = $this->getAcceptedFilters($data);
-        $this->results[] = $this->_mapper->selectItem($where, array('added' => false), $this->limit);
+        $sort = $this->getSort($data);
+        $this->results[] = $this->_mapper->selectItem($where, $sort, $this->limit);
     }
 
     public function actionItem($id)
@@ -59,4 +60,6 @@ class ChannelController extends BaseController
     {
         $this->results[] = $this->_mapper->addItem($data);
     }
+
+
 }
