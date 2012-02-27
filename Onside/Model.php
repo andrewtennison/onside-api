@@ -30,7 +30,7 @@ class Model
     public function clearWhere() { $this->_where = array(); }
     public function clearJoin() { $this->_join = array(); }
 
-    public function setJoin($table, $leftfield, $rightfield, $wherefield, $wherevalue, $fields = array(), $type = 'JOIN')
+    public function setJoin($table, $leftfield, $rightfield, $wherefield, $wherevalue, $fields = array(), $type = 'JOIN', $lefttable = null)
     {
 	$this->_join[] = array(
 	    'table' => $table,
@@ -40,6 +40,7 @@ class Model
 	    'rightfield' => $rightfield,
 	    'wherefield' => $wherefield,
 	    'wherevalue' => $wherevalue,
+	    'lefttable' => $lefttable
 	);
     }
 
@@ -82,9 +83,10 @@ class Model
 
 	// joins
 	if (count($this->_join) > 0) {
+            $tableKeys = array();
 	    foreach ($this->_join as $key => $join) {
 //echo print_r($join, true) . "\n";
-
+                $tableKeys[$join['table']] = $key;
 		// only works for channel <-> channel relationship
 		if (is_array($join['leftfield']) && is_array($join['rightfield']) && count($join['leftfield']) == count($join['rightfield'])) {
 		    $on = '';
@@ -93,18 +95,23 @@ class Model
 			$on .= '(t.' . $join['leftfield'][$i] . ' = t' . $key . '.' . $join['rightfield'][$i] . ' AND t' . $key . '.' . $otherfield . ' = ' . $join['wherevalue'] . ') OR ';
 		    }
 		    $on = ' ON (' . substr($on, 0, -4) . ')';
-		    $sql .= ' ' . $join['type'] . ' ' . $this->_getTable($join['table']) . ' t' . $key . $on;
 
+                    $sql .= ' ' . $join['type'] . ' ' . $this->_getTable($join['table']) . ' t' . $key . $on;
 
 		} else {
+                    $leftTableExpr = 't';
+                    if ($join['lefttable'] !== null) {
+                        assert(array_key_exists($join['lefttable'], $tableKeys));
+                        $leftTableExpr .= $tableKeys[$join['lefttable']];
+                    }
 		    // TODO: add select tables to sql
-		    $sql .= ' ' . $join['type'] . ' ' . $this->_getTable($join['table']) . ' t' . $key . ' ON t.' . $join['leftfield'] . ' = t' . $key . '.' . $join['rightfield'];
+		    $sql .= ' ' . $join['type'] . ' ' . $this->_getTable($join['table']) . ' t' . $key . ' ON ' . $leftTableExpr . '.' . $join['leftfield'] . ' = t' . $key . '.' . $join['rightfield'];
 		}
 
 		if (is_array($join['wherefield'])) {
 //		    foreach ($join['wherefield'] as $wherefield)
 //			$this->setWhere('t' . $key . '.`' . $wherefield . '`', $join['wherevalue']);
-		} else {
+		} else if ($join['wherefield'] !== null) {
 		    $this->setWhere('t' . $key . '.`' . $join['wherefield'] . '`', $join['wherevalue']);
 		}
 	    }

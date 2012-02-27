@@ -48,15 +48,23 @@ class Article extends Mapper
             }
 	}
 	if (array_key_exists('event', $where)) {
-//	    $join[] = array(
-//		'table' => 'channel',
-//		'leftfield' => 'id',
-//		'rightfield' => 'channel',
-//		'type' => 'JOIN',
-//		'fields' => array(),
-//		'wherefield' => 'user',
-//		'wherevalue' => $where['user'],
-//	    );
+	    $join[] = array(
+		'table' => 'carticle',
+		'leftfield' => 'id',
+		'rightfield' => 'article',
+                'fields' => array(),
+		'type' => 'JOIN',
+	    );
+            $join[] = array(
+                'lefttable' => 'carticle',
+                'table' => 'cevent',
+                'leftfield' => 'channel',
+                'rightfield' => 'channel',
+                'fields' => array(),
+                'type' => 'JOIN',
+                'wherefield' => 'event',
+                'wherevalue' => $where['event'],
+            );
 	    unset($where['event']);
 	}
 

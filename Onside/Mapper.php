@@ -93,10 +93,11 @@ class Mapper
 		    $join['table'],
 		    $join['leftfield'],
 		    $join['rightfield'],
-		    $join['wherefield'],
-		    $join['wherevalue'],
+		    array_key_exists('wherefield', $join) ? $join['wherefield'] : null,
+		    array_key_exists('wherevalue', $join) ? $join['wherevalue'] : null,
 		    $join['fields'],
-		    $join['type']
+		    $join['type'],
+                    array_key_exists('lefttable', $join) ? $join['lefttable'] : null
 		);
 	    }
 	}
