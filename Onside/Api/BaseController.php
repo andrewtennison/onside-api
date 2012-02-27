@@ -37,6 +37,8 @@ abstract class BaseController
 
     public function getErrors() { return $this->errors; }
 
+    private $operators = array('<', '>');
+
     protected function getAcceptedFilters($data = array())
     {
 	if (array_key_exists('limit', $data)) {
@@ -45,8 +47,16 @@ abstract class BaseController
 
 	$where = array();
 	foreach ($this->filters as $filter)
-	    if (array_key_exists($filter, $data))
-		$where[$filter] = $data[$filter];
+	    if (array_key_exists($filter, $data)) {
+                $rawFilter = $data[$filter];
+                $firstChar = substr($rawFilter, 0, 1);
+                if (in_array($firstChar, $this->operators)) {
+                    $where[$filter] = array($firstChar, substr($rawFilter,1), 'AND');
+                }
+                else {
+                    $where[$filter] = $data[$filter];
+                }
+            }
 	return $where;
     }
 
