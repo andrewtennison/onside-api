@@ -67,7 +67,7 @@ class User extends Mapper
             return $users;
         }
 	else {
-            return $this->_updateItem($id, $data);
+            return $this->blankPasswords($this->_updateItem($id, $data));
         }
 
     }
@@ -84,7 +84,7 @@ class User extends Mapper
         $templates[0]->to = $users[0]->email;
         $email = new \Onside\Email($templates[0]);
         $email->sendEmail((array) $users[0]);
-        return $users;
+        return $this->blankPasswords($users);
     }
 
     //TODO: This needs to be done by not selecting the password from the DB in the first place
@@ -102,7 +102,7 @@ class User extends Mapper
     private function blankPasswords(array $users)
     {
         foreach ($users as $user) {
-            $user->password = null;
+            unset($user->password);
         }
         return $users;
     }

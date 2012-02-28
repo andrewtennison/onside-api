@@ -248,19 +248,16 @@ SQL;
     private function _getFieldListPlaceholders()
     {
         if (null === $this->_fields) $this->_setFields();
-
         $str = '';
         foreach ($this->_fields as $field) {
-            if (null !== $this->$field) {
-                if ($field === 'password') {
-                    if ($this->$field) {
-                        $this->_values[] = $this->$field;
-                        $str .= ', `' . $field . '` = PASSWORD(?)';
-                    }
-                } else {
+            if ($field === 'password') {
+                if ($this->$field) {
                     $this->_values[] = $this->$field;
-                    $str .= ', `' . $field . '` = ?';
+                    $str .= ', `' . $field . '` = PASSWORD(?)';
                 }
+            } else {
+                $this->_values[] = $this->$field;
+                $str .= ', `' . $field . '` = ?';
             }
         }
         $this->_values[] = $this->id;
