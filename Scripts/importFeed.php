@@ -20,6 +20,7 @@ if (count($row) == 0) {
     exit;
 }
 $row = $row[0];
+$model = \Onside\Model\Source::getModelFromArray($row);
 $model->status = 'running';
 $sql = $model->getUpdateSQL();
 $args = $model->getValues();
@@ -84,36 +85,37 @@ foreach ($articles as $article) {
 //echo "$sql\n\n" . print_r($args, true) . "\n";
     try {
 	$rows = $db->prepared($sql, $args)->fetchAll();
-    } catch (\PDOException $e) {
+        if (count($rows) == 0) {
+            $sql = $article->getInsertSQL();
+            $args = $article->getValues();
+            //echo "$sql\n\n" . print_r($args, true) . "\n";
+            $result = $db->prepared($sql, $args);
+            if (!$result) {
+                // (incorrect fields)ID=12(title)/15(title)/38(title)/39(???)/40(title) (fatal)ID=20
+                $logger->write("Problem inserting new article, source: $id will be flagged as 'failed'", 'warn');
+                $model->status = 'failed';
+                $model->id = $id;
+                $model->failed_reason = $failed_reason;
+                $sql = $model->getUpdateSQL();
+                $args = $model->getValues();
+                $result = $db->prepared($sql, $args);
+                // Stop all processing and exit
+                continue(1);
+            }
+
+            // Associate article with channel(s)
+            $channels = strpos($row->channels, ',') === false ? array($row->channels) : explode(',', $row->channels);
+            foreach ($channels as $c) {
+                $carticle = \Onside\Model\Carticle::getModelFromArray(array('article' => $result, 'channel' => $c));
+                $carticle = $db->prepared($carticle->getInsertSQL(), $carticle->getValues());
+            }
+            $inserted++;
+        }
+    } catch (Exception $e) {
 	$logger->write($e->getMessage() . "\n",'error');
         $logger->write($e->getTraceAsString() . "\n",'error');
     }
-    if (count($rows) == 0) {
-	$sql = $article->getInsertSQL();
-	$args = $article->getValues();
-//echo "$sql\n\n" . print_r($args, true) . "\n";
-	$result = $db->prepared($sql, $args);
-	if (!$result) {
-	    // (incorrect fields)ID=12(title)/15(title)/38(title)/39(???)/40(title) (fatal)ID=20
-	    $logger->write("Problem inserting new article, source: $id will be flagged as 'failed'", 'warn');
-	    $model->status = 'failed';
-	    $model->id = $id;
-	    $model->failed_reason = $failed_reason;
-	    $sql = $model->getUpdateSQL();
-	    $args = $model->getValues();
-	    $result = $db->prepared($sql, $args);
-	    // Stop all processing and exit
-	    continue(1);
-	}
 
-	// Associate article with channel(s)
-	$channels = strpos($row->channels, ',') === false ? array($row->channels) : explode(',', $row->channels);
-	foreach ($channels as $c) {
-	    $carticle = \Onside\Model\Carticle::getModelFromArray(array('article' => $result, 'channel' => $c));
-	    $carticle = $db->prepared($carticle->getInsertSQL(), $carticle->getValues());
-	}
-	$inserted++;
-    }
 }
 $logger->write("Import feed $id: Imported $inserted / " . count($articles) . " articles from feed", 'info');
 

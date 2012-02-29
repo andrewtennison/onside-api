@@ -25,7 +25,9 @@ class Db extends PDO
             $r = $stmt->execute();
             if ($stmt->errorCode() != '00000') {
                 $errorInfo = $stmt->errorInfo();
-                throw new \Onside\Exception(array(array('code' => $errorInfo[1], 'message' => $errorInfo[2])));
+                $errorMsg = 'Problem with sql statement ' + $sql + ' with args ' . print_r($args, true);
+                $errorMsg .= "\n " . $errorInfo[2];
+                throw new \Onside\Exception(array(array('code' => $errorInfo[1], 'message' => $errorMsg)));
             }
 //echo print_r($stmt->errorInfo(), true) . "\n";
 //echo '$r: ' . ($r ? 'TRUE' : 'FALSE') . "\n";
@@ -38,6 +40,7 @@ class Db extends PDO
         }
 //echo 'lastInsertId(): ' . $this->lastInsertId() . "\n";
 //echo 'rowCount(): ' . $stmt->rowCount() . "\n";
+
         return $this->lastInsertId() > 0 ? $this->lastInsertId() : $stmt->rowCount();
     }
 

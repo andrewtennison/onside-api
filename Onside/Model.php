@@ -53,6 +53,12 @@ class Model
 	if (is_string($rightside) && strpos($rightside, 'PASSWORD') === false) {
 	    $rightside = "'" . $this->_addSlashes($rightside) . "'";
 	}
+
+        if($rightside === null) {
+            assert($operator === '=');
+            $operator = 'IS';
+            $rightside = 'NULL';
+        }
 //	$this->_where[] = '`' . $leftside . '` ' . $operator . ' ' . $rightside . ' ' . $type . ' ';
         $this->_where[] = (false !== strpos($leftside, '`') ?
 	    $leftside . $operator . ' ' . $rightside . ' ' . $type . ' ':
