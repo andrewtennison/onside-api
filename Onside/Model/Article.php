@@ -12,7 +12,7 @@ class Article extends Model
 
     protected $_definitions = array(
         'id' => 'INT(11) NOT NULL AUTO_INCREMENT',
-	'type' => 'ENUM("rss","twitter","youtube","google","custom") NOT NULL Default "rss"',
+	'type' => 'ENUM("rss","twitter","youtube","google","custom", "espn") NOT NULL Default "rss"',
 	'title' => 'VARCHAR(100) NOT NULL',
 	'content' => 'TEXT',
 	'images' => 'TEXT',
