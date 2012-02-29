@@ -35,7 +35,7 @@ class Email
 	if (!empty($this->template->bcc))
 		$headers .= 'Bcc: ' . $this->template->bcc . "\r\n";
 
-	mail($this->template->to, $this->template->subject, $this->template->text, $headers, '-fwebsite@onside.me');
+	mail($this->template->to, $this->template->subject, $this->template->text, $headers, '-fplease.reply@onside.me');
     }
 
     private function replaceWithValues($field, array $data = array())
