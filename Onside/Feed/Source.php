@@ -1,14 +1,14 @@
 <?php
 namespace Onside\Feed;
 use \Onside\Model\Article;
- 
+
 class Source
 {
     private $source;
     private $mapFields;
     private $mapLookups;
     private $articles;
-    
+
     public function __construct(\Onside\Model\Source $source)
     {
 	$this->articles = array();
@@ -21,7 +21,7 @@ class Source
 //echo "$json\n";
 	$this->parseJson($json);
     }
-    
+
     /**
      * @return array \Onside\Model\Article
      */
@@ -29,7 +29,7 @@ class Source
     {
 	return $this->articles;
     }
-    
+
     private function decodeMappings()
     {
 	$reflect = new \ReflectionClass($this->source);
@@ -44,13 +44,13 @@ class Source
 	}
 //echo print_r($this->mapLookups, true) . "\n";
     }
-    
+
     private function xmlToJson($xml)
     {
 //echo print_r($xml, true) . "\n";
 	$sxml = @simplexml_load_string($xml);
 	return $sxml ? $sxml : json_decode($xml);
-	
+
 	return $sxml ? json_encode($sxml) : $xml;
     }
 
@@ -62,10 +62,10 @@ class Source
 	    $json = $this->xmlToJson($feed);
 	    return $json;
 	} catch (Exception $e) {}
-	
+
 	return $feed;
     }
-    
+
     private function sendCurlRequest($url)
     {
 	$curl = curl_init($url);
@@ -73,40 +73,40 @@ class Source
         curl_setopt($curl, CURLOPT_VERBOSE, true);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $feed = curl_exec($curl);
-	
+
 	// TODO: handle CURL errors
-	
+
 	try
 	{
 	    $json = $this->xmlToJson($feed);
 	    return $json;
 	} catch (Exception $e) {}
-	
+
 	return $feed;
     }
-    
+
     private function parseJson($json)
     {
 //echo print_r($json, true) . "\n";
 //	$json = json_decode($json);
 //die(print_r($json, true));
-	
+
 	$lookup = '$items = $json' . $this->mapLookups['map_article']['value'] . ';';
 //echo "$lookup\n";
 	eval($lookup);
-//echo print_r($items, true) . "\n";	
+//echo print_r($items, true) . "\n";
 	foreach ($items as $article) {
 //echo print_r($article, true) . "\n\n";
 	    $this->parseArticle($json, $article);
 	}
     }
-    
+
     private function parseArticle($parent, $object)
     {
 //echo print_r($object, true) . "\n";
 	$data = array();
 	$source = $this->parseSource($this->getElementMap($parent, $object, 'map_source'));
-	$data['source'] = empty($source) ? 
+	$data['source'] = empty($source) ?
 		$this->source->url : $source;
 	$data['original'] = json_encode($object);
 	$data['type'] = $this->parseType($this->getElementMap($parent, $object, 'map_type'));
@@ -125,15 +125,15 @@ class Source
 //die();
 	$this->articles[] = Article::getModelFromArray($data);
     }
-        
+
     private function getElementMap($parent, $object, $lookup)
     {
 //echo print_r($parent, true) . "\n";
 	if ($this->mapLookups[$lookup]['isLiteral']) {
 	    return $this->mapLookups[$lookup]['value'];
 	} else {
-	    $fields = is_array($this->mapLookups[$lookup]['value']) ? 
-		$this->mapLookups[$lookup]['value'] : 
+	    $fields = is_array($this->mapLookups[$lookup]['value']) ?
+		$this->mapLookups[$lookup]['value'] :
 		array($this->mapLookups[$lookup]['value']);
 //echo 'getElementMap: ' . print_r($fields, true) . "\n\n";
 	    foreach ($fields as $field) {
@@ -153,7 +153,7 @@ class Source
 			    $array = $array->$parts[$i];
 			}
 		    }
-		    
+
 		    return $array;
 		}
 //echo "\$field: $field\n";
@@ -170,7 +170,7 @@ class Source
 	    }
 	}
     }
-    
+
     private function parseAuthor($value)
     {
 	if (is_object($value)) {
@@ -186,7 +186,7 @@ class Source
     {
 	// TODO: source ID=12
 //echo 'parseTitle($value): ' . print_r($value, true) . "\n\n";
-	
+
 	if (is_object($value)) {
 	    $strvalue = (string)$value;
 	    if (!empty($strvalue))
@@ -201,7 +201,7 @@ class Source
 	// If no date found default to now
 	if (empty($value))
 	    return date('Y-m-d H:i:s');
-	
+
 	if (strlen($value) == 25) {
 	    $date = date_parse_from_format('D, j M Y H:i:s', $value); // without e
 	} else {
@@ -222,7 +222,7 @@ class Source
 	$date['hour'] = sprintf('%02s', (int)$date['hour']);
 	$date['minute'] = sprintf('%02s', (int)$date['minute']);
 	$date['second'] = sprintf('%02s', floor($date['second']));
-	
+
 	return "{$date['year']}-{$date['month']}-{$date['day']} {$date['hour']}:{$date['minute']}:{$date['second']}";
     }
     private function parseContent($value)
@@ -234,7 +234,7 @@ class Source
 		return $strvalue;
 	    return;
 	}
-	
+
 	return $value;
     }
     private function parseLink($value)
@@ -245,7 +245,7 @@ class Source
 		return $strvalue;
 	    return;
 	}
-	
+
 	return $value;
     }
     private function parseImages($value)
@@ -254,10 +254,16 @@ class Source
 //echo 'parseImages($value): ' . print_r($value, true) . "\n\n";
 	if (is_object($value)) {
 	    $value = (array)$value;
-	    if (empty($value))
-		return;
 	    // TODO: handle when content exists
 	}
+        if (empty($value))
+            return null;
+        if (is_array($value)) {
+            $value = $value[0];
+        }
+        if (is_object($value)) {
+            $value = $value->url;
+        }
 
 	return $value;
     }
