@@ -19,7 +19,9 @@ class Source
 //	$json = $this->loadCurlResponse($source->id); // offline use
 	$json = $this->sendCurlRequest($source->url); // online use
 //echo "$json\n";
-	$this->parseJson($json);
+        if ($json) {
+	    $this->parseJson($json);
+        }
     }
 
     /**
