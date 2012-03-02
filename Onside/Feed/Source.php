@@ -97,10 +97,12 @@ class Source
 //echo "$lookup\n";
 	eval($lookup);
 //echo print_r($items, true) . "\n";
-	foreach ($items as $article) {
-//echo print_r($article, true) . "\n\n";
-	    $this->parseArticle($json, $article);
-	}
+        if ($items) {
+            foreach ($items as $article) {
+    //echo print_r($article, true) . "\n\n";
+                $this->parseArticle($json, $article);
+            }
+        }
     }
 
     private function parseArticle($parent, $object)
